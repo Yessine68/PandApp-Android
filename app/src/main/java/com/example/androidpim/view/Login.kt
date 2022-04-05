@@ -27,12 +27,15 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+
         //--------------------------------------------
         email = findViewById(R.id.login_email)
         password = findViewById(R.id.login_password)
         login = findViewById(R.id.login_button)
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
-
+        println("ééééééééééééééééééééééééééééééééééééééééééééééééééééééé")
+        println(mSharedPref.getString("password", "zwayten").toString())
         //--------------------------------------------
 
         login.setOnClickListener { var user = User()
@@ -48,9 +51,11 @@ class Login : AppCompatActivity() {
                     if(response.isSuccessful){
                         mSharedPref.edit().apply{
 
-                            putString("email", response.body()?.user?.email.toString())
-                            putString("password", response.body()?.user?.password.toString())
-
+                            putString("email", response.body()?.email.toString())
+                            putString("password", response.body()?.password.toString())
+                            println("###########################################")
+                            println(response.body())
+                                println("###########################################")
                             putString("tokenUser", response.body()?.token.toString())
                             //putBoolean("session", true)
                         }.apply()
