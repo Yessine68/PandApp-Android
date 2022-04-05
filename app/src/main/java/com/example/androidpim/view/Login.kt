@@ -13,7 +13,6 @@ import com.example.androidpim.R
 import com.example.androidpim.models.User
 import com.example.androidpim.models.UserLoggedIn
 import com.example.androidpim.service.RetrofitApi
-import com.example.androidpim.upload_post
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +24,7 @@ class Login : AppCompatActivity() {
     lateinit var login: Button
     lateinit var remember:CheckBox
     lateinit var mSharedPref: SharedPreferences
-    lateinit var     post_file: Button
+
     //-----------------------------------------------
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +40,6 @@ class Login : AppCompatActivity() {
         println("ééééééééééééééééééééééééééééééééééééééééééééééééééééééé")
         println(mSharedPref.getString("password", "zwayten").toString())
         //--------------------------------------------
-        post_file=findViewById(R.id.post_file)
-        post_file.setOnClickListener {
-
-            val intent = Intent(applicationContext, upload_post::class.java)
-            startActivity(intent)
-        }
 
 
 

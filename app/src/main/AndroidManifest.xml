@@ -21,8 +21,12 @@
             android:name=".view.Home"
             android:exported="false" />
         <activity
+            android:name=".view.upload_post"
+            android:exported="false"/>
+        <activity
             android:name=".view.SplashScreen"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
