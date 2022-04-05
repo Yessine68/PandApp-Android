@@ -57,10 +57,10 @@ class Signup : AppCompatActivity() {
 
         val apiInterface = RetrofitApi.create()
         val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
-
+        data["identifant"] = RequestBody.create(MultipartBody.FORM, identifiant_text)
         data["email"] = RequestBody.create(MultipartBody.FORM, email_text)
         data["password"] = RequestBody.create(MultipartBody.FORM, password_text)
-        data["identifant"] = RequestBody.create(MultipartBody.FORM, identifiant_text)
+
         data["phoneNumber"] = RequestBody.create(MultipartBody.FORM, phone_text)
         data["FirstName"] = RequestBody.create(MultipartBody.FORM, first_text)
         data["LastName"] = RequestBody.create(MultipartBody.FORM, last_text)
