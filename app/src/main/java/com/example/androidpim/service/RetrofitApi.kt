@@ -11,7 +11,7 @@ import retrofit2.http.*
 interface RetrofitApi {
 
     @Multipart
-    @POST("user")
+    @POST("/user")
     fun userSignUp(
         @PartMap data : LinkedHashMap<String, RequestBody>,
         //@Part profilePicture: MultipartBody.Part
@@ -31,7 +31,7 @@ interface RetrofitApi {
         fun create() : RetrofitApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://glacial-taiga-36886.herokuapp.com/")
+                .baseUrl("http://10.0.2.2:3000/")
                 .build()
             return retrofit.create(RetrofitApi::class.java)
 

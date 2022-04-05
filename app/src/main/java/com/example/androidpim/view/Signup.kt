@@ -77,7 +77,7 @@ class Signup : AppCompatActivity() {
         }
 
                     override fun onFailure(call: Call<User>, t: Throwable) {
-                        TODO("Not yet implemented")
+                        println("nooooooooooooooooooooooooo")
                     }
 
                 })
