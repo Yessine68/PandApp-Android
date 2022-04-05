@@ -48,9 +48,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     //okhttp
 
-    //image picker
-    //implementation 'com.github.dhaval2404:imagepicker:2.1'
-    //circular imageview
+
 
 
     //for getting photos
