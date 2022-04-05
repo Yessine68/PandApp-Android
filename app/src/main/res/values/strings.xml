@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">androidPim</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="button_login">Login</string>
+    <string name="button_register">Register</string>
+    <string name="hint_enter_name">Enter Full Name</string>
+    <string name="hint_enter_school">Enter School Name</string>
+    <string name="hint_enter_id">Enter School ID</string>
+    <string name="hint_enter_phone_num">Enter Phone Number</string>
+    <string name="hint_description">Add Description</string>
+    <string name="hint_title">Add Title</string>
+    <string name="Open">NavBar</string>
+    <string name="Close">NavBar</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="choose_file">Choose file</string>
 </resources>
