@@ -28,22 +28,24 @@ class SplashScreen : AppCompatActivity() {
         var user = User()
         val email: String = mSharedPref.getString("email", "zwayten").toString()
         val password: String = mSharedPref.getString("password", "zwayten").toString()
+        var remember: Boolean = false
         user.email = email
         user.password = password
+        remember = mSharedPref.getBoolean("remember", false)
         print("########################################################")
         print(email);
         val apiuser = RetrofitApi.create().userLogin(user)
 
         apiuser.enqueue(object: Callback<UserLoggedIn> {
             override fun onResponse(call: Call<UserLoggedIn>, response: Response<UserLoggedIn>) {
-                if(response.isSuccessful){
+                if(response.isSuccessful && remember == true){
                     print(email);
                     val intent = Intent(applicationContext, Home::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else {
 
-                    val intent = Intent(applicationContext, Login::class.java)
+                    val intent = Intent(applicationContext, SecondSplash::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
 

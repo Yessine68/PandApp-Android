@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.example.androidpim.R
@@ -22,18 +23,23 @@ class Login : AppCompatActivity() {
     lateinit var email: EditText
     lateinit var password: EditText
     lateinit var login: Button
+    lateinit var remember:CheckBox
     lateinit var mSharedPref: SharedPreferences
     lateinit var     post_file: Button
     //-----------------------------------------------
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+
         //--------------------------------------------
         email = findViewById(R.id.login_email)
         password = findViewById(R.id.login_password)
         login = findViewById(R.id.login_button)
+        remember = findViewById(R.id.checkBox)
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
-
+        println("ééééééééééééééééééééééééééééééééééééééééééééééééééééééé")
+        println(mSharedPref.getString("password", "zwayten").toString())
         //--------------------------------------------
         post_file=findViewById(R.id.post_file)
         post_file.setOnClickListener {
@@ -55,17 +61,24 @@ class Login : AppCompatActivity() {
 
             apiuser.enqueue(object: Callback<UserLoggedIn> {
                 override fun onResponse(call: Call<UserLoggedIn>, response: Response<UserLoggedIn>) {
-                    if(response.isSuccessful){
-                        mSharedPref.edit().apply{
+                    if(response.isSuccessful ){
 
-                            putString("email", response.body()?.user?.email.toString())
-                            putString("password", response.body()?.user?.password.toString())
+                            mSharedPref.edit().apply {
 
-                            putString("tokenUser", response.body()?.token.toString())
-                            //putBoolean("session", true)
-                        }.apply()
+                                putString("email", response.body()?.email.toString())
+                                putString("password", response.body()?.password.toString())
+                                if (remember.isChecked()) {
+                                putBoolean("remember", true)
+                                }
+                                println("###########################################")
+                                println(response.body())
+                                println("###########################################")
+                                putString("tokenUser", response.body()?.token.toString())
+                                //putBoolean("session", true)
+                            }.apply()
 
-                        finish()
+                            finish()
+
                         val intent = Intent(applicationContext, Home::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)

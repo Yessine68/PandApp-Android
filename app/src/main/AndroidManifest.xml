@@ -3,8 +3,6 @@
     package="com.example.androidpim">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,10 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidPim">
         <activity
-            android:name=".postActivty"
-            android:exported="false" />
-        <activity
-            android:name=".upload_post"
+            android:name=".view.Signup"
             android:exported="false" />
         <activity
             android:name=".view.SecondSplash"
