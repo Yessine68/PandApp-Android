@@ -52,12 +52,14 @@ class Login : AppCompatActivity() {
             apiuser.enqueue(object: Callback<UserLoggedIn> {
                 override fun onResponse(call: Call<UserLoggedIn>, response: Response<UserLoggedIn>) {
                     if(response.isSuccessful ){
-                        if (remember.isChecked()) {
+
                             mSharedPref.edit().apply {
 
                                 putString("email", response.body()?.email.toString())
                                 putString("password", response.body()?.password.toString())
+                                if (remember.isChecked()) {
                                 putBoolean("remember", true)
+                                }
                                 println("###########################################")
                                 println(response.body())
                                 println("###########################################")
@@ -66,7 +68,7 @@ class Login : AppCompatActivity() {
                             }.apply()
 
                             finish()
-                        }
+
                         val intent = Intent(applicationContext, Home::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)

@@ -45,7 +45,7 @@ class SplashScreen : AppCompatActivity() {
                     startActivity(intent)
                 } else {
 
-                    val intent = Intent(applicationContext, Login::class.java)
+                    val intent = Intent(applicationContext, SecondSplash::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
 

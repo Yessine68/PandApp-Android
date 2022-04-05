@@ -9,14 +9,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface RetrofitApi {
-    /*
+
     @Multipart
     @POST("user")
     fun userSignUp(
         @PartMap data : LinkedHashMap<String, RequestBody>,
-        @Part profilePicture: MultipartBody.Part
-    ) : Call<userSignUpResponse>
-    */
+        //@Part profilePicture: MultipartBody.Part
+    ) : Call<User>
+
 
     @POST("/auth")
     fun userLogin(
