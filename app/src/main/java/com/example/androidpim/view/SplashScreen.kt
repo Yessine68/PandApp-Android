@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import com.example.androidpim.R
-import com.example.androidpim.models.User
 import com.example.androidpim.models.UserLoggedIn
 import com.example.androidpim.service.RetrofitApi
 import retrofit2.Call
@@ -25,7 +24,7 @@ class SplashScreen : AppCompatActivity() {
         supportActionBar?.hide();
         lateinit var handler: Handler
         //-------------------------------------------------------
-        var user = User()
+        var user = UserLoggedIn()
         val email: String = mSharedPref.getString("email", "zwayten").toString()
         val password: String = mSharedPref.getString("password", "zwayten").toString()
         var remember: Boolean = false

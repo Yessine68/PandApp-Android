@@ -10,7 +10,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.example.androidpim.R
-import com.example.androidpim.models.User
 import com.example.androidpim.models.UserLoggedIn
 import com.example.androidpim.service.RetrofitApi
 import retrofit2.Call
@@ -44,7 +43,7 @@ class Login : AppCompatActivity() {
 
 
         //--------------------------------------------------
-        login.setOnClickListener { var user = User()
+        login.setOnClickListener { var user = UserLoggedIn()
             user.email = email.text.toString()
             user.password = password.text.toString()
             val apiuser = RetrofitApi.create().userLogin(user)
@@ -69,7 +68,6 @@ class Login : AppCompatActivity() {
                                 putString("tokenUser", response.body()?.token.toString())
                                 //putBoolean("session", true)
                             }.apply()
-
                             finish()
 
                         val intent = Intent(applicationContext, Home::class.java)

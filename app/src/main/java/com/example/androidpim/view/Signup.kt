@@ -1,11 +1,11 @@
 package com.example.androidpim.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpim.R
-import com.example.androidpim.models.User
+import com.example.androidpim.models.UserLoggedIn
 import com.example.androidpim.service.RetrofitApi
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -69,14 +69,14 @@ class Signup : AppCompatActivity() {
 
         save.setOnClickListener {
 
-                apiInterface.userSignUp(data).enqueue(object: Callback<User> {
-                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                apiInterface.userSignUp(data).enqueue(object: Callback<UserLoggedIn> {
+                    override fun onResponse(call: Call<UserLoggedIn>, response: Response<UserLoggedIn>) {
                         if(response.isSuccessful){
                             println("jawek 9ron9os")
                         }
         }
 
-                    override fun onFailure(call: Call<User>, t: Throwable) {
+                    override fun onFailure(call: Call<UserLoggedIn>, t: Throwable) {
                         println("nooooooooooooooooooooooooo")
                     }
 

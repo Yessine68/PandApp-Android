@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidPim">
         <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".view.Signup"
             android:exported="false" />
         <activity
@@ -22,11 +25,10 @@
             android:exported="false" />
         <activity
             android:name=".view.upload_post"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".view.SplashScreen"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
