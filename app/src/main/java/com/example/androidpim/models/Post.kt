@@ -9,4 +9,4 @@ data class Post(
     val publishedAt: String,
     val state: Boolean,
     val type: String
-)
+){}
