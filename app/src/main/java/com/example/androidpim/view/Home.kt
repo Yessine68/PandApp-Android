@@ -1,24 +1,82 @@
 package com.example.androidpim.view
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager.widget.ViewPager
 import com.example.androidpim.R
+import com.example.androidpim.adapters.ViewPagerAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 
 class Home : AppCompatActivity() {
-    lateinit var     postfile: Button
+    private val context: Context = this
 
+    private val lostFrag: fragmentLost = fragmentLost()
+    private val foundFrag: fragmentfound = fragmentfound()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-    postfile=findViewById(R.id.post_file)
+        setContentView(R.layout.main_view)
 
-    postfile.setOnClickListener {
+        // Initialize
+        var searchView = findViewById<View>(R.id.searchView) as SearchView
+        var buttonCreate = findViewById<View>(R.id.buttonCreate) as FloatingActionButton
 
-        val intent = Intent(applicationContext, upload_post::class.java)
-        startActivity(intent)
-    }
+        var toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+
+        var tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
+        var viewPager = findViewById<View>(R.id.viewPager) as ViewPager
+
+        var drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+
+        var navigationView = findViewById<View>(R.id.navigation) as NavigationView
+        setSupportActionBar(toolbar)
+
+        // Set drawer
+        var actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close)
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+
+        actionBarDrawerToggle.syncState()
+
+
+        // Listen to search and populate the searched item
+        /*    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+             override fun onQueryTextSubmit(query: String): Boolean {
+                 return false
+             }
+
+          override fun onQueryTextChange(newText: String): Boolean {
+              /* if (viewPager.currentItem == 0) {
+                     lostFrag.refreshList(newText)
+                 } else if (viewPager.currentItem == 1) {
+                     foundFrag.refreshList(newText)
+                 }
+                 return false*/
+             }
+        })*/
+        // Set drawer
+        setSupportActionBar(toolbar)
+      //  buttonCreate.setOnClickListener(this)
+
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+
+        // Add fragments
+
+        // Add fragments
+        adapter.addFragment(lostFrag, "Lost")
+        adapter.addFragment(foundFrag, "Found")
+
+        viewPager.adapter = adapter
+        tabLayout.setupWithViewPager(viewPager)
+
     }
 
 }
