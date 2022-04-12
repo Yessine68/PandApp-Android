@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidPim">
         <activity
-            android:name=".MainActivity2"
+            android:name=".view.LoginPro"
+            android:exported="false" />
+        <activity
+            android:name=".view.ProfileUser"
             android:exported="false" />
         <activity
             android:name=".view.Signup"
