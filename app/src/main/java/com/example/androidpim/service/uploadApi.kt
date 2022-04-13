@@ -1,15 +1,13 @@
 package com.example.androidpim.service
 
+import com.example.androidpim.models.Post
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.PartMap
+import retrofit2.http.*
 
 
 interface uploadApi {
@@ -18,6 +16,8 @@ interface uploadApi {
 open fun uploadFile(
     @Part file: List<MultipartBody.Part?>?
 ): Call<JsonObject?>?
+    @GET("download")
+    fun GetAllArticles():Call<Post>
 
 
     companion object {
@@ -32,4 +32,5 @@ open fun uploadFile(
 
 
     }
+
 }
