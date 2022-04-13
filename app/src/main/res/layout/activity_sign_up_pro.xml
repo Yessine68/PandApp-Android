@@ -9,13 +9,43 @@
     android:background="@color/white"
     android:padding="20dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/logo_image"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+
+            android:src="@drawable/logo"
+            android:transitionName="logo" />
+
+        <View
+            android:layout_width="170dp"
+            android:layout_height="match_parent"></View>
+
+<RelativeLayout
+    android:layout_width="100dp"
+    android:layout_height="match_parent">
     <ImageView
-        android:id="@+id/logo_image"
+        android:id="@+id/imagepick"
         android:layout_width="100dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="match_parent"
+        android:layout_gravity=""
         android:src="@drawable/logo"
-        android:transitionName="logo"/>
+        android:transitionName="logo" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/pickButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="SpeakableTextPresentCheck"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+</RelativeLayout>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/logo_name"
@@ -151,7 +181,8 @@
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Already have an account?"
         android:background="#2196F3"
-        android:elevation="0dp" />
+        android:elevation="0dp"
+        android:text="Already have an account?"
+        android:textColor="#212121" />
 </LinearLayout>
