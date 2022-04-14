@@ -27,6 +27,11 @@
             android:name=".view.ProfileUser"
             android:exported="false" />
         <activity
+            android:name=".view.Signup"
+            android:exported="false" />
+
+
+        <activity
             android:name=".view.Home"
             android:exported="false" />
         <activity
