@@ -12,7 +12,7 @@
 
         <EditText
             android:id="@+id/customEditTextemail"
-            android:layout_width="207dp"
+            android:layout_width="288dp"
             android:layout_height="match_parent"
             android:hint="Example@esprit.tn" />
 

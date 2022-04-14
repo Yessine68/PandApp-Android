@@ -11,15 +11,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.example.androidpim.R
 import com.example.androidpim.R.layout.custom_dialog_view
 import com.example.androidpim.models.UserLoggedIn
+import com.example.androidpim.models.UserReset
+import com.example.androidpim.models.UserResetResponse
 import com.example.androidpim.service.RetrofitApi
 
 import com.marcoscg.dialogsheet.DialogSheet
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 
 class LoginPro : AppCompatActivity() {
@@ -142,13 +147,39 @@ class LoginPro : AppCompatActivity() {
         val sendcode = inflatedView?.findViewById<Button>(R.id.sendCode)
         val customEditTextemail = inflatedView?.findViewById<EditText>(R.id.customEditTextemail)
         sendcode?.setOnClickListener {
-            val apiuser = RetrofitApi.create().sendResetCode(customEditTextemail?.text.toString())
+            var userReset = UserReset()
+            userReset.email = customEditTextemail?.text.toString()
+            val apiuser = RetrofitApi.create().sendResetCode(userReset)
 
-            apiuser.enqueue(object: Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+            apiuser.enqueue(object: Callback<UserResetResponse> {
+                override fun onResponse(call: Call<UserResetResponse>, response: Response<UserResetResponse>) {
+                    println("++++++++++++++response"+response.body()?.msgg.toString())
                     if(response.isSuccessful ){
 
-                        Toast.makeText(applicationContext, "Code Sent Successfully", Toast.LENGTH_LONG).show()
+                        if(response.body()?.msgg.toString() == "false"){
+                            MotionToast.darkColorToast(this@LoginPro,
+                                "Failed ",
+                                "Wrong email !",
+                                MotionToastStyle.WARNING,
+                                MotionToast.GRAVITY_TOP,
+                                MotionToast.LONG_DURATION,
+                                ResourcesCompat.getFont(this@LoginPro, www.sanju.motiontoast.R.font.helvetica_regular))
+                        }
+
+                        if(response.body()?.msgg.toString() == "true"){
+
+
+                            MotionToast.darkColorToast(this@LoginPro,
+                                "Success ",
+                                "code sent!",
+                                MotionToastStyle.SUCCESS,
+                                MotionToast.GRAVITY_TOP,
+                                MotionToast.LONG_DURATION,
+                                ResourcesCompat.getFont(this@LoginPro, www.sanju.motiontoast.R.font.helvetica_regular))
+                        }
+
+
+                        //Toast.makeText(applicationContext, "Code Sent Successfully", Toast.LENGTH_LONG).show()
 
 
                     } else {
@@ -158,9 +189,15 @@ class LoginPro : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<UserResetResponse>, t: Throwable) {
 
-                    Toast.makeText(applicationContext, "erreur server", Toast.LENGTH_LONG).show()
+                    MotionToast.darkColorToast(this@LoginPro,
+                        "Failed ",
+                        "Server problem",
+                        MotionToastStyle.ERROR,
+                        MotionToast.GRAVITY_TOP,
+                        MotionToast.LONG_DURATION,
+                        ResourcesCompat.getFont(this@LoginPro, www.sanju.motiontoast.R.font.helvetica_regular))
                 }
 
 

@@ -32,3 +32,14 @@ data class User (
     val social: Boolean? = null,
     val verified: Boolean? = null
 )
+
+data class UserReset (
+    var email: String? = null
+)
+
+data class UserResetResponse (
+    val msgg: String? = null
+
+)
+
+
