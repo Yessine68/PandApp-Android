@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.androidpim.R
 import com.example.androidpim.models.UserLoggedIn
 import com.example.androidpim.service.RetrofitApi
+import com.marcoscg.dialogsheet.DialogSheet
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,15 +26,20 @@ class LoginPro : AppCompatActivity() {
         lateinit var signup: Button
         lateinit var remember: CheckBox
         lateinit var mSharedPref: SharedPreferences
+        lateinit var resetPassword:Button
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_pro)
         supportActionBar?.hide();
+        //-------------------------------------------------
         email = findViewById(R.id.login_email)
         password = findViewById(R.id.login_password)
         login = findViewById(R.id.login_button)
         signup = findViewById(R.id.signup_btn)
         remember = findViewById(R.id.checkBox)
+        resetPassword = findViewById(R.id.resetPassword)
+
+        //---------------------------------------------------
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
         println("ééééééééééééééééééééééééééééééééééééééééééééééééééééééé")
         println(mSharedPref.getString("password", "zwayten").toString())
@@ -90,6 +96,26 @@ class LoginPro : AppCompatActivity() {
             val intent = Intent(applicationContext, SignUpPro::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+
+
+        val dialogSheet = DialogSheet(this@LoginPro,true) // you can also use DialogSheet2 if you want the new style
+            //.setNewDialogStyle() // You can also set new style by this method, but put it on the first line
+            .setTitle("Reset Password")
+            .setMessage("Verification cod will be sent to the mail")
+            .setSingleLineTitle(true)
+            .setColoredNavigationBar(true)
+            //.setButtonsColorRes(R.color.colorAccent) // You can use dialogSheetAccent style attribute instead
+            .setPositiveButton(android.R.string.ok) {
+                Toast.makeText(this@LoginPro, "code have been sent", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(android.R.string.cancel)
+            .setNeutralButton("Neutral")
+            dialogSheet.setIconResource(R.drawable.logo)
+            dialogSheet.setView(R.layout.custom_dialog_view)
+
+        resetPassword.setOnClickListener {
+            dialogSheet.show()
         }
     }
 }
