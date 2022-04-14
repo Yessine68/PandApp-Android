@@ -24,10 +24,6 @@
         <activity
             android:name=".view.LoginPro"
             android:exported="false" />
-        <activity
-            android:name=".view.ProfileUser"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
 
         <activity
             android:name=".view.Home"

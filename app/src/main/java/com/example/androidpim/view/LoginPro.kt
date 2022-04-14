@@ -94,7 +94,7 @@ class LoginPro : AppCompatActivity() {
                         }.apply()
                         finish()
 
-                        val intent = Intent(applicationContext, ProfileUser::class.java)
+                        val intent = Intent(applicationContext, LkolPro::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                     } else {
@@ -129,7 +129,7 @@ class LoginPro : AppCompatActivity() {
             // you can also use DialogSheet2 if you want the new style
             //.setNewDialogStyle() // You can also set new style by this method, but put it on the first line
         dialogSheet.setTitle("Reset Password")
-            .setMessage("Verification cod will be sent to the mail")
+            .setMessage("Verification code will be sent to the mail")
             .setSingleLineTitle(true)
             .setColoredNavigationBar(true)
             //.setButtonsColorRes(R.color.colorAccent) // You can use dialogSheetAccent style attribute instead
@@ -146,6 +146,20 @@ class LoginPro : AppCompatActivity() {
         val inflatedView = dialogSheet.inflatedView
         val sendcode = inflatedView?.findViewById<Button>(R.id.sendCode)
         val customEditTextemail = inflatedView?.findViewById<EditText>(R.id.customEditTextemail)
+
+        val code1 = inflatedView?.findViewById<EditText>(R.id.code1)
+        val code2 = inflatedView?.findViewById<EditText>(R.id.code2)
+        val code3 = inflatedView?.findViewById<EditText>(R.id.code3)
+        val code4 = inflatedView?.findViewById<EditText>(R.id.code4)
+
+        code1?.isEnabled =false
+        code2?.isEnabled =false
+        code3?.isEnabled =false
+        code4?.isEnabled =false
+
+
+
+
         sendcode?.setOnClickListener {
             var userReset = UserReset()
             userReset.email = customEditTextemail?.text.toString()
@@ -164,6 +178,10 @@ class LoginPro : AppCompatActivity() {
                                 MotionToast.GRAVITY_TOP,
                                 MotionToast.LONG_DURATION,
                                 ResourcesCompat.getFont(this@LoginPro, www.sanju.motiontoast.R.font.helvetica_regular))
+                            code1?.isEnabled =false
+                            code2?.isEnabled =false
+                            code3?.isEnabled =false
+                            code4?.isEnabled =false
                         }
 
                         if(response.body()?.msgg.toString() == "true"){
@@ -176,6 +194,10 @@ class LoginPro : AppCompatActivity() {
                                 MotionToast.GRAVITY_TOP,
                                 MotionToast.LONG_DURATION,
                                 ResourcesCompat.getFont(this@LoginPro, www.sanju.motiontoast.R.font.helvetica_regular))
+                            code1?.isEnabled = true
+                            code2?.isEnabled = true
+                            code3?.isEnabled = true
+                            code4?.isEnabled = true
                         }
 
 
