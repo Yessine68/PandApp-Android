@@ -42,4 +42,17 @@ data class UserResetResponse (
 
 )
 
+data class CheckResponse (
+    val check: Boolean? = null
+)
+data class Check (
+    var code: String? = null
+)
+
+data class UserResetPassword (
+    var email: String? = null,
+    var paswsord: String? = null
+
+)
+
 

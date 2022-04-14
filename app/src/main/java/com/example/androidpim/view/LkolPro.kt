@@ -38,6 +38,7 @@ class LkolPro : AppCompatActivity() {
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
         val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(profile_icon)
+        supportFragmentManager.beginTransaction().replace(R.id.frame, HomePro()).commit()
     }
 
     private val clickListener : View.OnClickListener = View.OnClickListener { view ->
