@@ -18,10 +18,19 @@ interface RetrofitApi {
     ) : Call<User>
 
 
+    @GET("/userByEmail/{email}")
+    fun getUserByEmail(
+        @Path("email") email:String,
+    ) : Call<UserLoggedIn>
+
+
     @POST("auth")
     fun userLogin(
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
+
+    @GET("user")
+    fun GetAllUsers():Call<List<User>>
 
     /*
         @GET("article")

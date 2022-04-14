@@ -15,4 +15,6 @@
     <string name="Close">NavBar</string>
     <string name="open_camera">Open Camera</string>
     <string name="choose_file">Choose file</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

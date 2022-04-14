@@ -1,96 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_centerInParent="true"
-    android:gravity="center">
+    android:gravity="center"
+    tools:context=".view.ItemImage">
     <RelativeLayout
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="250dp">
+
         <androidx.cardview.widget.CardView
-            app:cardCornerRadius="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
             android:layout_marginTop="40dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="10dp"
             app:cardUseCompatPadding="true"
-            card_view:cardCornerRAdius="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="240dp">
+            card_view:cardCornerRAdius="5dp">
+
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_marginTop="23dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="23dp"
+                android:orientation="vertical">
+
                 <TextView
-                    android:layout_marginTop="15dp"
-                    android:text="Mariya Doe"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textColor="@color/black"
+                    android:id="@+id/usernameProfile"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="Mariya Doe"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="PID:362Hb458760"
-                    android:textSize="13sp"
-                    android:textStyle="normal"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
+                    android:text="PID:362Hb458760"
                     android:textColor="#5C5A5A"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="13sp"
+                    android:textStyle="normal" />
+
                 <View
-                    android:background="#79D6D1D1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:background="#79D6D1D1" />
+
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Personal Info"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
                         android:textColor="@color/black"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                     <View
-                        android:background="#79D6D1D1"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:background="#79D6D1D1" />
+
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Family"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
                         android:textColor="#636262"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                     <View
-                        android:background="#79D6D1D1"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:background="#79D6D1D1" />
+
                     <TextView
-                        android:layout_weight="1"
-                        android:text="Vitals"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:textColor="#636262"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Vitals"
+                        android:textColor="#636262"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -102,6 +115,7 @@
     </RelativeLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageProfile"
         android:layout_width="98dp"
         android:layout_height="98dp"
         android:layout_centerHorizontal="true"

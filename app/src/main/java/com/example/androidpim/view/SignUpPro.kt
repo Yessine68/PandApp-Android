@@ -3,16 +3,15 @@ package com.example.androidpim.view
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpim.R
 import com.example.androidpim.models.User
-import com.example.androidpim.models.UserLoggedIn
 import com.example.androidpim.service.RetrofitApi
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,73 +40,7 @@ class SignUpPro : AppCompatActivity() {
 
     private var selectedImageUri: Uri? = null
     var imagePicker: ImageView?=null
-    private lateinit var fab: FloatingActionButton
-
-
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up_pro)
-        supportActionBar?.hide();
-
-
-
-
-
-
-        email = findViewById(R.id.email)
-        //println("########################################"+email.text.toString())
-        password = findViewById(R.id.password)
-        //passwordConfirm = findViewById(R.id.confirm)
-        identifant = findViewById(R.id.identifant)
-        phone = findViewById(R.id.phone)
-        first = findViewById(R.id.firstname)
-        last = findViewById(R.id.lastName)
-        //classe = findViewById(R.id.classe)
-        //description = findViewById(R.id.desc)
-        save = findViewById(R.id.signup_btn)
-
-        fab = findViewById(R.id.pickButton)
-        imagePicker = findViewById(R.id.imagepick)
-
-        fab.setOnClickListener(View.OnClickListener {
-            ImagePicker.with(this)
-                .crop()	    			//Crop image(Optional), Check Customization for more option
-                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                .start()
-        })
-
-
-
-
-        save.setOnClickListener {
-            val email_text = email.text.toString().trim()
-            val password_text = password.text.toString().trim()
-            //var passwordConfirm_text = passwordConfirm.text.toString()
-            val identifant_text = identifant.text.toString().trim()
-            val phone_text = phone.text.toString().trim()
-            val first_text = first.text.toString().trim()
-            val last_text = last.text.toString().trim()
-            //var classe_text = classe.text.toString()
-            //var description_text = description.text.toString()
-            val description_text = "aaaaaaaaaaaaaaaaaa"
-            println("########################################"+email.text.toString())
-            login(identifant_text, email_text, password_text, phone_text, first_text, last_text, description_text)
-
-        }
-
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == ImagePicker.REQUEST_CODE){
-            selectedImageUri = data?.data
-            imagePicker?.setImageURI(selectedImageUri)
-
-        }
-    }
+    private lateinit var fab: Button
 
 
 
@@ -115,19 +48,21 @@ class SignUpPro : AppCompatActivity() {
     private fun login(identifant_text: String, email_text: String, password_text: String, phone_text: String, first_text: String, last_text: String, description_text: String){
 
 
-
-
         val stream = contentResolver.openInputStream(selectedImageUri!!)
-        println("-------------------------------------"+stream)
-        val request =
-            stream?.let { RequestBody.create("image/*".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
-        val profilePicture = request?.let {
-            MultipartBody.Part.createFormData(
-                "file",
-                "image.png",
-                it
-            )
-        }
+        if(stream!=null){
+
+            val request =
+                stream?.let { RequestBody.create("image/png".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
+            val profilePicture = request?.let {
+                MultipartBody.Part.createFormData(
+                    "file",
+                    "file.png",
+                    it
+                )
+            }
+
+
+
 
 
         Log.d("MyActivity", "on finish upload file")
@@ -167,5 +102,73 @@ class SignUpPro : AppCompatActivity() {
 
             })
         }
+        }
     }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_sign_up_pro)
+        supportActionBar?.hide();
+
+
+        email = findViewById(R.id.email)
+        //println("########################################"+email.text.toString())
+        password = findViewById(R.id.password)
+        //passwordConfirm = findViewById(R.id.confirm)
+        identifant = findViewById(R.id.identifant)
+        phone = findViewById(R.id.phone)
+        first = findViewById(R.id.firstname)
+        last = findViewById(R.id.lastName)
+        //classe = findViewById(R.id.classe)
+        //description = findViewById(R.id.desc)
+        save = findViewById(R.id.signup_btn)
+
+        fab = findViewById(R.id.pickButton)
+        imagePicker = findViewById(R.id.imagepick)
+
+        fab.setOnClickListener(
+
+            View.OnClickListener {
+            ImagePicker.with(this)
+                .crop()	    			//Crop image(Optional), Check Customization for more option
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .start()
+        })
+
+
+
+
+
+        save.setOnClickListener {
+            val email_text = email.text.toString().trim()
+            val password_text = password.text.toString().trim()
+            //var passwordConfirm_text = passwordConfirm.text.toString()
+            val identifant_text = identifant.text.toString().trim()
+            val phone_text = phone.text.toString().trim()
+            val first_text = first.text.toString().trim()
+            val last_text = last.text.toString().trim()
+            //var classe_text = classe.text.toString()
+            //var description_text = description.text.toString()
+            val description_text = "aaaaaaaaaaaaaaaaaa"
+            println("########################################"+email.text.toString())
+            login(identifant_text, email_text, password_text, phone_text, first_text, last_text, description_text)
+
+        }
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK && requestCode == ImagePicker.REQUEST_CODE){
+            selectedImageUri = data?.data
+            imagePicker?.setImageURI(selectedImageUri)
+
+        }
+    }
+
+
+
+
+
 }

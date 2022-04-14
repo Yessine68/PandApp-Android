@@ -54,6 +54,8 @@ class LoginPro : AppCompatActivity() {
 
                             putString("email", response.body()?.email.toString())
                             putString("password", response.body()?.password.toString())
+                            putString("FirstName", response.body()?.FirstName.toString())
+                            putString("profilePicture", response.body()?.profilePicture.toString())
                             if (remember.isChecked()) {
                                 putBoolean("remember", true)
                             }
@@ -65,7 +67,7 @@ class LoginPro : AppCompatActivity() {
                         }.apply()
                         finish()
 
-                        val intent = Intent(applicationContext, Home::class.java)
+                        val intent = Intent(applicationContext, ProfileUser::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                     } else {
