@@ -17,7 +17,7 @@
             android:hint="Example@esprit.tn" />
 
         <Button
-            android:id="@+id/customButtonSend"
+            android:id="@+id/sendCode"
             android:layout_width="73dp"
             android:layout_height="wrap_content"
             android:background="#00000000"
@@ -26,12 +26,6 @@
             android:textColor="@color/black"
             android:textSize="10sp" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/customEditText"
-        android:layout_width="211dp"
-        android:layout_height="wrap_content"
-        android:hint="1234" />
 
     <LinearLayout
         android:layout_gravity="center"
@@ -43,25 +37,29 @@
             android:layout_width="52dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="1"/>
         <EditText
             android:id="@+id/code2"
             android:layout_width="52dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="1"/>
         <EditText
             android:id="@+id/code3"
             android:layout_width="52dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="1"/>
         <EditText
             android:id="@+id/code4"
             android:layout_width="52dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="1"/>
 
     </LinearLayout>
 

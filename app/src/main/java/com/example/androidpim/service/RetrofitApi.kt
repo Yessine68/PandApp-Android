@@ -29,6 +29,11 @@ interface RetrofitApi {
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
 
+    @POST("auth/reset")
+    fun sendResetCode(
+        @Body email: String
+    ):Call<String>
+
     @GET("user")
     fun GetAllUsers():Call<List<User>>
 
