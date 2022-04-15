@@ -29,7 +29,7 @@ class fragmentLost : Fragment() {
 
 
     lateinit var listView:  ListView;
-    private var postList: ArrayList<Post>? = null
+    private var postList: ArrayList<Post>? = ArrayList<Post>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,27 +38,20 @@ class fragmentLost : Fragment() {
         // Inflate the layout for this fragment
        val view = inflater.inflate(R.layout.fragment_lost, container, false)
         listView = view!!.findViewById<ListView>(R.id.listView) as ListView
-         postList =  ArrayList<Post>()
-
-
-        getNewsData { newss : List<Post> ->
-            for (post in newss) {
-
-postList!!.add(post)
-            }
+        // postList =  ArrayList<Post>()
+        getNewsData()
+       // refreshList("")
             Collections.reverse(postList)
             val parentActivity = view.context as FragmentActivity
             val postAdapter = PostAdapter(parentActivity, postList!!)
             listView.adapter = postAdapter
 
 
-        }
-
         return view
 
     }
 
-   /* fun refreshList(search: String) {
+    fun refreshList(search: String) {
         val parentActivity = requireView().context as FragmentActivity
         val mFinalList: MutableList<Post> = java.util.ArrayList()
         for (p in postList!!) {
@@ -70,22 +63,28 @@ postList!!.add(post)
         //PostAdapter postAdapter = new PostAdapter(parentActivity,postList);
         //postAdapter.getFilter().filter(search);
         listView.adapter = postAdapter
-    }*/
+    }
 
 
 
-    private fun getNewsData(callback: (List<Post>) -> Unit) {
+    private fun getNewsData() {
         val apiInterface = LostPostApi.create()
         apiInterface.GetAllLost().enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
-                Log.i("yessss", response.body().toString())
 
                 if(response.isSuccessful){
+                 for(post in response.body()!!)
+                 {
+                     Log.i("ghassen", post.toString())
 
+                     postList?.add(post)
+
+                 }
                     Log.i("yessss", response.body().toString())
-                    //}
                 } else {
-                    Log.i("nooooo", response.body().toString())                }
+                    Log.i("nooooo", response.body().toString())
+
+                }
             }
 
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
@@ -96,5 +95,5 @@ postList!!.add(post)
         })
 
     }
-
 }
+

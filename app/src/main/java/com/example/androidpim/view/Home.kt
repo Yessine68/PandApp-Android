@@ -28,11 +28,11 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_view)
         // Initialize
+        var viewPager = findViewById<View>(R.id.viewPager) as ViewPager
+        var tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
         var searchView = findViewById<View>(R.id.searchView) as SearchView
         var buttonCreate = findViewById<View>(R.id.buttonCreate) as FloatingActionButton
         var toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        var tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
-        var viewPager = findViewById<View>(R.id.viewPager) as ViewPager
 
         var drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
 
@@ -48,21 +48,22 @@ class Home : AppCompatActivity() {
         supportActionBar?.hide();
 
 
+
         // Listen to search and populate the searched item
-        /*    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+          searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
              override fun onQueryTextSubmit(query: String): Boolean {
                  return false
              }
 
           override fun onQueryTextChange(newText: String): Boolean {
-              /* if (viewPager.currentItem == 0) {
+               if (viewPager.currentItem == 0) {
                      lostFrag.refreshList(newText)
                  } else if (viewPager.currentItem == 1) {
                      foundFrag.refreshList(newText)
                  }
-                 return false*/
+                 return false
              }
-        })*/
+        })
         // Set drawer
         buttonCreate.setOnClickListener {
 
@@ -75,6 +76,7 @@ class Home : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
 
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
