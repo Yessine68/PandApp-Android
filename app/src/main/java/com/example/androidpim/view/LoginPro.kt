@@ -120,7 +120,7 @@ class LoginPro : AppCompatActivity() {
         }
 
         signup.setOnClickListener {
-            val intent = Intent(applicationContext, SignUpPro::class.java)
+            val intent = Intent(applicationContext, OnboardingExample4Activity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

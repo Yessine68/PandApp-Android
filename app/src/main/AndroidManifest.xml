@@ -16,6 +16,9 @@
         android:theme="@style/Theme.AndroidPim"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.OnboardingExample4Activity"
+            android:exported="false" />
+        <activity
             android:name=".view.LkolPro"
             android:exported="false" />
         <activity
@@ -24,7 +27,6 @@
         <activity
             android:name=".view.LoginPro"
             android:exported="false" />
-
         <activity
             android:name=".view.Home"
             android:exported="false" />

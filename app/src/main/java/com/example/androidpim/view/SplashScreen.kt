@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import com.example.androidpim.R
 import com.example.androidpim.models.UserLoggedIn
@@ -23,6 +24,7 @@ class SplashScreen : AppCompatActivity() {
         //hide action bar
         supportActionBar?.hide();
         lateinit var handler: Handler
+
         //-------------------------------------------------------
         var user = UserLoggedIn()
         val email: String = mSharedPref.getString("email", "zwayten").toString()
@@ -61,4 +63,10 @@ class SplashScreen : AppCompatActivity() {
 
 
     }
+
+
+
+
+
+
 }
