@@ -23,7 +23,7 @@ open fun uploadFile(
     companion object {
         fun create() : uploadApi {
            return Retrofit.Builder()
-               .baseUrl("https://glacial-taiga-36886.herokuapp.com/")
+               .baseUrl("http://10.0.2.2:3000/")
                .addConverterFactory(GsonConverterFactory.create())
                 .build()
             .create(uploadApi::class.java)

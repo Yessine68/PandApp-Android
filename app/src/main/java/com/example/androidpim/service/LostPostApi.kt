@@ -9,13 +9,13 @@ import retrofit2.http.GET
  interface LostPostApi {
     @GET("lost")
      fun GetAllLost(): Call<List<Post>>
-   //  @GET("/found")
-    // fun GetAllFound(): Call<PostResponse>
+    @GET("found")
+     fun GetAllFound(): Call<List<Post>>
 
     companion object {
         fun create() : LostPostApi {
             return Retrofit.Builder()
-                .baseUrl("http://192.168.1.187:3000/lostpost/lostFound/")
+                .baseUrl("http://10.0.2.2:3000/lostpost/lostFound/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(LostPostApi::class.java)

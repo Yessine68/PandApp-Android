@@ -29,7 +29,7 @@ import java.util.*
  */
 class fragmentfound : Fragment() {
     lateinit var listView:  ListView;
-    private var postList: java.util.ArrayList<Post>? = null
+    private var postList: ArrayList<Post>? = null
 
 
     fun refreshList(search: String) {
@@ -41,8 +41,8 @@ class fragmentfound : Fragment() {
             }
         }
         val postAdapter = PostAdapter(parentActivity, mFinalList)
-        //PostAdapter postAdapter = new PostAdapter(parentActivity,postList);
-        //postAdapter.getFilter().filter(search);
+       // PostAdapter postAdapter = new PostAdapter(parentActivity,postList);
+        postAdapter.getFilter().filter(search);
         listView?.setAdapter(postAdapter)
     }
 
@@ -52,39 +52,32 @@ class fragmentfound : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        getNewsData()
         val view = inflater.inflate(R.layout.fragment_lost, container, false)
         listView = view!!.findViewById<ListView>(R.id.listView) as ListView
-        postList = java.util.ArrayList<Post>()
+        postList = ArrayList<Post>()
 
-
-        getNewsData { newss : List<Post> ->
-            for (post in newss) {
-
-                postList!!.add(post)
-            }
             Collections.reverse(postList)
             val parentActivity = view.context as FragmentActivity
             val postAdapter = PostAdapter(parentActivity, postList!!)
             listView.adapter = postAdapter
 
-
-        }
-
         return view
     }
 
-    private fun getNewsData(callback: (List<Post>) -> Unit) {
+    private fun getNewsData() {
         val apiInterface = LostPostApi.create()
-        apiInterface.GetAllLost().enqueue(object: Callback<List<Post>> {
+        apiInterface.GetAllFound().enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 if(response.isSuccessful){
-                    val cat = response.body()
-                    Log.e("response cat : ",cat.toString())
-                    if(cat != null)
+                    for(post in response.body()!!)
                     {
-                        Log.e("response cat : ",cat.toString())
+                        Log.i("ghassen", post.toString())
+
+                        postList?.add(post)
 
                     }
+                    Log.i("yessss", response.body().toString())
                     //}
                 } else {
                     Log.i("nooooo", response.body().toString())                }
