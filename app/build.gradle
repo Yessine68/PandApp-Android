@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
 android {
     compileSdk 32
 
@@ -31,6 +32,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -48,11 +50,11 @@ dependencies {
     //GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
-    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     //alert
     implementation 'com.github.chnouman:AwesomeDialog:1.0.4'
@@ -66,6 +68,9 @@ dependencies {
     //okhttp
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     //------------------
+    implementation 'com.github.marcoscgdev:DialogSheet:2.1.2'
+
+    implementation 'com.github.Spikeysanju:MotionToast:1.4'
 
 
 

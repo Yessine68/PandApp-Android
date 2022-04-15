@@ -18,5 +18,6 @@
     <color name="button">@color/textColorPrimary</color>
     <color name="tabTextColor">#fff</color>
     <color name="tabIndicatorColor">#ff4081</color>
+    <color name="dark_black">#BCBCBC</color>
 
 </resources>

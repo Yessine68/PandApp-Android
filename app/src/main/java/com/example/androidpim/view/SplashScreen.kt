@@ -39,7 +39,7 @@ class SplashScreen : AppCompatActivity() {
             override fun onResponse(call: Call<UserLoggedIn>, response: Response<UserLoggedIn>) {
                 if(response.isSuccessful && remember == true){
                     print(email);
-                    val intent = Intent(applicationContext, Home::class.java)
+                    val intent = Intent(applicationContext, LkolPro::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else {

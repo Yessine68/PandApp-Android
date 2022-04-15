@@ -18,10 +18,31 @@ interface RetrofitApi {
     ) : Call<User>
 
 
+    @GET("/userByEmail/{email}")
+    fun getUserByEmail(
+        @Path("email") email:String,
+    ) : Call<UserLoggedIn>
+
+
     @POST("auth")
     fun userLogin(
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
+
+    @POST("/auth/reset")
+    fun sendResetCode(
+        @Body email: UserReset):Call<UserResetResponse>
+
+    @POST("/auth/reset/checkcode")
+    fun checkCode(
+        @Body check: Check):Call<CheckResponse>
+
+    @PATCH("/auth/reset")
+    fun changePasswordReset(
+        @Body user: UserResetPassword):Call<User>
+
+    @GET("user")
+    fun GetAllUsers():Call<List<User>>
 
     /*
         @GET("article")
