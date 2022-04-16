@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.androidpim.R
 import com.example.androidpim.adapters.OnboardingViewPagerAdapter5
 import com.example.androidpim.fragments.OnboardingFragment
+import com.example.androidpim.models.Club
 import com.example.androidpim.models.User
 import com.example.androidpim.service.RetrofitApi
 import com.google.android.material.tabs.TabLayoutMediator
@@ -38,7 +39,7 @@ class OnboardingExample5 : AppCompatActivity() {
     private lateinit var btnBack: Button
     private lateinit var btnNext: Button
 
-/*
+
     private fun login(){
 
         registerClubShared = getSharedPreferences("RegisterClub", Context.MODE_PRIVATE)
@@ -49,7 +50,7 @@ class OnboardingExample5 : AppCompatActivity() {
 
             val request =
                 stream?.let { RequestBody.create("image/png".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
-            val profilePicture = request?.let {
+            val clubLogo = request?.let {
                 MultipartBody.Part.createFormData(
                     "file",
                     "file.png",
@@ -65,14 +66,12 @@ class OnboardingExample5 : AppCompatActivity() {
 
 
 
-            val identifant_text: String = registerShared.getString("identifant", "zwayten").toString()
-            val email_text: String = registerShared.getString("email", "zwayten").toString()
-            val password_text: String = registerShared.getString("password", "zwayten").toString()
-            val phone_text: String = registerShared.getString("phone", "zwayten").toString()
-            val first_text: String = registerShared.getString("firstname", "zwayten").toString()
-            val last_text: String = registerShared.getString("lastName", "zwayten").toString()
-            val description_text: String = registerShared.getString("description", "zwayten").toString()
-            val classe_text: String = registerShared.getString("className", "zwayten").toString()
+            val clubName: String = registerClubShared.getString("clubName", "zwayten").toString()
+            val login: String = registerClubShared.getString("login", "zwayten").toString()
+            val password: String = registerClubShared.getString("password", "zwayten").toString()
+            val clubOwner: String = registerClubShared.getString("clubOwner", "zwayten").toString()
+            val description: String = registerClubShared.getString("description", "zwayten").toString()
+
 
 
 
@@ -81,22 +80,21 @@ class OnboardingExample5 : AppCompatActivity() {
             val apiInterface = RetrofitApi.create()
             val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
 
-            data["identifant"] = identifant_text.toRequestBody(MultipartBody.FORM)
-            data["email"] = email_text.toRequestBody(MultipartBody.FORM)
-            data["password"] = password_text.toRequestBody(MultipartBody.FORM)
-            data["phoneNumber"] = phone_text.toRequestBody(MultipartBody.FORM)
-            data["FirstName"] = first_text.toRequestBody(MultipartBody.FORM)
-            data["LastName"] = last_text.toRequestBody(MultipartBody.FORM)
-            data["className"] =  classe_text.toRequestBody(MultipartBody.FORM)
-            data["description"] = description_text.toRequestBody(MultipartBody.FORM)
 
-            if (profilePicture != null) {
-                println("++++++++++++++++++++++++++++++++++++"+profilePicture)
-                apiInterface.userSignUp(data,profilePicture).enqueue(object:
-                    Callback<User> {
+
+            data["clubName"] = clubName.toRequestBody(MultipartBody.FORM)
+            data["login"] = login.toRequestBody(MultipartBody.FORM)
+            data["password"] = password.toRequestBody(MultipartBody.FORM)
+            data["clubOwner"] = clubOwner.toRequestBody(MultipartBody.FORM)
+            data["description"] = description.toRequestBody(MultipartBody.FORM)
+
+            if (clubLogo != null) {
+                println("++++++++++++++++++++++++++++++++++++"+clubLogo)
+                apiInterface.clubSignUp(data,clubLogo).enqueue(object:
+                    Callback<Club> {
                     override fun onResponse(
-                        call: Call<User>,
-                        response: Response<User>
+                        call: Call<Club>,
+                        response: Response<Club>
                     ) {
                         if(response.isSuccessful){
                             Log.i("onResponse goooood", response.body().toString())
@@ -106,7 +104,7 @@ class OnboardingExample5 : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<User>, t: Throwable) {
+                    override fun onFailure(call: Call<Club>, t: Throwable) {
 
                         println("noooooooooooooooooo")
                     }
@@ -115,7 +113,7 @@ class OnboardingExample5 : AppCompatActivity() {
             }
         }
     }
-    */
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         registerClubShared = getSharedPreferences("RegisterClub", Context.MODE_PRIVATE)
@@ -145,13 +143,13 @@ class OnboardingExample5 : AppCompatActivity() {
         btnNext.setOnClickListener {
             if (getItem() > mViewPager.childCount - 1) {
 
-                //login()
+                login()
                 //apiiiiiiii
 
 
-                /*    val intent = Intent(applicationContext, LoginPro::class.java)
+                    val intent = Intent(applicationContext, LoginPro::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent) */
+                    startActivity(intent)
             } else {
                 mViewPager.setCurrentItem(getItem() + 1, true)
             }

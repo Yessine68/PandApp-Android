@@ -87,7 +87,7 @@ class OnboardingFragment4 : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        registerClubShared = requireActivity().getSharedPreferences("Register", Context.MODE_PRIVATE)
+        registerClubShared = requireActivity().getSharedPreferences("RegisterClub", Context.MODE_PRIVATE)
         if (resultCode == Activity.RESULT_OK && requestCode == ImagePicker.REQUEST_CODE) {
             selectedImageUri = data?.data
             imagepick?.setImageURI(selectedImageUri)
