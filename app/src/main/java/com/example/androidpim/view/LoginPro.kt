@@ -15,8 +15,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.androidpim.R
-import com.example.androidpim.R.layout.custom_dialog_view
-import com.example.androidpim.R.layout.custom_dialog_view_password
+import com.example.androidpim.R.layout.*
 import com.example.androidpim.models.*
 import com.example.androidpim.service.RetrofitApi
 
@@ -119,10 +118,31 @@ class LoginPro : AppCompatActivity() {
 
         }
 
-        signup.setOnClickListener {
+        val dialogSheet2 = DialogSheet(this@LoginPro, true)
+        dialogSheet2.setView(custom_dialog_view_singup)
+        val factory2 = layoutInflater
+        dialogSheet2.setTitle("Reset Password")
+            .setMessage("Verification code will be sent to the mail")
+            .setSingleLineTitle(true)
+            .setColoredNavigationBar(true)
+        val inflatedView2 = dialogSheet2.inflatedView
+        val usersignup = inflatedView2?.findViewById<Button>(R.id.usersign)
+        val clubignup = inflatedView2?.findViewById<Button>(R.id.clubsign)
+        usersignup?.setOnClickListener {
             val intent = Intent(applicationContext, OnboardingExample4Activity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+        clubignup?.setOnClickListener {
+            val intent = Intent(applicationContext, OnboardingExample5::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+
+        signup.setOnClickListener {
+            dialogSheet2.show()
+
         }
 
 
