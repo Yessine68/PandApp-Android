@@ -93,16 +93,14 @@
                         android:layout_height="match_parent"
                         android:background="#79D6D1D1" />
 
-                    <Button
-                        android:id="@+id/editprofilebutton"
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#00FFFFFF"
                         android:gravity="center"
-                        android:text="Edit profile"
+                        android:text="Vitals"
                         android:textColor="#636262"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
 

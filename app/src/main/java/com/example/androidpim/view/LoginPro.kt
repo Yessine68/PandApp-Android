@@ -86,6 +86,7 @@ class LoginPro : AppCompatActivity() {
                             putString("password", response.body()?.password.toString())
                             putString("FirstName", response.body()?.FirstName.toString())
                             putString("profilePicture", response.body()?.profilePicture.toString())
+                            putString("phonenumber", response.body()?.phoneNumber.toString())
                             if (remember.isChecked()) {
                                 putBoolean("remember", true)
                             }

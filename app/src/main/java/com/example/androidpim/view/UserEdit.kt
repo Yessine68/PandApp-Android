@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -18,26 +19,27 @@ import kotlinx.android.synthetic.main.activity_sign_up_pro.*
 
 
 
-class ProfileUser : Fragment(R.layout.activity_profile_user) {
+class UserEdit : Fragment(R.layout.user_edit) {
     lateinit var mSharedPref: SharedPreferences
     lateinit var imageProfile: ImageView
     lateinit var usernameProfile: TextView
-    lateinit var emailprofile: TextView
-    lateinit var phoneprofile: TextView
-    lateinit var editprofilebutton:Button
-
+    lateinit var emailprofile: EditText
+    lateinit var phoneprofile: EditText
+    lateinit var password1: EditText
+    lateinit var password3: EditText
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.activity_profile_user, parent, false)
+        val view = inflater.inflate(R.layout.user_edit, parent, false)
 
         mSharedPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
         imageProfile = view.findViewById(R.id.imageProfile)
         usernameProfile = view.findViewById(R.id.usernameProfile)
-        emailprofile = view.findViewById(R.id.emailprofile)
-        phoneprofile = view.findViewById(R.id.phoneprofile)
-        //editprofilebutton = view.findViewById(R.id.editprofilebutton)
-        editprofilebutton = view.findViewById(R.id.editprofilebutton)
+        emailprofile = view.findViewById(R.id.emailprofileedit)
+        phoneprofile = view.findViewById(R.id.phoneprofileEdit)
+        password1 = view.findViewById(R.id.password1)
+        password3 = view.findViewById(R.id.password3)
+
 
         val email: String = mSharedPref.getString("email", "zwayten").toString()
         val firstName: String = mSharedPref.getString("FirstName", "zwayten").toString()
@@ -46,8 +48,8 @@ class ProfileUser : Fragment(R.layout.activity_profile_user) {
 
 
         usernameProfile.text = firstName +" "+lastName;
-        emailprofile.text = email;
-        phoneprofile.text = phone
+        emailprofile.setText(email);
+        phoneprofile.setText(phone)
 
 
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
@@ -55,11 +57,7 @@ class ProfileUser : Fragment(R.layout.activity_profile_user) {
         val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(imageProfile)
 
-        editprofilebutton.setOnClickListener {
-            var lkolPro = (activity as LkolPro)
-            lkolPro.supportFragmentManager.beginTransaction().replace(R.id.frame, UserEdit()).commit()
-            println("édfsgfjhsdfvsjfksfvvfghqfvsfqlfglqfhsgfsbfjsfgsjfhjdslkfgsflsfjhsklfgsks544sd52f452s4fs2f452s")
-        }
+
 
         return view
     }
