@@ -51,7 +51,7 @@ data class Check (
 
 data class UserResetPassword (
     var email: String? = null,
-    var paswsord: String? = null
+    var password: String? = null
 
 )
 

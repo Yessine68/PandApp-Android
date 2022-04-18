@@ -46,7 +46,7 @@ interface RetrofitApi {
 
     @PATCH("/auth/reset")
     fun changePasswordReset(
-        @Body user: UserResetPassword):Call<User>
+        @Body password: UserResetPassword):Call<User>
 
     @GET("user")
     fun GetAllUsers():Call<List<User>>

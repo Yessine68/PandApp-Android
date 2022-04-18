@@ -359,7 +359,7 @@ class LoginPro : AppCompatActivity() {
                                                                 var passRes = UserResetPassword()
                                                                 if(pass1?.text.toString() == pass2?.text.toString()){
                                                                     passRes.email = mSharedPref.getString("emailreset", "zwayten").toString()
-                                                                    passRes.paswsord = pass1?.text.toString()
+                                                                    passRes.password = pass1?.text.toString()
 
                                                                     val apiuser =
                                                                         RetrofitApi.create().changePasswordReset(passRes)
