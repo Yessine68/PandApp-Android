@@ -26,7 +26,7 @@ data class User (
     val description: String? = null,
     var email: String? = null,
     var password: String? = null,
-    val phoneNumber: Int? = null,
+    var phoneNumber: Int? = null,
     val profilePicture: String? = null,
     val role: String? = null,
     val social: Boolean? = null,
@@ -51,7 +51,7 @@ data class Check (
 
 data class UserResetPassword (
     var email: String? = null,
-    var paswsord: String? = null
+    var password: String? = null
 
 )
 

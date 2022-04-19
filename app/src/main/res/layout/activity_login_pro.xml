@@ -26,12 +26,11 @@
         android:textSize="40sp"
         android:transitionName="logo_title"/>
 
-    <TextView
-        android:id="@+id/slogn_name"
-        android:layout_width="wrap_content"
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In to Continue"
-        android:textSize="18sp" />
+        android:text="user" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,4 +111,5 @@
             android:layout_margin="5dp"
             android:layout_gravity="center" />
     </LinearLayout>
+
 </LinearLayout>

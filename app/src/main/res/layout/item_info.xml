@@ -37,7 +37,7 @@
 
         </LinearLayout>
         <TextView
-            android:text="+91 98000000000"
+            android:id="@+id/phoneprofile"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="18sp"

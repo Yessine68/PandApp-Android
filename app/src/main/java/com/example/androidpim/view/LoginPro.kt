@@ -15,8 +15,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.androidpim.R
-import com.example.androidpim.R.layout.custom_dialog_view
-import com.example.androidpim.R.layout.custom_dialog_view_password
+import com.example.androidpim.R.layout.*
 import com.example.androidpim.models.*
 import com.example.androidpim.service.RetrofitApi
 
@@ -65,64 +64,148 @@ class LoginPro : AppCompatActivity() {
         println(mSharedPref.getString("password", "zwayten").toString())
 
         login.setOnClickListener {
-            var user = UserLoggedIn()
-            user.email = email.text.toString()
-            user.password = password.text.toString()
-            val apiuser = RetrofitApi.create().userLogin(user)
+            val toggle: ToggleButton = findViewById(R.id.toggleButton)
 
+                if (toggle.isChecked) {
+                    var club = ClubLoggedIn()
+                    club.login = email.text.toString()
+                    club.password = password.text.toString()
+                    val apiuser = RetrofitApi.create().clubLogin(club)
 
+                    apiuser.enqueue(object : Callback<ClubLoggedIn> {
+                        override fun onResponse(
+                            call: Call<ClubLoggedIn>,
+                            response: Response<ClubLoggedIn>
+                        ) {
+                            if (response.isSuccessful) {
 
+                                mSharedPref.edit().apply {
 
+                                    putString("email", response.body()?.login.toString())
+                                    putString("password", response.body()?.password.toString())
+                                    putString("ClubName", response.body()?.clubName.toString())
+                                    putString("clubLogo", response.body()?.clubLogo.toString())
+                                    putString("clubOwner", response.body()?.clubOwner.toString())
+                                    putString("role", "club")
+                                    putString("lastlogged", "club")
+                                    if (remember.isChecked()) {
+                                        putBoolean("remember", true)
+                                    }
+                                    println("###########################################")
+                                    println(response.body())
+                                    println("###########################################")
+                                    putString("tokenClub", response.body()?.token.toString())
+                                    //putBoolean("session", true)
+                                }.apply()
+                                finish()
 
-            apiuser.enqueue(object : Callback<UserLoggedIn> {
-                override fun onResponse(
-                    call: Call<UserLoggedIn>,
-                    response: Response<UserLoggedIn>
-                ) {
-                    if (response.isSuccessful) {
+                                val intent = Intent(applicationContext, LkolPro::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            } else {
 
-                        mSharedPref.edit().apply {
+                                Toast.makeText(applicationContext, "Failed to Login", Toast.LENGTH_LONG)
+                                    .show()
 
-                            putString("email", response.body()?.email.toString())
-                            putString("password", response.body()?.password.toString())
-                            putString("FirstName", response.body()?.FirstName.toString())
-                            putString("profilePicture", response.body()?.profilePicture.toString())
-                            if (remember.isChecked()) {
-                                putBoolean("remember", true)
                             }
-                            println("###########################################")
-                            println(response.body())
-                            println("###########################################")
-                            putString("tokenUser", response.body()?.token.toString())
-                            //putBoolean("session", true)
-                        }.apply()
-                        finish()
+                        }
 
-                        val intent = Intent(applicationContext, LkolPro::class.java)
-                        intent.flags =
-                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                    } else {
+                        override fun onFailure(call: Call<ClubLoggedIn>, t: Throwable) {
 
-                        Toast.makeText(applicationContext, "Failed to Login", Toast.LENGTH_LONG)
-                            .show()
+                            Toast.makeText(applicationContext, "erreur server", Toast.LENGTH_LONG).show()
+                        }
 
-                    }
+                    })
+
+                } else {
+                    var user = UserLoggedIn()
+                    user.email = email.text.toString()
+                    user.password = password.text.toString()
+                    val apiuser = RetrofitApi.create().userLogin(user)
+
+
+
+
+
+                    apiuser.enqueue(object : Callback<UserLoggedIn> {
+                        override fun onResponse(
+                            call: Call<UserLoggedIn>,
+                            response: Response<UserLoggedIn>
+                        ) {
+                            if (response.isSuccessful) {
+
+                                mSharedPref.edit().apply {
+
+                                    putString("email", response.body()?.email.toString())
+                                    putString("password", response.body()?.password.toString())
+                                    putString("FirstName", response.body()?.FirstName.toString())
+                                    putString("profilePicture", response.body()?.profilePicture.toString())
+                                    putString("phonenumber", response.body()?.phoneNumber.toString())
+                                    putString("role", "user")
+                                    putString("lastlogged", "user")
+                                    if (remember.isChecked()) {
+                                        putBoolean("remember", true)
+                                    }
+                                    println("###########################################")
+                                    println(response.body())
+                                    println("###########################################")
+                                    putString("tokenUser", response.body()?.token.toString())
+                                    //putBoolean("session", true)
+                                }.apply()
+                                finish()
+
+                                val intent = Intent(applicationContext, LkolPro::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            } else {
+
+                                Toast.makeText(applicationContext, "Failed to Login", Toast.LENGTH_LONG)
+                                    .show()
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<UserLoggedIn>, t: Throwable) {
+
+                            Toast.makeText(applicationContext, "erreur server", Toast.LENGTH_LONG).show()
+                        }
+
+                    })
                 }
+            }
 
-                override fun onFailure(call: Call<UserLoggedIn>, t: Throwable) {
 
-                    Toast.makeText(applicationContext, "erreur server", Toast.LENGTH_LONG).show()
-                }
 
-            })
 
-        }
-
-        signup.setOnClickListener {
-            val intent = Intent(applicationContext, SignUpPro::class.java)
+        val dialogSheet2 = DialogSheet(this@LoginPro, true)
+        dialogSheet2.setView(custom_dialog_view_singup)
+        val factory2 = layoutInflater
+        dialogSheet2.setTitle("Reset Password")
+            .setMessage("Verification code will be sent to the mail")
+            .setSingleLineTitle(true)
+            .setColoredNavigationBar(true)
+        val inflatedView2 = dialogSheet2.inflatedView
+        val usersignup = inflatedView2?.findViewById<Button>(R.id.usersign)
+        val clubignup = inflatedView2?.findViewById<Button>(R.id.clubsign)
+        usersignup?.setOnClickListener {
+            dialogSheet2.dismiss()
+            val intent = Intent(applicationContext, OnboardingExample4Activity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+        clubignup?.setOnClickListener {
+            dialogSheet2.dismiss()
+            val intent = Intent(applicationContext, OnboardingExample5::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+
+        signup.setOnClickListener {
+            dialogSheet2.show()
+
         }
 
 
@@ -337,7 +420,7 @@ class LoginPro : AppCompatActivity() {
                                                                 var passRes = UserResetPassword()
                                                                 if(pass1?.text.toString() == pass2?.text.toString()){
                                                                     passRes.email = mSharedPref.getString("emailreset", "zwayten").toString()
-                                                                    passRes.paswsord = pass1?.text.toString()
+                                                                    passRes.password = pass1?.text.toString()
 
                                                                     val apiuser =
                                                                         RetrofitApi.create().changePasswordReset(passRes)

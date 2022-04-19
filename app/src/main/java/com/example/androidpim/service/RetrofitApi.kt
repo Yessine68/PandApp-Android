@@ -17,6 +17,13 @@ interface RetrofitApi {
         @Part profilePicture: MultipartBody.Part
     ) : Call<User>
 
+    @Multipart
+    @POST("club/signup")
+    fun clubSignUp(
+        @PartMap data : LinkedHashMap<String, RequestBody>,
+        @Part clubLogo: MultipartBody.Part
+    ) : Call<Club>
+
 
     @GET("/userByEmail/{email}")
     fun getUserByEmail(
@@ -29,6 +36,11 @@ interface RetrofitApi {
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
 
+    @POST("authClub")
+    fun clubLogin(
+        @Body club: ClubLoggedIn
+    ):Call<ClubLoggedIn>
+
     @POST("/auth/reset")
     fun sendResetCode(
         @Body email: UserReset):Call<UserResetResponse>
@@ -39,7 +51,12 @@ interface RetrofitApi {
 
     @PATCH("/auth/reset")
     fun changePasswordReset(
-        @Body user: UserResetPassword):Call<User>
+        @Body password: UserResetPassword):Call<User>
+
+    @PATCH("/user/{email}")
+    fun updateProfileUser(
+        @Path("email") email:String,
+        @Body user: User):Call<User>
 
     @GET("user")
     fun GetAllUsers():Call<List<User>>

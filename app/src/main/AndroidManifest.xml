@@ -19,6 +19,12 @@
             android:name=".courses"
             android:exported="false" />
         <activity
+            android:name=".view.OnboardingExample5"
+            android:exported="false" />
+        <activity
+            android:name=".view.OnboardingExample4Activity"
+            android:exported="false" />
+        <activity
             android:name=".view.LkolPro"
             android:exported="false" />
         <activity
