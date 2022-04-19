@@ -48,6 +48,11 @@ interface RetrofitApi {
     fun changePasswordReset(
         @Body password: UserResetPassword):Call<User>
 
+    @PATCH("/user/{email}")
+    fun updateProfileUser(
+        @Path("email") email:String,
+        @Body user: User):Call<User>
+
     @GET("user")
     fun GetAllUsers():Call<List<User>>
 
