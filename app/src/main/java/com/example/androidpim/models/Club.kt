@@ -16,8 +16,8 @@ data class ClubLoggedIn(
     val clubName: String? = null,
     val clubOwner: String? = null,
     val description: String? = null,
-    val login: String? = null,
-    val password: String? = null,
+    var login: String? = null,
+    var password: String? = null,
     val social: Boolean? = null,
     val verified: Boolean? = null,
     val token : String? = null

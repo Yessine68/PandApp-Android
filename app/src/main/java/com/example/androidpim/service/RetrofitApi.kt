@@ -36,6 +36,11 @@ interface RetrofitApi {
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
 
+    @POST("authClub")
+    fun clubLogin(
+        @Body club: ClubLoggedIn
+    ):Call<ClubLoggedIn>
+
     @POST("/auth/reset")
     fun sendResetCode(
         @Body email: UserReset):Call<UserResetResponse>
