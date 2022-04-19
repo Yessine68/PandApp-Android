@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.androidpim">
+    package="com.example.androidpim" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidPim"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".courses"
+            android:exported="false" />
         <activity
             android:name=".view.LkolPro"
             android:exported="false" />
@@ -24,16 +27,15 @@
         <activity
             android:name=".view.LoginPro"
             android:exported="false" />
-
         <activity
-            android:name=".view.Home"
+            android:name=".view.lostAndFound"
             android:exported="false" />
         <activity
             android:name=".view.upload_post"
             android:exported="false" />
         <activity
             android:name=".view.SplashScreen"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

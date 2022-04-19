@@ -36,15 +36,42 @@ class fragmentLost : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
        val view = inflater.inflate(R.layout.fragment_lost, container, false)
+
         listView = view!!.findViewById<ListView>(R.id.listView) as ListView
         // postList =  ArrayList<Post>()
-        getNewsData()
-       // refreshList("")
-            Collections.reverse(postList)
-            val parentActivity = view.context as FragmentActivity
-            val postAdapter = PostAdapter(parentActivity, postList!!)
-            listView.adapter = postAdapter
+        val apiInterface = LostPostApi.create()
+        apiInterface.GetAllLost().enqueue(object: Callback<List<Post>> {
+            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+
+                if(response.isSuccessful){
+                    for(post in response.body()!!)
+                    {
+                        Log.i("ghassen", post.toString())
+
+                        postList?.add(post)
+
+                    }
+
+                    Collections.reverse(response.body()!!)
+                    val parentActivity = view.context as FragmentActivity
+                    val postAdapter = PostAdapter(parentActivity,response.body()!!)
+                    listView.adapter = postAdapter
+
+                    Log.i("yessss", response.body().toString())
+                } else {
+                    Log.i("nooooo", response.body().toString())
+
+                }
+            }
+
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                t.printStackTrace()
+                println("OnFailure")
+            }
+
+        })
 
 
         return view
@@ -67,33 +94,6 @@ class fragmentLost : Fragment() {
 
 
 
-    private fun getNewsData() {
-        val apiInterface = LostPostApi.create()
-        apiInterface.GetAllLost().enqueue(object: Callback<List<Post>> {
-            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 
-                if(response.isSuccessful){
-                 for(post in response.body()!!)
-                 {
-                     Log.i("ghassen", post.toString())
-
-                     postList?.add(post)
-
-                 }
-                    Log.i("yessss", response.body().toString())
-                } else {
-                    Log.i("nooooo", response.body().toString())
-
-                }
-            }
-
-            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                t.printStackTrace()
-                println("OnFailure")
-            }
-
-        })
-
-    }
 }
 
