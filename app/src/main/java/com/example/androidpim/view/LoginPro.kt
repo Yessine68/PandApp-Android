@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Typeface
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -18,7 +19,6 @@ import com.example.androidpim.R
 import com.example.androidpim.R.layout.*
 import com.example.androidpim.models.*
 import com.example.androidpim.service.RetrofitApi
-
 import com.marcoscg.dialogsheet.DialogSheet
 import retrofit2.Call
 import retrofit2.Callback
@@ -57,6 +57,7 @@ class LoginPro : AppCompatActivity() {
         signup = findViewById(R.id.signup_btn)
         remember = findViewById(R.id.checkBox)
         resetPassword = findViewById(R.id.resetPassword)
+
 
         //---------------------------------------------------
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
@@ -235,6 +236,8 @@ class LoginPro : AppCompatActivity() {
         val sendcode = inflatedView?.findViewById<Button>(R.id.sendCode)
         val customEditTextemail = inflatedView?.findViewById<EditText>(R.id.customEditTextemail)
 
+        val countDownTimer = inflatedView?.findViewById<TextView>(R.id.countDownTimer)
+
         val code1 = inflatedView?.findViewById<EditText>(R.id.code1)
         val code2 = inflatedView?.findViewById<EditText>(R.id.code2)
         val code3 = inflatedView?.findViewById<EditText>(R.id.code3)
@@ -249,6 +252,20 @@ class LoginPro : AppCompatActivity() {
 
 
         sendcode?.setOnClickListener {
+            object : CountDownTimer(30000, 1000) {
+
+                override fun onTick(millisUntilFinished: Long) {
+                    countDownTimer?.setText("You will be eligible to resend code after " + millisUntilFinished / 1000)
+                    sendcode?.isEnabled = false
+                    sendcode?.setTextColor(R.color.colorPrimaryDark)
+                }
+
+                override fun onFinish() {
+                    countDownTimer?.setText("")
+                    sendcode?.isEnabled = true
+                    sendcode?.setTextColor(R.color.md_black_1000)
+                }
+            }.start()
             var userReset = UserReset()
             userReset.email = customEditTextemail?.text.toString()
             mSharedPref.edit().apply {
@@ -261,6 +278,7 @@ class LoginPro : AppCompatActivity() {
                     call: Call<UserResetResponse>,
                     response: Response<UserResetResponse>
                 ) {
+
                     println("++++++++++++++response" + response.body()?.msgg.toString())
                     if (response.isSuccessful) {
 
@@ -450,6 +468,7 @@ class LoginPro : AppCompatActivity() {
                                                                             call: Call<User>,
                                                                             t: Throwable
                                                                         ) {
+
                                                                             MotionToast.darkColorToast(
                                                                                 this@LoginPro,
                                                                                 "Failed ",
@@ -479,6 +498,21 @@ class LoginPro : AppCompatActivity() {
                                                         }
                                                         if(response.body()?.check == false){
                                                             println("wrong code")
+                                                            val shake =
+                                                                AnimationUtils.loadAnimation(
+                                                                    this@LoginPro,
+                                                                    R.anim.shake
+                                                                )
+
+
+                                                            code1?.setTextColor(R.color.colorPrimary)
+                                                            code2?.setTextColor(R.color.md_red_800)
+                                                            code3?.setTextColor(R.color.md_red_800)
+                                                            code4?.setTextColor(R.color.md_red_800)
+                                                            code1?.startAnimation(shake)
+                                                            code2?.startAnimation(shake)
+                                                            code3?.startAnimation(shake)
+                                                            code4?.startAnimation(shake)
                                                         }
 
                                                     }
