@@ -23,13 +23,27 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTitle"
+                android:id="@+id/objet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center|top"
-                android:hint="@string/hint_title"/>
+                android:hint="objet"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center|top"
+                android:hint="place"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,18 +74,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
-                android:text="@string/choose_file"
+                android:text="choose_file or open camera"
                 app:strokeColor="@color/button"
                 app:strokeWidth="1dp" />
-        <Button
-            android:id="@+id/buttonCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="60dp"
-            android:text="@string/open_camera"
-            app:strokeColor="@color/button"
-            app:strokeWidth="1dp"/>
+
         </RelativeLayout>
 
 

@@ -8,8 +8,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
+<ImageView
+    android:id="@+id/profile_icon"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="center"
+    android:ellipsize="end"
+    />
+
+
 
         <TextView
+
             android:id="@+id/textViewTitle"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
@@ -17,6 +27,7 @@
             android:gravity="center"
             android:text="Title"
             android:ellipsize="end"
+            android:layout_marginTop="100dp"
             android:maxLines="1"/>
 
         <TextView
@@ -24,7 +35,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="132dp"
             android:gravity="center"
             android:text="Description"
             android:ellipsize="end"

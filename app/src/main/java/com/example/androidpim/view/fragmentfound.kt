@@ -52,20 +52,7 @@ class fragmentfound : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        getNewsData()
         val view = inflater.inflate(R.layout.fragment_lost, container, false)
-        listView = view!!.findViewById<ListView>(R.id.listView) as ListView
-        postList = ArrayList<Post>()
-
-            Collections.reverse(postList)
-            val parentActivity = view.context as FragmentActivity
-            val postAdapter = PostAdapter(parentActivity, postList!!)
-            listView.adapter = postAdapter
-
-        return view
-    }
-
-    private fun getNewsData() {
         val apiInterface = LostPostApi.create()
         apiInterface.GetAllFound().enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
@@ -77,6 +64,15 @@ class fragmentfound : Fragment() {
                         postList?.add(post)
 
                     }
+                    listView = view!!.findViewById<ListView>(R.id.listView) as ListView
+                    postList = ArrayList<Post>()
+
+                    Collections.reverse(response.body()!!)
+                    val parentActivity = view.context as FragmentActivity
+                    val postAdapter = PostAdapter(parentActivity, response.body()!!)
+                    listView.adapter = postAdapter
+
+
                     Log.i("yessss", response.body().toString())
                     //}
                 } else {
@@ -91,7 +87,9 @@ class fragmentfound : Fragment() {
 
         })
 
+        return view
     }
+
 
 
 }

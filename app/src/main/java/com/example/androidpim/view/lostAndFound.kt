@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 
-class Home : AppCompatActivity() {
+class lostAndFound : AppCompatActivity() {
     private val context: Context = this
 
     private val lostFrag: fragmentLost = fragmentLost()
@@ -27,24 +27,13 @@ class Home : AppCompatActivity() {
         overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_view)
+
         // Initialize
         var viewPager = findViewById<View>(R.id.viewPager) as ViewPager
         var tabLayout = findViewById<View>(R.id.tabLayout) as TabLayout
         var searchView = findViewById<View>(R.id.searchView) as SearchView
         var buttonCreate = findViewById<View>(R.id.buttonCreate) as FloatingActionButton
-        var toolbar = findViewById<View>(R.id.toolbar) as Toolbar
 
-        var drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-
-        var navigationView = findViewById<View>(R.id.navigation) as NavigationView
-
-        // Set drawer
-        var actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close)
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-
-        actionBarDrawerToggle.syncState()
         supportActionBar?.hide();
 
 
@@ -66,13 +55,12 @@ class Home : AppCompatActivity() {
         })
         // Set drawer
         buttonCreate.setOnClickListener {
-
             // Create post
             val intent = Intent(this, upload_post::class.java)
             if (viewPager.currentItem == 0) {
-                intent.putExtra(POST_ROUTE, "LOST")
+                intent.putExtra("data", "lost")
             } else if (viewPager.currentItem == 1) {
-                intent.putExtra(POST_ROUTE, "FOUND")
+                intent.putExtra("data", "found")
             }
             startActivity(intent)
         }
@@ -82,12 +70,12 @@ class Home : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         // Add fragments
-        adapter.addFragment(lostFrag, "Lost")
+        adapter.addFragment(lostFrag, "LOST")
         adapter.addFragment(foundFrag, "Found")
-
 
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)
+
 
     }
 
