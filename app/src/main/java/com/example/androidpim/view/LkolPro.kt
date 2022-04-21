@@ -20,6 +20,7 @@ class LkolPro : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
     lateinit var profile_icon: ImageView
     lateinit var  camera_img:ImageButton
+    lateinit var frag:Fragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -29,6 +30,7 @@ class LkolPro : AppCompatActivity() {
         actionBar?.hide()
         setContentView(R.layout.activity_lkol_pro)
         supportActionBar?.hide();
+        frag = EventFragment()
 
         val homeBtn = findViewById<ImageView>(R.id.home_icon)
         val searchBtn = findViewById<ImageView>(R.id.search_icon)
@@ -50,6 +52,7 @@ class LkolPro : AppCompatActivity() {
         val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(profile_icon)
         supportFragmentManager.beginTransaction().replace(R.id.frame, HomePro()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frameEvent, frag).commit()
 
         camera_img.setOnClickListener{
             mSharedPref.edit().clear().apply()
@@ -63,11 +66,11 @@ class LkolPro : AppCompatActivity() {
         when (view.id) {
             R.id.home_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, HomePro()).commit()
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameEvent, EventFragment()).commit()
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameEvent, frag).commit()
             }
             R.id.search_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, EventFragment()).commit()
-                getSupportFragmentManager().beginTransaction().remove(EventFragment()).commit()
+                getSupportFragmentManager().beginTransaction().remove(frag).commit()
 
             }
             /*
@@ -81,7 +84,7 @@ class LkolPro : AppCompatActivity() {
 
             R.id.profile_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, ProfileUser()).commit()
-                getSupportFragmentManager().beginTransaction().remove(EventFragment()).commit()
+                getSupportFragmentManager().beginTransaction().remove(frag).commit()
             }
 
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.models.Event
+import com.marcoscg.dialogsheet.DialogSheet
 
 class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
@@ -38,6 +39,11 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
          holder.eventPlace.setText(eventList[position].place.toString())
         holder.eventTime.setText(eventList[position].Time.toString())
          holder.eventparticipants.setText("40")
+        holder.itemView.setOnClickListener{
+            val dialogSheetdetail = this.mContext?.let { it1 -> DialogSheet(it1, true) }
+            dialogSheetdetail?.setView(R.layout.event_detail)
+            dialogSheetdetail?.show()
+        }
     }
 
     override fun getItemCount(): Int {

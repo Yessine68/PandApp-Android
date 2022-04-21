@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
-            android:background="@drawable/photo_big"
             android:clipToOutline="true"
             app:cardCornerRadius="40dp"
             card_view:cardCornerRAdius="40dp" />
