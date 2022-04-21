@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
+import com.example.androidpim.fragments.EventFragment
 
 
 class LkolPro : AppCompatActivity() {
@@ -62,9 +63,10 @@ class LkolPro : AppCompatActivity() {
             R.id.home_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, HomePro()).commit()
             }
-           /* R.id.search_icon -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, SearchFragment()).commit()
+            R.id.search_icon -> {
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame, EventFragment()).commit()
             }
+            /*
             R.id.add_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, GalleryFragment()).commit()
             }

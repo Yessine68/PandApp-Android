@@ -35,14 +35,14 @@
         android:id="@+id/profile_name"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:singleLine="true"
+        android:layout_centerHorizontal="true"
         android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="1"
-    />
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
 
 </RelativeLayout>

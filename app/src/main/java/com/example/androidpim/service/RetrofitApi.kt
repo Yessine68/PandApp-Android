@@ -61,6 +61,9 @@ interface RetrofitApi {
     @GET("user")
     fun GetAllUsers():Call<List<User>>
 
+    @GET("event")
+    fun GetEvents():Call<List<Event>>
+
     /*
         @GET("article")
         fun GetAllArticles():Call<ArticlesReponse>
