@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -49,6 +50,11 @@ class LoginPro : AppCompatActivity() {
         //code-------
 
         super.onCreate(savedInstanceState)
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
         setContentView(R.layout.activity_login_pro)
         supportActionBar?.hide();
 
