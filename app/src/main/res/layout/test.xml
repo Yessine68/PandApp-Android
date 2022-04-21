@@ -8,54 +8,54 @@
     android:orientation="vertical"
     tools:context=".view.ProfileUser"
    >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="300dp">
 
-    <com.github.florent37.shapeofview.shapes.ArcView
-        android:id="@+id/header"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        app:shape_arc_height="26dp"
-        app:shape_arc_position="bottom">
+        android:layout_height="270dp">
 
-        <RelativeLayout
+        <com.github.florent37.shapeofview.shapes.ArcView
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            app:shape_arc_height="26dp"
+            app:shape_arc_position="bottom">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.8"
-                android:scaleType="centerCrop"
-                android:src="@drawable/logo" />
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
-                <include
-                    layout="@layout/item_image"
-                    android:layout_width="395dp"
-                    android:layout_height="208dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <include
+                        layout="@layout/item_image"
+                        android:layout_width="395dp"
+                        android:layout_height="208dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-    </com.github.florent37.shapeofview.shapes.ArcView>
+        </com.github.florent37.shapeofview.shapes.ArcView>
 
 
-
-</RelativeLayout>
+    </RelativeLayout>
 
 <ScrollView
     android:layout_width="match_parent"
