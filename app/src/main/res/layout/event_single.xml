@@ -15,7 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="269dp">
 
-        <View
+        <ImageView
+            android:id="@+id/eventImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
