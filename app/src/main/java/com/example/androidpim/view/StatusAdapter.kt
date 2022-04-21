@@ -27,11 +27,7 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<User>) : Re
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
 
-        if (p1 == 0) {
-            p0.add.visibility = View.VISIBLE
-        } else{
-            p0.add.visibility = View.INVISIBLE
-        }
+
 
         p0.name?.text = statusList[p1].FirstName+ " " + statusList[p1].LastName
         p0.name.visibility = View.VISIBLE
@@ -43,6 +39,6 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<User>) : Re
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name = itemView.findViewById<TextView>(R.id.profile_name)
         val photo = itemView.findViewById<ImageView>(R.id.profile_img)
-        val add = itemView.findViewById<ImageView>(R.id.ic_add_img)
+        //val add = itemView.findViewById<ImageView>(R.id.ic_add_img)
     }
 }

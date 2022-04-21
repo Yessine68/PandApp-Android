@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -40,8 +41,28 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
         holder.eventTime.setText(eventList[position].Time.toString())
          holder.eventparticipants.setText("40")
         holder.itemView.setOnClickListener{
+
+
             val dialogSheetdetail = this.mContext?.let { it1 -> DialogSheet(it1, true) }
             dialogSheetdetail?.setView(R.layout.event_detail)
+            val inflatedView2 = dialogSheetdetail?.inflatedView
+            val eventImagedetail = inflatedView2?.findViewById<ImageView>(R.id.eventImagedetail)
+            val eventTitleDetail = inflatedView2?.findViewById<TextView>(R.id.eventTitleDetail)
+            val eventTimeDetail= inflatedView2?.findViewById<TextView>(R.id.eventTimeDetail)
+            val eventPlaceDetail= inflatedView2?.findViewById<TextView>(R.id.eventPlaceDetail)
+            val descriptiondetail= inflatedView2?.findViewById<TextView>(R.id.descriptiondetail)
+
+
+            eventTitleDetail?.setText(eventList[position].title.toString())
+            eventPlaceDetail?.setText(eventList[position].place.toString())
+            eventTimeDetail?.setText(eventList[position].Time.toString())
+            descriptiondetail?.setText(eventList[position].description.toString())
+
+            this.mContext?.let {
+                if (eventImagedetail != null) {
+                    Glide.with(it).load(Uri.parse(ppp)).into(eventImagedetail)
+                }
+            }
             dialogSheetdetail?.show()
         }
     }
