@@ -35,6 +35,7 @@
     <color name="md_red_A200">#FF5252</color>
     <color name="md_red_A400">#FF1744</color>
     <color name="md_red_A700">#D50000</color>
+    <color name="tansparentColor">#00FFFFFF</color>
 
     <!-- pinks -->
     <color name="md_pink_50">#FCE4EC</color>

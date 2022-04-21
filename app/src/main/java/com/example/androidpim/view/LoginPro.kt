@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.androidpim.R
@@ -28,6 +30,7 @@ import www.sanju.motiontoast.MotionToastStyle
 
 
 class LoginPro : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -38,6 +41,8 @@ class LoginPro : AppCompatActivity() {
         lateinit var remember: CheckBox
         lateinit var mSharedPref: SharedPreferences
         lateinit var resetPassword: Button
+        lateinit var loginuserr:TextView
+        lateinit var loginclubb:TextView
         //------code
 
 
@@ -57,6 +62,34 @@ class LoginPro : AppCompatActivity() {
         signup = findViewById(R.id.signup_btn)
         remember = findViewById(R.id.checkBox)
         resetPassword = findViewById(R.id.resetPassword)
+        loginuserr= findViewById(R.id.loginuserr)
+        loginclubb= findViewById(R.id.loginclubb)
+
+         var loginAs = "user"
+
+
+        loginuserr.setOnClickListener {
+            loginAs = "user"
+            loginuserr.background = resources.getDrawable(R.drawable.switch_trcks,null)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                loginuserr.setTextColor(resources.getColor(R.color.white,null))
+            }
+            loginclubb.background = null
+
+            loginclubb.setTextColor(resources.getColor(R.color.md_red_800,null))
+        }
+        loginclubb.setOnClickListener {
+            loginAs = "club"
+            loginuserr.background = null
+            loginuserr.setTextColor(resources.getColor(R.color.md_red_800,null))
+            loginclubb.background = resources.getDrawable(R.drawable.switch_trcks,null)
+            loginclubb.setTextColor(resources.getColor(R.color.white,null))
+        }
+
+
+
+
+
 
 
         //---------------------------------------------------
@@ -65,9 +98,9 @@ class LoginPro : AppCompatActivity() {
         println(mSharedPref.getString("password", "zwayten").toString())
 
         login.setOnClickListener {
-            val toggle: ToggleButton = findViewById(R.id.toggleButton)
 
-                if (toggle.isChecked) {
+
+                if (loginAs == "club") {
                     var club = ClubLoggedIn()
                     club.login = email.text.toString()
                     club.password = password.text.toString()
@@ -119,7 +152,7 @@ class LoginPro : AppCompatActivity() {
 
                     })
 
-                } else {
+                } else if (loginAs == "user"){
                     var user = UserLoggedIn()
                     user.email = email.text.toString()
                     user.password = password.text.toString()
@@ -497,7 +530,7 @@ class LoginPro : AppCompatActivity() {
 
                                                         }
                                                         if(response.body()?.check == false){
-                                                            println("wrong code")
+
                                                             val shake =
                                                                 AnimationUtils.loadAnimation(
                                                                     this@LoginPro,

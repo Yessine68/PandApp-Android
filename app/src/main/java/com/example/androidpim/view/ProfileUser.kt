@@ -28,7 +28,7 @@ class ProfileUser : Fragment(R.layout.activity_profile_user) {
 
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.activity_profile_user, parent, false)
+        val view = inflater.inflate(R.layout.test, parent, false)
 
         mSharedPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
