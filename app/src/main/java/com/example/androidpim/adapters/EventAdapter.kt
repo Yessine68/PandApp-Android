@@ -62,17 +62,41 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
             joinButton?.setOnClickListener { var eventInt = EventInt()
                 eventInt.postId = eventList[position]._id
                 eventInt.userEmail = email
-                val apiuser = RetrofitApi.create().joinEvent(eventInt)
-                apiuser.enqueue(object : Callback<EventInt>{
-                    override fun onResponse(call: Call<EventInt>, response: Response<EventInt>) {
-                        println(response.body()!!)
+
+                var existedeja = false
+                val apijoin = RetrofitApi.create().getEventIntByEmail(eventInt.postId!!)
+                apijoin.enqueue(object : Callback<List<EventInt>>{
+                    override fun onResponse(call: Call<List<EventInt>>, response: Response<List<EventInt>>) {
+                        if (response.isSuccessful){
+                    //println(response.body()!![position].userEmail.toString())
+                            for (i in 0 until response.body()!!.size)
+                            {
+                                existedeja = response.body()!![i].userEmail.toString() == email
+                            }
+                            if (existedeja == false){
+                                val apiuser = RetrofitApi.create().joinEvent(eventInt)
+                                apiuser.enqueue(object : Callback<EventInt>{
+                                    override fun onResponse(call: Call<EventInt>, response: Response<EventInt>) {
+                                        println(response.body()!!)
+                                    }
+
+                                    override fun onFailure(call: Call<EventInt>, t: Throwable) {
+                                        println("failed")
+                                    }
+
+                                })
+                            }
+                        }
                     }
 
-                    override fun onFailure(call: Call<EventInt>, t: Throwable) {
-                       println("failed")
+                    override fun onFailure(call: Call<List<EventInt>>, t: Throwable) {
+                        println("failed")
                     }
 
                 })
+
+
+
             }
 
 

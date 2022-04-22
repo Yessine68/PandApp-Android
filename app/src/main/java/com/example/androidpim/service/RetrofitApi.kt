@@ -25,10 +25,15 @@ interface RetrofitApi {
     ) : Call<Club>
 
 
-    @GET("/userByEmail/{email}")
+    @GET("user/userByEmail/{email}")
     fun getUserByEmail(
         @Path("email") email:String,
     ) : Call<UserLoggedIn>
+
+    @GET("eventInt/eventIntById/{postId}")
+    fun getEventIntByEmail(
+        @Path("postId") postId:String,
+    ) : Call<List<EventInt>>
 
 
     @POST("auth")
