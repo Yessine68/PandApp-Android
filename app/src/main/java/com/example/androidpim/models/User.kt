@@ -3,6 +3,7 @@ package com.example.androidpim.models
 
 
 data class UserLoggedIn (
+    val _id: String? = null,
     val identifant: String? = null,
     val FirstName: String? = null,
     val LastName: String? = null,

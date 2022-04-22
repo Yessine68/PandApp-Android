@@ -23,4 +23,14 @@
     <string name="finish">finish</string>
     <string name="next">next</string>
     <string name="back">back</string>
+    <string-array name="doc_lang">
+        <item>French</item>
+        <item>English</item>
+        <item>Arabic</item>
+    </string-array>
+    <string-array name="type_doc">
+        <item>certificate of attendance</item>
+        <item>Transcript</item>
+        <item>diploma application</item>
+    </string-array>
 </resources>

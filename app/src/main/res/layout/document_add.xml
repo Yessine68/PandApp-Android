@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="409dp"
+            android:background="@drawable/docsamp"
+            android:layout_gravity="center">
+
+
+            <TextView
+                android:id="@+id/livetype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="81dp"
+                android:layout_marginTop="93dp"
+                android:layout_marginEnd="82dp"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="25dp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/paragraph"
+                android:layout_width="336dp"
+                android:layout_height="146dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="173dp"
+                android:layout_marginEnd="37dp"
+                android:layout_marginBottom="90dp"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15dp">
+
+            </TextView>
+
+
+
+
+        </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="232dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:id="@+id/typebox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+            <View
+                android:id="@+id/blankGapfirst"
+
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_below="@+id/typebox">
+
+            </View>
+
+            <Spinner
+                android:id="@+id/languagebox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/blankGapfirst">
+
+            </Spinner>
+
+            <View
+                android:id="@+id/blankGap"
+
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/languagebox">
+
+            </View>
+
+            <NumberPicker
+                android:id="@+id/copiesnum"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/blankGap">
+
+            </NumberPicker>
+
+
+            <Button
+                android:id="@+id/subbb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/copiesnum"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="-3dp"
+                android:layout_marginEnd="30dp"
+                android:text="Submit Request">
+            </Button>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:windowSoftInputMode="stateHidden"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,13 +27,16 @@
             android:exported="false" />
         <activity
             android:name=".view.LkolPro"
+
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:exported="false" />
         <activity
             android:name=".view.SignUpPro"
             android:exported="false" />
         <activity
             android:name=".view.LoginPro"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".view.lostAndFound"
             android:exported="false" />

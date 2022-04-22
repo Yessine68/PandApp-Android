@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_centerInParent="true"
-    android:gravity="center"
-    tools:context=".view.ItemImage">
+    android:gravity="center">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,7 +29,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/usernameProfile"
+                    android:id="@+id/usernameProfileDoc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -63,14 +62,16 @@
                     android:orientation="horizontal"
                     android:weightSum="3">
 
-                    <TextView
+                    <Button
+                        android:id="@+id/profDoc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="#00FFFFFF"
                         android:gravity="center"
-                        android:text="Personal Info"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
+                        android:text="Profile"
+                        android:textColor="#636262"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <View
@@ -79,7 +80,7 @@
                         android:background="#79D6D1D1" />
 
                     <Button
-                        android:id="@+id/documentsrequest"
+                        android:id="@+id/documentsrequestDoc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -96,7 +97,7 @@
                         android:background="#79D6D1D1" />
 
                     <Button
-                        android:id="@+id/editprofilebutton"
+                        android:id="@+id/editprofilebuttonDoc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -120,7 +121,7 @@
     </RelativeLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageProfile"
+        android:id="@+id/imageProfileDoc"
         android:layout_width="98dp"
         android:layout_height="98dp"
         android:layout_centerHorizontal="true"
