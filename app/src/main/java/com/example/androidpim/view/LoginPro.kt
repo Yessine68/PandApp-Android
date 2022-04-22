@@ -121,8 +121,8 @@ class LoginPro : AppCompatActivity() {
 
                                 mSharedPref.edit().apply {
 
-                                    putString("email", response.body()?.login.toString())
-                                    putString("password", response.body()?.password.toString())
+                                    putString("login", response.body()?.login.toString())
+                                    putString("passwordclub", response.body()?.password.toString())
                                     putString("ClubName", response.body()?.clubName.toString())
                                     putString("clubLogo", response.body()?.clubLogo.toString())
                                     putString("clubOwner", response.body()?.clubOwner.toString())
