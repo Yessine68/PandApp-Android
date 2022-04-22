@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+
     }
 }
 dependencyResolutionManagement {
@@ -14,6 +15,7 @@ dependencyResolutionManagement {
 
         // e.g this is how you would add jitpack
         maven { url "https://jitpack.io" }
+
     }
 }
 rootProject.name = "androidPim"
