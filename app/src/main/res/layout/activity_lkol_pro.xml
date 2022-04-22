@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,11 +20,12 @@
 
             <ImageButton
                 android:id="@+id/camera_img"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:src="@drawable/ic_camera" />
+                android:src="@drawable/ic_logout"
+                app:tint="@color/md_black_1000" />
 
             <ImageView
                 android:id="@+id/insta_img"
@@ -46,11 +48,20 @@
     </androidx.cardview.widget.CardView>
 
     <FrameLayout
+        android:id="@+id/frameEvent"
+        android:layout_width="match_parent"
+        android:layout_height="524dp"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_below="@+id/header_layout"
+        android:layout_marginTop="107dp" />
+
+    <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_layout"
         android:layout_below="@+id/header_layout" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottom_layout"

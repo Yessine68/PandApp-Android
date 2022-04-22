@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
+import com.example.androidpim.fragments.DocumentsFragment
 import kotlinx.android.synthetic.main.activity_sign_up_pro.*
 
 
@@ -25,10 +26,11 @@ class ProfileUser : Fragment(R.layout.activity_profile_user) {
     lateinit var emailprofile: TextView
     lateinit var phoneprofile: TextView
     lateinit var editprofilebutton:Button
+    lateinit var documentsrequest:Button
 
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.activity_profile_user, parent, false)
+        val view = inflater.inflate(R.layout.test, parent, false)
 
         mSharedPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
@@ -38,6 +40,7 @@ class ProfileUser : Fragment(R.layout.activity_profile_user) {
         phoneprofile = view.findViewById(R.id.phoneprofile)
         //editprofilebutton = view.findViewById(R.id.editprofilebutton)
         editprofilebutton = view.findViewById(R.id.editprofilebutton)
+        documentsrequest = view.findViewById(R.id.documentsrequest)
 
         val email: String = mSharedPref.getString("email", "zwayten").toString()
         val firstName: String = mSharedPref.getString("FirstName", "zwayten").toString()
@@ -59,6 +62,11 @@ class ProfileUser : Fragment(R.layout.activity_profile_user) {
             var lkolPro = (activity as LkolPro)
             lkolPro.supportFragmentManager.beginTransaction().replace(R.id.frame, UserEdit()).commit()
             println("édfsgfjhsdfvsjfksfvvfghqfvsfqlfglqfhsgfsbfjsfgsjfhjdslkfgsflsfjhsklfgsks544sd52f452s4fs2f452s")
+        }
+
+        documentsrequest.setOnClickListener {
+            var lkolPro = (activity as LkolPro)
+            lkolPro.supportFragmentManager.beginTransaction().replace(R.id.frame, DocumentsFragment()).commit()
         }
 
         return view

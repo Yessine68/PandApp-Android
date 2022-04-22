@@ -9,20 +9,61 @@
     android:background="@color/white"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/logo_name"
-        android:layout_width="wrap_content"
-        android:layout_height="110dp"
-        android:fontFamily="@font/bungee"
-        android:text="Hello there,\nWelcome Back"
-        android:textSize="40sp"
-        android:transitionName="logo_title"/>
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo"
+        android:transitionName="logo"/>
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/switch_tumbs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="user" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/loginuserr"
+            android:text="Student/Teacher"
+            android:paddingTop="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:textStyle="bold|normal"
+            android:background="@drawable/switch_trcks"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/loginclubb"
+            android:text="Club"
+            android:paddingTop="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/md_red_800"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:textStyle="bold|normal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

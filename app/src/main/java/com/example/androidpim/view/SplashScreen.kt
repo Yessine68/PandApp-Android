@@ -20,6 +20,11 @@ import retrofit2.Response
 class SplashScreen : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)

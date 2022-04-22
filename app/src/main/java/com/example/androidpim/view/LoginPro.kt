@@ -4,21 +4,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.androidpim.R
 import com.example.androidpim.R.layout.*
 import com.example.androidpim.models.*
 import com.example.androidpim.service.RetrofitApi
-
 import com.marcoscg.dialogsheet.DialogSheet
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +31,7 @@ import www.sanju.motiontoast.MotionToastStyle
 
 
 class LoginPro : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -38,12 +42,19 @@ class LoginPro : AppCompatActivity() {
         lateinit var remember: CheckBox
         lateinit var mSharedPref: SharedPreferences
         lateinit var resetPassword: Button
+        lateinit var loginuserr:TextView
+        lateinit var loginclubb:TextView
         //------code
 
 
         //code-------
 
         super.onCreate(savedInstanceState)
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
         setContentView(R.layout.activity_login_pro)
         supportActionBar?.hide();
 
@@ -57,6 +68,35 @@ class LoginPro : AppCompatActivity() {
         signup = findViewById(R.id.signup_btn)
         remember = findViewById(R.id.checkBox)
         resetPassword = findViewById(R.id.resetPassword)
+        loginuserr= findViewById(R.id.loginuserr)
+        loginclubb= findViewById(R.id.loginclubb)
+
+         var loginAs = "user"
+
+
+        loginuserr.setOnClickListener {
+            loginAs = "user"
+            loginuserr.background = resources.getDrawable(R.drawable.switch_trcks,null)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                loginuserr.setTextColor(resources.getColor(R.color.white,null))
+            }
+            loginclubb.background = null
+
+            loginclubb.setTextColor(resources.getColor(R.color.md_red_800,null))
+        }
+        loginclubb.setOnClickListener {
+            loginAs = "club"
+            loginuserr.background = null
+            loginuserr.setTextColor(resources.getColor(R.color.md_red_800,null))
+            loginclubb.background = resources.getDrawable(R.drawable.switch_trcks,null)
+            loginclubb.setTextColor(resources.getColor(R.color.white,null))
+        }
+
+
+
+
+
+
 
         //---------------------------------------------------
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
@@ -64,9 +104,9 @@ class LoginPro : AppCompatActivity() {
         println(mSharedPref.getString("password", "zwayten").toString())
 
         login.setOnClickListener {
-            val toggle: ToggleButton = findViewById(R.id.toggleButton)
 
-                if (toggle.isChecked) {
+
+                if (loginAs == "club") {
                     var club = ClubLoggedIn()
                     club.login = email.text.toString()
                     club.password = password.text.toString()
@@ -118,7 +158,7 @@ class LoginPro : AppCompatActivity() {
 
                     })
 
-                } else {
+                } else if (loginAs == "user"){
                     var user = UserLoggedIn()
                     user.email = email.text.toString()
                     user.password = password.text.toString()
@@ -142,6 +182,8 @@ class LoginPro : AppCompatActivity() {
                                     putString("FirstName", response.body()?.FirstName.toString())
                                     putString("profilePicture", response.body()?.profilePicture.toString())
                                     putString("phonenumber", response.body()?.phoneNumber.toString())
+                                    putString("identifiant", response.body()?.identifant.toString())
+                                    putString("_id", response.body()?._id.toString())
                                     putString("role", "user")
                                     putString("lastlogged", "user")
                                     if (remember.isChecked()) {
@@ -235,6 +277,8 @@ class LoginPro : AppCompatActivity() {
         val sendcode = inflatedView?.findViewById<Button>(R.id.sendCode)
         val customEditTextemail = inflatedView?.findViewById<EditText>(R.id.customEditTextemail)
 
+        val countDownTimer = inflatedView?.findViewById<TextView>(R.id.countDownTimer)
+
         val code1 = inflatedView?.findViewById<EditText>(R.id.code1)
         val code2 = inflatedView?.findViewById<EditText>(R.id.code2)
         val code3 = inflatedView?.findViewById<EditText>(R.id.code3)
@@ -249,6 +293,20 @@ class LoginPro : AppCompatActivity() {
 
 
         sendcode?.setOnClickListener {
+            object : CountDownTimer(30000, 1000) {
+
+                override fun onTick(millisUntilFinished: Long) {
+                    countDownTimer?.setText("You will be eligible to resend code after " + millisUntilFinished / 1000)
+                    sendcode?.isEnabled = false
+                    sendcode?.setTextColor(R.color.colorPrimaryDark)
+                }
+
+                override fun onFinish() {
+                    countDownTimer?.setText("")
+                    sendcode?.isEnabled = true
+                    sendcode?.setTextColor(R.color.md_black_1000)
+                }
+            }.start()
             var userReset = UserReset()
             userReset.email = customEditTextemail?.text.toString()
             mSharedPref.edit().apply {
@@ -261,6 +319,7 @@ class LoginPro : AppCompatActivity() {
                     call: Call<UserResetResponse>,
                     response: Response<UserResetResponse>
                 ) {
+
                     println("++++++++++++++response" + response.body()?.msgg.toString())
                     if (response.isSuccessful) {
 
@@ -450,6 +509,7 @@ class LoginPro : AppCompatActivity() {
                                                                             call: Call<User>,
                                                                             t: Throwable
                                                                         ) {
+
                                                                             MotionToast.darkColorToast(
                                                                                 this@LoginPro,
                                                                                 "Failed ",
@@ -478,7 +538,22 @@ class LoginPro : AppCompatActivity() {
 
                                                         }
                                                         if(response.body()?.check == false){
-                                                            println("wrong code")
+
+                                                            val shake =
+                                                                AnimationUtils.loadAnimation(
+                                                                    this@LoginPro,
+                                                                    R.anim.shake
+                                                                )
+
+
+                                                            code1?.setTextColor(R.color.colorPrimary)
+                                                            code2?.setTextColor(R.color.md_red_800)
+                                                            code3?.setTextColor(R.color.md_red_800)
+                                                            code4?.setTextColor(R.color.md_red_800)
+                                                            code1?.startAnimation(shake)
+                                                            code2?.startAnimation(shake)
+                                                            code3?.startAnimation(shake)
+                                                            code4?.startAnimation(shake)
                                                         }
 
                                                     }
