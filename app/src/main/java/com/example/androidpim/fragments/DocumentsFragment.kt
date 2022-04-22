@@ -12,10 +12,15 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
+import com.example.androidpim.adapters.DocumentAdapter
+import com.example.androidpim.adapters.EventAdapter
 import com.example.androidpim.models.ClubLoggedIn
 import com.example.androidpim.models.Document
+import com.example.androidpim.models.Event
 import com.example.androidpim.service.RetrofitApi
 import com.example.androidpim.view.LkolPro
 import com.example.androidpim.view.ProfileUser
@@ -179,6 +184,33 @@ class DocumentsFragment : Fragment(R.layout.document_fragment) {
 
             dialogDocument?.show()
         }
+
+
+        val activity = activity as Context
+
+        val eventRecycler = view.findViewById<RecyclerView>(R.id.recycledocument)
+        eventRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        val apiuser = RetrofitApi.create().GetDocuments()
+
+        var eventList = ArrayList<Document>()
+
+        apiuser.enqueue( object : Callback<List<Document>> {
+            override fun onResponse(call: Call<List<Document>>, response: Response<List<Document>>) {
+
+                for (i in 0 until response.body()!!.size)
+
+                    eventList.add(response.body()!![i])
+                val eventAdapter = DocumentAdapter(eventList)
+                eventRecycler.adapter = eventAdapter
+            }
+
+            override fun onFailure(call: Call<List<Document>>, t: Throwable) {
+                println("arja3")
+            }
+
+        })
+
+
         return view
     }
 

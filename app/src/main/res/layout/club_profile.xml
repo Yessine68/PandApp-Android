@@ -120,7 +120,8 @@
 
             <include
                 layout="@layout/item_add_club"
-                android:layout_height="99dp" />
+                android:layout_height="99dp"
+                android:layout_width="match_parent" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/framedll"
                 android:layout_width="match_parent"

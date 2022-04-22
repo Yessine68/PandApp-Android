@@ -79,6 +79,9 @@ interface RetrofitApi {
     @GET("event")
     fun GetEvents():Call<List<Event>>
 
+    @GET("document")
+    fun GetDocuments():Call<List<Document>>
+
     /*
         @GET("article")
         fun GetAllArticles():Call<ArticlesReponse>
