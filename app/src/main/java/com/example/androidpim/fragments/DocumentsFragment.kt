@@ -14,11 +14,16 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
+import com.example.androidpim.models.ClubLoggedIn
 import com.example.androidpim.models.Document
+import com.example.androidpim.service.RetrofitApi
 import com.example.androidpim.view.LkolPro
 import com.example.androidpim.view.ProfileUser
 import com.example.androidpim.view.UserEdit
 import com.marcoscg.dialogsheet.DialogSheet
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DocumentsFragment : Fragment(R.layout.document_fragment) {
 
@@ -62,7 +67,9 @@ class DocumentsFragment : Fragment(R.layout.document_fragment) {
         //-----------------------------------------------------
         val firstName: String = mSharedPref.getString("FirstName", "zwayten").toString()
         val lastName: String = mSharedPref.getString("LastName", "zwayten").toString()
-        val _id: String = mSharedPref.getString("_id", "zwayten").toString()
+        val id: String = mSharedPref.getString("id", "zwayten").toString()
+
+        println("ellll iddddddddddddddddddddddddddddddddddd: "+id)
         usernameProfileDoc.text = firstName +" "+lastName;
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
         println("###############################################"+picStr)
@@ -154,7 +161,18 @@ class DocumentsFragment : Fragment(R.layout.document_fragment) {
         }
 
         subbb?.setOnClickListener{
-            doc.claimedId = _id
+            doc.claimedId = id
+            val apiuser = RetrofitApi.create().requestDoc(doc)
+            apiuser.enqueue(object : Callback<Document> {
+                override fun onResponse(call: Call<Document>, response: Response<Document>) {
+                    println("behy")
+                }
+
+                override fun onFailure(call: Call<Document>, t: Throwable) {
+                    println("mahouch behy")
+                }
+
+            })
         }
 
         submitdocbutton.setOnClickListener {

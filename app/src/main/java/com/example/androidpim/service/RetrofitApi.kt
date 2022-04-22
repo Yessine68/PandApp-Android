@@ -41,6 +41,11 @@ interface RetrofitApi {
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
 
+    @POST("document")
+    fun requestDoc(
+        @Body doc: Document
+    ):Call<Document>
+
     @POST("EventInt")
     fun joinEvent(
         @Body eventInt: EventInt
@@ -82,7 +87,7 @@ interface RetrofitApi {
         fun create() : RetrofitApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://10.0.2.2:3000/")
+                .baseUrl("http://192.168.1.14:3000/")
                 .build()
             return retrofit.create(RetrofitApi::class.java)
 
