@@ -76,6 +76,8 @@ dependencies {
 
     implementation 'com.github.florent37:shapeofview:1.4.7'
 
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+
 //-----------------------------------------
 
 
