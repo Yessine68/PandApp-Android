@@ -36,6 +36,11 @@ interface RetrofitApi {
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
 
+    @POST("EventInt")
+    fun joinEvent(
+        @Body eventInt: EventInt
+    ):Call<EventInt>
+
     @POST("authClub")
     fun clubLogin(
         @Body club: ClubLoggedIn
