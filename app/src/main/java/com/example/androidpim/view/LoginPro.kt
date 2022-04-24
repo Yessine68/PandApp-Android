@@ -1,6 +1,7 @@
 package com.example.androidpim.view
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -44,6 +45,7 @@ import www.sanju.motiontoast.MotionToastStyle
 
 class LoginPro : AppCompatActivity() {
 
+    lateinit var dialogCOmpleteUser: DialogSheet
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceType")
@@ -107,10 +109,11 @@ class LoginPro : AppCompatActivity() {
             .setGoogleIdTokenRequestOptions(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
+
                     // Your server's client ID, not your Android client ID.
                     .setServerClientId(BuildConfig.WEB_CLIENT_ID)
                     // Show all accounts on the device.
-                    .setFilterByAuthorizedAccounts(true)
+                    .setFilterByAuthorizedAccounts(false)
                     .build())
             .build()
 
@@ -694,19 +697,22 @@ class LoginPro : AppCompatActivity() {
 
 
 
-
     private var oneTapClient: SignInClient? = null
     private var signUpRequest: BeginSignInRequest? = null
     private var signInRequest: BeginSignInRequest? = null
 
+
     private val oneTapResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result ->
         try {
+            lateinit var mSharedPref: SharedPreferences
+            mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
             val credential = oneTapClient?.getSignInCredentialFromIntent(result.data)
             val idToken = credential?.googleIdToken
-            val displayName = credential?.displayName
-            val email = credential?.id
             when {
                 idToken != null -> {
+
+                    val displayName = credential?.displayName
+                    val email = credential?.id
                     // Got an ID token from Google. Use it to authenticate
                     // with your backend.
                     val msg = "idToken: $idToken"
@@ -719,15 +725,75 @@ class LoginPro : AppCompatActivity() {
                 //---------test if exist
                     val apiuser = email?.let { RetrofitApi.create().getUserByEmail(it) }
                     apiuser?.enqueue(object: Callback<List<UserLoggedIn>> {
+                        var userInstance = UserLoggedIn()
                         override fun onResponse(
                             call: Call<List<UserLoggedIn>>,
                             response: Response<List<UserLoggedIn>>
                         ) {
                             if(response.body()!!.size!=0){
+                                //--------login
+                                userInstance = response.body()!![0]
+                                val apiuserrr = RetrofitApi.create().userLogin(userInstance)
+
+
+
+
+
+                                apiuserrr.enqueue(object : Callback<UserLoggedIn> {
+                                    override fun onResponse(
+                                        call: Call<UserLoggedIn>,
+                                        response: Response<UserLoggedIn>
+                                    ) {
+                                        if (response.isSuccessful) {
+
+                                            mSharedPref.edit().apply {
+
+                                                putString("email", userInstance.email.toString())
+                                                putString("password", userInstance.password.toString())
+                                                putString("FirstName", userInstance.FirstName.toString())
+                                                putString("profilePicture", userInstance.profilePicture.toString())
+                                                putString("phonenumber", userInstance.phoneNumber.toString())
+                                                putString("identifiant", userInstance.identifant.toString())
+                                                putString("id", userInstance.id.toString())
+                                                putString("role", "user")
+                                                putString("lastlogged", "user")
+
+                                                println("###########################################")
+                                                println(response.body())
+                                                println("###########################################")
+                                                putString("tokenUser", userInstance.token.toString())
+                                                //putBoolean("session", true)
+                                            }.apply()
+                                            finish()
+
+                                            val intent = Intent(applicationContext, LkolPro::class.java)
+                                            intent.flags =
+                                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            startActivity(intent)
+                                        } else {
+
+                                            Toast.makeText(applicationContext, "Failed to Login", Toast.LENGTH_LONG)
+                                                .show()
+
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<UserLoggedIn>, t: Throwable) {
+
+                                        Toast.makeText(applicationContext, "erreur server", Toast.LENGTH_LONG).show()
+                                    }
+
+                                })
+                                    //----------------
                                 println("user already exist")
                             }
                             else {
-                                println("tnajem tet3ada w tcreati compte")
+                                //------- complete user
+                                val dialogCOmpleteUser = DialogSheet(this@LoginPro, true)
+                                dialogCOmpleteUser.setView(finish_registration_user)
+                                val inflatedView2 = dialogCOmpleteUser.inflatedView
+                                val usersignup = inflatedView2?.findViewById<Button>(R.id.usersign)
+                                dialogCOmpleteUser.show()
                             }
                         }
 
@@ -745,6 +811,7 @@ class LoginPro : AppCompatActivity() {
                     // Shouldn't happen.
                     Log.d("one tap", "No ID token!")
 
+
                 }
             }
         } catch (e: ApiException) {
@@ -753,15 +820,19 @@ class LoginPro : AppCompatActivity() {
                     Log.d("one tap", "One-tap dialog was closed.")
                     // Don't re-prompt the user.
 
+
                 }
                 CommonStatusCodes.NETWORK_ERROR -> {
                     Log.d("one tap", "One-tap encountered a network error.")
                     // Try again or just ignore.
 
+
                 }
                 else -> {
                     Log.d("one tap", "Couldn't get credential from result." +
                             " (${e.localizedMessage})")
+
+
 
                 }
             }
@@ -774,13 +845,17 @@ class LoginPro : AppCompatActivity() {
                     val ib = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                     oneTapResult.launch(ib)
                 } catch (e: IntentSender.SendIntentException) {
+
                     Log.e("btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                    Log.e("btn click", "problerm")
                 }
             }
             ?.addOnFailureListener(this) { e ->
                 // No Google Accounts found. Just continue presenting the signed-out UI.
                 displaySignUp()
                 Log.d("btn click", e.localizedMessage!!)
+                Log.e("btn click", "problerm 22222")
+
             }
     }
 
@@ -796,10 +871,12 @@ class LoginPro : AppCompatActivity() {
             }
             ?.addOnFailureListener(this) { e ->
                 // No Google Accounts found. Just continue presenting the signed-out UI.
-                displaySignUp()
-                Log.d("btn click", e.localizedMessage!!)
+
+                Log.d("ezzeeeebi", e.localizedMessage!!)
+
             }
     }
+
 
 
 }
