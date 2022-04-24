@@ -10,7 +10,15 @@
         android:paddingRight="24dp">
 
 
-
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageProfilegoogle"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:elevation="15dp"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:src="@drawable/me"
+        app:shapeAppearanceOverlay="@style/Circular" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/identifant_fld"

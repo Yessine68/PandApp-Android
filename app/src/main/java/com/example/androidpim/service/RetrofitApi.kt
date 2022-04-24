@@ -17,6 +17,10 @@ interface RetrofitApi {
         @Part profilePicture: MultipartBody.Part
     ) : Call<User>
 
+    @POST("user/signup/google")
+    fun usergooglesignup(
+        @Body user: User):Call<User>
+
     @Multipart
     @POST("club/signup")
     fun clubSignUp(

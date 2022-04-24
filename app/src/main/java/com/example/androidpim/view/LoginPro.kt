@@ -1,51 +1,118 @@
 package com.example.androidpim.view
 
+import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
+import android.annotation.TargetApi
+import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.SharedPreferences
-import android.os.Build
-import android.os.Bundle
-import android.os.CountDownTimer
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.*
+import android.os.StrictMode.ThreadPolicy
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+
 import com.example.androidpim.BuildConfig
 import com.example.androidpim.R
 import com.example.androidpim.R.layout.*
-import com.example.androidpim.databinding.ActivityMainBinding
 import com.example.androidpim.models.*
 import com.example.androidpim.service.RetrofitApi
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
-import com.google.android.material.snackbar.Snackbar
 import com.marcoscg.dialogsheet.DialogSheet
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
+import java.io.File
+import java.io.InputStream
+import java.net.URL
 
 
 class LoginPro : AppCompatActivity() {
 
     lateinit var dialogCOmpleteUser: DialogSheet
+    lateinit var selectedImageUri:Uri
+    lateinit var directory: File
+     var testi:String = "notOk"
+    private var imageUrl = "https://i.imgur.com/yc3CbKN.jpg"
+/*
+    @SuppressLint("Range")
+    private fun downloadImage(url: String) {
+         directory = File(Environment.DIRECTORY_PICTURES)
+
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+
+        val downloadManager = this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val downloadUri = Uri.parse(url)
+
+        val request = DownloadManager.Request(downloadUri).apply {
+            setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false)
+                .setTitle(url.substring(url.lastIndexOf("/") + 1))
+                .setDescription("")
+                .setDestinationInExternalPublicDir(
+                    directory.toString(),
+                    url.substring(url.lastIndexOf("/") + 1)
+                )
+        }
+        println( url.substring(url.lastIndexOf("/") + 1))
+        val downloadId = downloadManager.enqueue(request)
+
+        println("el fichier "+request.)
+        println("el directory : "+directory.toString())
+        val query = DownloadManager.Query().setFilterById(downloadId)
+        Thread(Runnable {
+            var downloading = true
+            while (downloading) {
+                val cursor: Cursor = downloadManager.query(query)
+                cursor.moveToFirst()
+                if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                    downloading = false
+                }
+
+                cursor.close()
+            }
+        }).start()
+    }
+    */
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceType")
@@ -66,6 +133,9 @@ class LoginPro : AppCompatActivity() {
 
 
         super.onCreate(savedInstanceState)
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+         directory = File(Environment.DIRECTORY_PICTURES)
         // Hide the status bar.
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
@@ -73,7 +143,6 @@ class LoginPro : AppCompatActivity() {
         actionBar?.hide()
         setContentView(R.layout.activity_login_pro)
         supportActionBar?.hide();
-
         var parent: ViewGroup
         var varinflater: LayoutInflater
 
@@ -713,19 +782,34 @@ class LoginPro : AppCompatActivity() {
 
                     val displayName = credential?.displayName
                     val email = credential?.id
+                    val prp = credential?.profilePictureUri
+                    val imageUrl = credential?.profilePictureUri.toString()
+                    println("el url "+prp!!)
                     // Got an ID token from Google. Use it to authenticate
                     // with your backend.
                     val msg = "idToken: $idToken"
                     val nameMsg = "displaName :$displayName"
                     val emailMsg = "displaName :$email"
 
+                  /*  AltexImageDownloader.writeToDisk(applicationContext,
+                        credential?.profilePictureUri.toString(), "IMAGES");
+
+                   */
+                    var userInstance = UserLoggedIn()
+                    var userInstancesignup = User()
                     Log.d("one tap", msg)
                     println("el nameMsg:   "+nameMsg)
                     println("el email:   "+emailMsg)
+                    userInstance.email = email
+                    userInstance.FirstName = displayName
+                    userInstancesignup.email = email
+                    userInstancesignup.FirstName = displayName
+                    userInstancesignup.profilePicture = credential?.profilePictureUri.toString()
                 //---------test if exist
                     val apiuser = email?.let { RetrofitApi.create().getUserByEmail(it) }
                     apiuser?.enqueue(object: Callback<List<UserLoggedIn>> {
-                        var userInstance = UserLoggedIn()
+
+
                         override fun onResponse(
                             call: Call<List<UserLoggedIn>>,
                             response: Response<List<UserLoggedIn>>
@@ -788,11 +872,92 @@ class LoginPro : AppCompatActivity() {
                                 println("user already exist")
                             }
                             else {
+                                //----------------------------------------------
                                 //------- complete user
                                 val dialogCOmpleteUser = DialogSheet(this@LoginPro, true)
                                 dialogCOmpleteUser.setView(finish_registration_user)
                                 val inflatedView2 = dialogCOmpleteUser.inflatedView
-                                val usersignup = inflatedView2?.findViewById<Button>(R.id.usersign)
+
+
+
+                                val identifantgoogle = inflatedView2?.findViewById<EditText>(R.id.identifantgoogle)
+                                val passwordgoogle = inflatedView2?.findViewById<EditText>(R.id.passwordgoogle)
+                                val password2google = inflatedView2?.findViewById<EditText>(R.id.password2google)
+                                val phonegoogle = inflatedView2?.findViewById<EditText>(R.id.phonegoogle)
+                                val classNamegoogle = inflatedView2?.findViewById<EditText>(R.id.classNamegoogle)
+                                val descriptiongoogle = inflatedView2?.findViewById<EditText>(R.id.descriptiongoogle)
+                                val imageProfilegoogle = inflatedView2?.findViewById<ImageView>(R.id.imageProfilegoogle)
+                                val savegoogle = inflatedView2?.findViewById<Button>(R.id.savegoogle)
+
+                                Glide.with(applicationContext)
+                                    .asBitmap()
+                                    .load(credential!!.profilePictureUri.toString())
+                                    .into(object : CustomTarget<Bitmap>(){
+                                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                            imageProfilegoogle?.setImageBitmap(resource)
+                                            println("el ressource 7adhret"+ resource.toString())
+                                        }
+                                        override fun onLoadCleared(placeholder: Drawable?) {
+                                            println("jawek behy")
+                                        }
+                                    })
+
+
+
+
+                                savegoogle?.setOnClickListener {
+                                    userInstancesignup.identifant = identifantgoogle?.text.toString()
+                                    userInstancesignup.password = passwordgoogle?.text.toString()
+                                    userInstancesignup.phoneNumber = phonegoogle?.text.toString().toInt()
+                                    userInstancesignup.className = classNamegoogle?.text.toString()
+                                    userInstancesignup.description = descriptiongoogle?.text.toString()
+                                    userInstancesignup.LastName = ""
+
+                                    //ne9s el image
+                                    ////###########################################################################
+
+
+
+
+
+                                    //val selectedImageUri: Uri?= Uri.parse("https://lh3.googleusercontent.com/a-/AOh14GgTQqjVQuKMLEwPs2ThTCn1sOQbbmsOOb4C0-sREw=s96-c")
+
+
+
+
+
+                                        val emptyString = ""
+                                        val apiInterface = RetrofitApi.create()
+
+                                            apiInterface.usergooglesignup(userInstancesignup).enqueue(object:
+                                                Callback<User> {
+                                                override fun onResponse(
+                                                    call: Call<User>,
+                                                    response: Response<User>
+                                                ) {
+                                                    if(response.isSuccessful){
+                                                        Log.i("onResponse goooood", response.body().toString())
+
+                                                    } else {
+                                                        Log.i("OnResponse not good", response.body().toString())
+                                                    }
+                                                }
+
+                                                override fun onFailure(call: Call<User>, t: Throwable) {
+
+                                                    println("noooooooooooooooooo")
+                                                }
+
+                                            })
+
+
+                                    ////###########################################################################
+
+
+                                }
+
+
+                                //-------------------------------------------------
                                 dialogCOmpleteUser.show()
                             }
                         }
@@ -875,8 +1040,11 @@ class LoginPro : AppCompatActivity() {
                 Log.d("ezzeeeebi", e.localizedMessage!!)
 
             }
+
+
     }
 
-
-
+    companion object {
+        private const val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1
+    }
 }
