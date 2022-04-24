@@ -43,6 +43,8 @@ import www.sanju.motiontoast.MotionToastStyle
 
 
 class LoginPro : AppCompatActivity() {
+
+
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +59,8 @@ class LoginPro : AppCompatActivity() {
         lateinit var loginuserr:TextView
         lateinit var loginclubb:TextView
         lateinit var googlebuttonLogin: Button
+
+
 
 
         super.onCreate(savedInstanceState)
@@ -699,13 +703,43 @@ class LoginPro : AppCompatActivity() {
         try {
             val credential = oneTapClient?.getSignInCredentialFromIntent(result.data)
             val idToken = credential?.googleIdToken
+            val displayName = credential?.displayName
+            val email = credential?.id
             when {
                 idToken != null -> {
                     // Got an ID token from Google. Use it to authenticate
                     // with your backend.
                     val msg = "idToken: $idToken"
+                    val nameMsg = "displaName :$displayName"
+                    val emailMsg = "displaName :$email"
 
                     Log.d("one tap", msg)
+                    println("el nameMsg:   "+nameMsg)
+                    println("el email:   "+emailMsg)
+                //---------test if exist
+                    val apiuser = email?.let { RetrofitApi.create().getUserByEmail(it) }
+                    apiuser?.enqueue(object: Callback<List<UserLoggedIn>> {
+                        override fun onResponse(
+                            call: Call<List<UserLoggedIn>>,
+                            response: Response<List<UserLoggedIn>>
+                        ) {
+                            if(response.body()!!.size!=0){
+                                println("user already exist")
+                            }
+                            else {
+                                println("tnajem tet3ada w tcreati compte")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<List<UserLoggedIn>>, t: Throwable) {
+                            println("fchelna")
+                        }
+                    })
+
+                    //--------------
+
+
+
                 }
                 else -> {
                     // Shouldn't happen.

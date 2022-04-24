@@ -28,7 +28,7 @@ interface RetrofitApi {
     @GET("user/userByEmail/{email}")
     fun getUserByEmail(
         @Path("email") email:String,
-    ) : Call<UserLoggedIn>
+    ) : Call<List<UserLoggedIn>>
 
     @GET("eventInt/eventIntById/{postId}")
     fun getEventIntByEmail(
