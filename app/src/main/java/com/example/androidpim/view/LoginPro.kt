@@ -3,25 +3,37 @@ package com.example.androidpim.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import com.example.androidpim.BuildConfig
 import com.example.androidpim.R
 import com.example.androidpim.R.layout.*
+import com.example.androidpim.databinding.ActivityMainBinding
 import com.example.androidpim.models.*
 import com.example.androidpim.service.RetrofitApi
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.material.snackbar.Snackbar
 import com.marcoscg.dialogsheet.DialogSheet
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,10 +56,8 @@ class LoginPro : AppCompatActivity() {
         lateinit var resetPassword: Button
         lateinit var loginuserr:TextView
         lateinit var loginclubb:TextView
-        //------code
+        lateinit var googlebuttonLogin: Button
 
-
-        //code-------
 
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -70,6 +80,39 @@ class LoginPro : AppCompatActivity() {
         resetPassword = findViewById(R.id.resetPassword)
         loginuserr= findViewById(R.id.loginuserr)
         loginclubb= findViewById(R.id.loginclubb)
+        googlebuttonLogin = findViewById(R.id.googlebuttonLogin)
+
+
+
+
+        //------code
+
+
+        oneTapClient = Identity.getSignInClient(this)
+        signUpRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(BuildConfig.WEB_CLIENT_ID)
+                    // Show all accounts on the device.
+                    .setFilterByAuthorizedAccounts(false)
+                    .build())
+            .build()
+        signInRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(BuildConfig.WEB_CLIENT_ID)
+                    // Show all accounts on the device.
+                    .setFilterByAuthorizedAccounts(true)
+                    .build())
+            .build()
+
+        googlebuttonLogin.setOnClickListener { displaySignIn() }
+
+        //code-------
 
          var loginAs = "user"
 
@@ -642,6 +685,86 @@ class LoginPro : AppCompatActivity() {
             dialogSheet.show()
 
         }
+    }
+
+
+
+
+
+    private var oneTapClient: SignInClient? = null
+    private var signUpRequest: BeginSignInRequest? = null
+    private var signInRequest: BeginSignInRequest? = null
+
+    private val oneTapResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result ->
+        try {
+            val credential = oneTapClient?.getSignInCredentialFromIntent(result.data)
+            val idToken = credential?.googleIdToken
+            when {
+                idToken != null -> {
+                    // Got an ID token from Google. Use it to authenticate
+                    // with your backend.
+                    val msg = "idToken: $idToken"
+
+                    Log.d("one tap", msg)
+                }
+                else -> {
+                    // Shouldn't happen.
+                    Log.d("one tap", "No ID token!")
+
+                }
+            }
+        } catch (e: ApiException) {
+            when (e.statusCode) {
+                CommonStatusCodes.CANCELED -> {
+                    Log.d("one tap", "One-tap dialog was closed.")
+                    // Don't re-prompt the user.
+
+                }
+                CommonStatusCodes.NETWORK_ERROR -> {
+                    Log.d("one tap", "One-tap encountered a network error.")
+                    // Try again or just ignore.
+
+                }
+                else -> {
+                    Log.d("one tap", "Couldn't get credential from result." +
+                            " (${e.localizedMessage})")
+
+                }
+            }
+        }
+    }
+    private fun displaySignIn(){
+        oneTapClient?.beginSignIn(signInRequest!!)
+            ?.addOnSuccessListener(this) { result ->
+                try {
+                    val ib = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                    oneTapResult.launch(ib)
+                } catch (e: IntentSender.SendIntentException) {
+                    Log.e("btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                }
+            }
+            ?.addOnFailureListener(this) { e ->
+                // No Google Accounts found. Just continue presenting the signed-out UI.
+                displaySignUp()
+                Log.d("btn click", e.localizedMessage!!)
+            }
+    }
+
+    private fun displaySignUp() {
+        oneTapClient?.beginSignIn(signUpRequest!!)
+            ?.addOnSuccessListener(this) { result ->
+                try {
+                    val ib = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                    oneTapResult.launch(ib)
+                } catch (e: IntentSender.SendIntentException) {
+                    Log.e("btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                }
+            }
+            ?.addOnFailureListener(this) { e ->
+                // No Google Accounts found. Just continue presenting the signed-out UI.
+                displaySignUp()
+                Log.d("btn click", e.localizedMessage!!)
+            }
     }
 
 
