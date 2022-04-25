@@ -19,4 +19,10 @@
     <style name="Circular">
         <item name="cornerSize">50%</item>
     </style>
+    <style name="Theme.AndroidPim.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.AndroidPim.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.AndroidPim.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

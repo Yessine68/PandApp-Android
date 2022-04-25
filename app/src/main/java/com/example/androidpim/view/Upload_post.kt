@@ -31,6 +31,7 @@ class upload_post : AppCompatActivity() {
     lateinit var button_choose : Button
     lateinit var imageView: ImageView
     lateinit var imageViewBack: ImageView
+
     lateinit var buttonPost : Button
     lateinit var objet: EditText
       lateinit var place: EditText

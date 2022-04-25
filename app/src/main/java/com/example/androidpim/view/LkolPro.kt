@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.fragments.EventFragment
+import com.example.androidpim.fragments.ListOfCourses
+import com.example.androidpim.fragments.lostfoundfrag
 
 
 class LkolPro : AppCompatActivity() {
@@ -21,6 +23,7 @@ class LkolPro : AppCompatActivity() {
     lateinit var profile_icon: ImageView
     lateinit var  camera_img:ImageButton
     lateinit var frag:Fragment
+    lateinit var lostfound:Fragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -31,6 +34,7 @@ class LkolPro : AppCompatActivity() {
         setContentView(R.layout.activity_lkol_pro)
         supportActionBar?.hide();
         frag = EventFragment()
+        lostfound =lostfoundfrag()
 
         val homeBtn = findViewById<ImageView>(R.id.home_icon)
         val searchBtn = findViewById<ImageView>(R.id.search_icon)
@@ -67,24 +71,33 @@ class LkolPro : AppCompatActivity() {
             R.id.home_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, HomePro()).commit()
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameEvent, frag).commit()
+                getSupportFragmentManager().beginTransaction().remove(lostfound).commit()
             }
             R.id.search_icon -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, EventFragment()).commit()
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame, ListOfCourses()).commit()
                 getSupportFragmentManager().beginTransaction().remove(frag).commit()
+                getSupportFragmentManager().beginTransaction().remove(lostfound).commit()
+
 
             }
             /*
             R.id.add_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, GalleryFragment()).commit()
             }
+
+             */
             R.id.heart_icon -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, FavouriteFragment()).commit()
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame, lostfound).commit()
+                getSupportFragmentManager().beginTransaction().remove(frag).commit()
+
             }
-            */
+
 
             R.id.profile_icon -> {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, ProfileUser()).commit()
                 getSupportFragmentManager().beginTransaction().remove(frag).commit()
+                getSupportFragmentManager().beginTransaction().remove(lostfound).commit()
+
             }
 
 

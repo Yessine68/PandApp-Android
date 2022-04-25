@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.example.androidpim.R
 import com.example.androidpim.courses
 import com.example.androidpim.models.UserLoggedIn
+import com.example.androidpim.pdfReader
 import com.example.androidpim.service.RetrofitApi
 import kotlinx.android.synthetic.main.fragment_onboarding3.*
 import retrofit2.Call
@@ -53,7 +54,7 @@ class SplashScreen : AppCompatActivity() {
                     startActivity(intent)
                 } else {
 
-                    val intent = Intent(applicationContext, login::class.java)
+                    val intent = Intent(applicationContext, LoginPro::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
 

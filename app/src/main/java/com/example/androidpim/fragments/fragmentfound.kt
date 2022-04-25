@@ -35,7 +35,7 @@ class fragmentfound : Fragment() {
         val parentActivity = requireView().context as FragmentActivity
         val mFinalList: MutableList<Post> = ArrayList<Post>()
         for (p in postList!!) {
-            if (p.objet.toLowerCase().contains(search.toLowerCase())) {
+            if (p.objet.lowercase(Locale.getDefault()).contains(search.lowercase(Locale.getDefault()))) {
                 mFinalList.add(p)
             }
         }
@@ -51,6 +51,8 @@ class fragmentfound : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        print("zwaytennn was here found")
+
         val view = inflater.inflate(R.layout.fragment_lost, container, false)
         val apiInterface = LostPostApi.create()
         apiInterface.GetAllFound().enqueue(object: Callback<List<Post>> {

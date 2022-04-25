@@ -36,6 +36,7 @@ class fragmentLost : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        println("zwaytennn was here Lost ")
 
        val view = inflater.inflate(R.layout.fragment_lost, container, false)
 

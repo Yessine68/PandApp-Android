@@ -52,31 +52,33 @@
 
         </LinearLayout>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <com.google.android.material.bottomappbar.BottomAppBar
-                android:id="@+id/bottomAppBar"
-                style="@style/Widget.MaterialComponents.BottomAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:fabCradleRoundedCornerRadius="16dp"
-                app:backgroundTint="@color/appBar"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/buttonCreate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_anchor="@+id/bottomAppBar"
-                app:maxImageSize="56dp"
-                app:fabSize="normal"
-                app:srcCompat="@drawable/plus"
-                android:backgroundTint="@color/tabTextColor"/>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            style="@style/Widget.MaterialComponents.BottomAppBar"
+            android:layout_width="wrap_content"
+            android:layout_height="0px"
+            android:layout_gravity="bottom"
+            app:fabCradleRoundedCornerRadius="16dp"
+            app:backgroundTint="@color/appBar"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@+id/bottomAppBar"
+            app:maxImageSize="56dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/plus"
+            android:backgroundTint="@color/tabTextColor"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </RelativeLayout>
