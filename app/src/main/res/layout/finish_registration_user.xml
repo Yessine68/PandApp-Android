@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageProfilegoogle"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:elevation="15dp"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:src="@drawable/me"
+        app:shapeAppearanceOverlay="@style/Circular" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/identifant_fld"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Identifier">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/identifantgoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:inputType="text"
+                android:maxLength="20"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_fld"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordgoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_fld2"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm password"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password2google"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phone_number_fld"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone No">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phonegoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:inputType="number"
+            android:maxLength="15"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/classNamefld"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Class">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/classNamegoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:inputType="text"
+            android:maxLength="20"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/description_fld"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/descriptiongoogle"
+            android:layout_width="319dp"
+            android:layout_height="125dp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:maxLength="20"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="398dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="match_parent">
+
+        </View>
+
+        <Button
+            android:id="@+id/savegoogle"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+
+

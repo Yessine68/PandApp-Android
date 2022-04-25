@@ -31,7 +31,7 @@ class EventFragment: Fragment(R.layout.fragment_event) {
         val activity = activity as Context
 
         val eventRecycler = rootView.findViewById<RecyclerView>(R.id.eventlist)
-        eventRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        eventRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         val apiuser = RetrofitApi.create().GetEvents()
 

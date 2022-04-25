@@ -17,6 +17,10 @@ interface RetrofitApi {
         @Part profilePicture: MultipartBody.Part
     ) : Call<User>
 
+    @POST("user/signup/google")
+    fun usergooglesignup(
+        @Body user: User):Call<User>
+
     @Multipart
     @POST("club/signup")
     fun clubSignUp(
@@ -28,7 +32,7 @@ interface RetrofitApi {
     @GET("user/userByEmail/{email}")
     fun getUserByEmail(
         @Path("email") email:String,
-    ) : Call<UserLoggedIn>
+    ) : Call<List<UserLoggedIn>>
 
     @GET("eventInt/eventIntById/{postId}")
     fun getEventIntByEmail(
@@ -40,6 +44,11 @@ interface RetrofitApi {
     fun userLogin(
         @Body user: UserLoggedIn
     ):Call<UserLoggedIn>
+
+    @POST("document")
+    fun requestDoc(
+        @Body doc: Document
+    ):Call<Document>
 
     @POST("EventInt")
     fun joinEvent(
@@ -74,6 +83,9 @@ interface RetrofitApi {
     @GET("event")
     fun GetEvents():Call<List<Event>>
 
+    @GET("document")
+    fun GetDocuments():Call<List<Document>>
+
     /*
         @GET("article")
         fun GetAllArticles():Call<ArticlesReponse>
@@ -82,7 +94,7 @@ interface RetrofitApi {
         fun create() : RetrofitApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://10.0.2.2:3000/")
+                .baseUrl("http://192.168.1.14:3000/")
                 .build()
             return retrofit.create(RetrofitApi::class.java)
 

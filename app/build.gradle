@@ -14,7 +14,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
+        buildConfigField("String", "WEB_CLIENT_ID", '"1012405297503-srts4p401265f9bh6dal59mpl2ab3mp1.apps.googleusercontent.com"')
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,6 +34,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+
 }
 
 
@@ -81,6 +82,12 @@ dependencies {
 
     implementation 'com.github.florent37:shapeofview:1.4.7'
 
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+//-----------------------------------------
+
 
 
 
@@ -93,7 +100,6 @@ dependencies {
     implementation 'com.github.adrianotelesc:ExpandableSearchBar:0.1.0'
 
 
-    //for getting photos
 
 
 }

@@ -1,36 +1,119 @@
 package com.example.androidpim.view
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.SharedPreferences
-import android.os.Build
-import android.os.Bundle
-import android.os.CountDownTimer
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.*
+import android.os.StrictMode.ThreadPolicy
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+
+import com.example.androidpim.BuildConfig
 import com.example.androidpim.R
 import com.example.androidpim.R.layout.*
 import com.example.androidpim.models.*
 import com.example.androidpim.service.RetrofitApi
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
 import com.marcoscg.dialogsheet.DialogSheet
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
+import java.io.File
+import java.io.InputStream
+import java.net.URL
 
 
 class LoginPro : AppCompatActivity() {
+
+    lateinit var dialogCOmpleteUser: DialogSheet
+    lateinit var selectedImageUri:Uri
+    lateinit var directory: File
+     var testi:String = "notOk"
+    private var imageUrl = "https://i.imgur.com/yc3CbKN.jpg"
+/*
+    @SuppressLint("Range")
+    private fun downloadImage(url: String) {
+         directory = File(Environment.DIRECTORY_PICTURES)
+
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+
+        val downloadManager = this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val downloadUri = Uri.parse(url)
+
+        val request = DownloadManager.Request(downloadUri).apply {
+            setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false)
+                .setTitle(url.substring(url.lastIndexOf("/") + 1))
+                .setDescription("")
+                .setDestinationInExternalPublicDir(
+                    directory.toString(),
+                    url.substring(url.lastIndexOf("/") + 1)
+                )
+        }
+        println( url.substring(url.lastIndexOf("/") + 1))
+        val downloadId = downloadManager.enqueue(request)
+
+        println("el fichier "+request.)
+        println("el directory : "+directory.toString())
+        val query = DownloadManager.Query().setFilterById(downloadId)
+        Thread(Runnable {
+            var downloading = true
+            while (downloading) {
+                val cursor: Cursor = downloadManager.query(query)
+                cursor.moveToFirst()
+                if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                    downloading = false
+                }
+
+                cursor.close()
+            }
+        }).start()
+    }
+    */
+
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +127,15 @@ class LoginPro : AppCompatActivity() {
         lateinit var resetPassword: Button
         lateinit var loginuserr:TextView
         lateinit var loginclubb:TextView
-        //------code
+        lateinit var googlebuttonLogin: Button
 
 
-        //code-------
+
 
         super.onCreate(savedInstanceState)
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+         directory = File(Environment.DIRECTORY_PICTURES)
         // Hide the status bar.
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
@@ -57,7 +143,6 @@ class LoginPro : AppCompatActivity() {
         actionBar?.hide()
         setContentView(R.layout.activity_login_pro)
         supportActionBar?.hide();
-
         var parent: ViewGroup
         var varinflater: LayoutInflater
 
@@ -70,6 +155,40 @@ class LoginPro : AppCompatActivity() {
         resetPassword = findViewById(R.id.resetPassword)
         loginuserr= findViewById(R.id.loginuserr)
         loginclubb= findViewById(R.id.loginclubb)
+        googlebuttonLogin = findViewById(R.id.googlebuttonLogin)
+
+
+
+
+        //------code
+
+
+        oneTapClient = Identity.getSignInClient(this)
+        signUpRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(BuildConfig.WEB_CLIENT_ID)
+                    // Show all accounts on the device.
+                    .setFilterByAuthorizedAccounts(false)
+                    .build())
+            .build()
+        signInRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(BuildConfig.WEB_CLIENT_ID)
+                    // Show all accounts on the device.
+                    .setFilterByAuthorizedAccounts(false)
+                    .build())
+            .build()
+
+        googlebuttonLogin.setOnClickListener { displaySignIn() }
+
+        //code-------
 
          var loginAs = "user"
 
@@ -121,8 +240,8 @@ class LoginPro : AppCompatActivity() {
 
                                 mSharedPref.edit().apply {
 
-                                    putString("email", response.body()?.login.toString())
-                                    putString("password", response.body()?.password.toString())
+                                    putString("login", response.body()?.login.toString())
+                                    putString("passwordclub", response.body()?.password.toString())
                                     putString("ClubName", response.body()?.clubName.toString())
                                     putString("clubLogo", response.body()?.clubLogo.toString())
                                     putString("clubOwner", response.body()?.clubOwner.toString())
@@ -183,7 +302,7 @@ class LoginPro : AppCompatActivity() {
                                     putString("profilePicture", response.body()?.profilePicture.toString())
                                     putString("phonenumber", response.body()?.phoneNumber.toString())
                                     putString("identifiant", response.body()?.identifant.toString())
-                                    putString("_id", response.body()?._id.toString())
+                                    putString("id", response.body()?.id.toString())
                                     putString("role", "user")
                                     putString("lastlogged", "user")
                                     if (remember.isChecked()) {
@@ -645,4 +764,287 @@ class LoginPro : AppCompatActivity() {
     }
 
 
+
+
+    private var oneTapClient: SignInClient? = null
+    private var signUpRequest: BeginSignInRequest? = null
+    private var signInRequest: BeginSignInRequest? = null
+
+
+    private val oneTapResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){ result ->
+        try {
+            lateinit var mSharedPref: SharedPreferences
+            mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+            val credential = oneTapClient?.getSignInCredentialFromIntent(result.data)
+            val idToken = credential?.googleIdToken
+            when {
+                idToken != null -> {
+
+                    val displayName = credential?.displayName
+                    val email = credential?.id
+                    val prp = credential?.profilePictureUri
+                    val imageUrl = credential?.profilePictureUri.toString()
+                    println("el url "+prp!!)
+                    // Got an ID token from Google. Use it to authenticate
+                    // with your backend.
+                    val msg = "idToken: $idToken"
+                    val nameMsg = "displaName :$displayName"
+                    val emailMsg = "displaName :$email"
+
+                  /*  AltexImageDownloader.writeToDisk(applicationContext,
+                        credential?.profilePictureUri.toString(), "IMAGES");
+
+                   */
+                    var userInstance = UserLoggedIn()
+                    var userInstancesignup = User()
+                    Log.d("one tap", msg)
+                    println("el nameMsg:   "+nameMsg)
+                    println("el email:   "+emailMsg)
+                    userInstance.email = email
+                    userInstance.FirstName = displayName
+                    userInstancesignup.email = email
+                    userInstancesignup.FirstName = displayName
+                    userInstancesignup.profilePicture = credential?.profilePictureUri.toString()
+                //---------test if exist
+                    val apiuser = email?.let { RetrofitApi.create().getUserByEmail(it) }
+                    apiuser?.enqueue(object: Callback<List<UserLoggedIn>> {
+
+
+                        override fun onResponse(
+                            call: Call<List<UserLoggedIn>>,
+                            response: Response<List<UserLoggedIn>>
+                        ) {
+                            if(response.body()!!.size!=0){
+                                //--------login
+                                userInstance = response.body()!![0]
+                                val apiuserrr = RetrofitApi.create().userLogin(userInstance)
+
+
+
+
+
+                                apiuserrr.enqueue(object : Callback<UserLoggedIn> {
+                                    override fun onResponse(
+                                        call: Call<UserLoggedIn>,
+                                        response: Response<UserLoggedIn>
+                                    ) {
+                                        if (response.isSuccessful) {
+
+                                            mSharedPref.edit().apply {
+
+                                                putString("email", userInstance.email.toString())
+                                                putString("password", userInstance.password.toString())
+                                                putString("FirstName", userInstance.FirstName.toString())
+                                                putString("profilePicture", userInstance.profilePicture.toString())
+                                                putString("phonenumber", userInstance.phoneNumber.toString())
+                                                putString("identifiant", userInstance.identifant.toString())
+                                                putString("id", userInstance.id.toString())
+                                                putString("role", "user")
+                                                putString("lastlogged", "user")
+
+                                                println("###########################################")
+                                                println(response.body())
+                                                println("###########################################")
+                                                putString("tokenUser", userInstance.token.toString())
+                                                //putBoolean("session", true)
+                                            }.apply()
+                                            finish()
+
+                                            val intent = Intent(applicationContext, LkolPro::class.java)
+                                            intent.flags =
+                                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            startActivity(intent)
+                                        } else {
+
+                                            Toast.makeText(applicationContext, "Failed to Login", Toast.LENGTH_LONG)
+                                                .show()
+
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<UserLoggedIn>, t: Throwable) {
+
+                                        Toast.makeText(applicationContext, "erreur server", Toast.LENGTH_LONG).show()
+                                    }
+
+                                })
+                                    //----------------
+                                println("user already exist")
+                            }
+                            else {
+                                //----------------------------------------------
+                                //------- complete user
+                                val dialogCOmpleteUser = DialogSheet(this@LoginPro, true)
+                                dialogCOmpleteUser.setView(finish_registration_user)
+                                val inflatedView2 = dialogCOmpleteUser.inflatedView
+
+
+
+                                val identifantgoogle = inflatedView2?.findViewById<EditText>(R.id.identifantgoogle)
+                                val passwordgoogle = inflatedView2?.findViewById<EditText>(R.id.passwordgoogle)
+                                val password2google = inflatedView2?.findViewById<EditText>(R.id.password2google)
+                                val phonegoogle = inflatedView2?.findViewById<EditText>(R.id.phonegoogle)
+                                val classNamegoogle = inflatedView2?.findViewById<EditText>(R.id.classNamegoogle)
+                                val descriptiongoogle = inflatedView2?.findViewById<EditText>(R.id.descriptiongoogle)
+                                val imageProfilegoogle = inflatedView2?.findViewById<ImageView>(R.id.imageProfilegoogle)
+                                val savegoogle = inflatedView2?.findViewById<Button>(R.id.savegoogle)
+
+                                Glide.with(applicationContext)
+                                    .asBitmap()
+                                    .load(credential!!.profilePictureUri.toString())
+                                    .into(object : CustomTarget<Bitmap>(){
+                                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                            imageProfilegoogle?.setImageBitmap(resource)
+                                            println("el ressource 7adhret"+ resource.toString())
+                                        }
+                                        override fun onLoadCleared(placeholder: Drawable?) {
+                                            println("jawek behy")
+                                        }
+                                    })
+
+
+
+
+                                savegoogle?.setOnClickListener {
+                                    userInstancesignup.identifant = identifantgoogle?.text.toString()
+                                    userInstancesignup.password = passwordgoogle?.text.toString()
+                                    userInstancesignup.phoneNumber = phonegoogle?.text.toString().toInt()
+                                    userInstancesignup.className = classNamegoogle?.text.toString()
+                                    userInstancesignup.description = descriptiongoogle?.text.toString()
+                                    userInstancesignup.LastName = ""
+
+                                    //ne9s el image
+                                    ////###########################################################################
+
+
+
+
+
+                                    //val selectedImageUri: Uri?= Uri.parse("https://lh3.googleusercontent.com/a-/AOh14GgTQqjVQuKMLEwPs2ThTCn1sOQbbmsOOb4C0-sREw=s96-c")
+
+
+
+
+
+                                        val emptyString = ""
+                                        val apiInterface = RetrofitApi.create()
+
+                                            apiInterface.usergooglesignup(userInstancesignup).enqueue(object:
+                                                Callback<User> {
+                                                override fun onResponse(
+                                                    call: Call<User>,
+                                                    response: Response<User>
+                                                ) {
+                                                    if(response.isSuccessful){
+                                                        Log.i("onResponse goooood", response.body().toString())
+
+                                                    } else {
+                                                        Log.i("OnResponse not good", response.body().toString())
+                                                    }
+                                                }
+
+                                                override fun onFailure(call: Call<User>, t: Throwable) {
+
+                                                    println("noooooooooooooooooo")
+                                                }
+
+                                            })
+
+
+                                    ////###########################################################################
+
+
+                                }
+
+
+                                //-------------------------------------------------
+                                dialogCOmpleteUser.show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<List<UserLoggedIn>>, t: Throwable) {
+                            println("fchelna")
+                        }
+                    })
+
+                    //--------------
+
+
+
+                }
+                else -> {
+                    // Shouldn't happen.
+                    Log.d("one tap", "No ID token!")
+
+
+                }
+            }
+        } catch (e: ApiException) {
+            when (e.statusCode) {
+                CommonStatusCodes.CANCELED -> {
+                    Log.d("one tap", "One-tap dialog was closed.")
+                    // Don't re-prompt the user.
+
+
+                }
+                CommonStatusCodes.NETWORK_ERROR -> {
+                    Log.d("one tap", "One-tap encountered a network error.")
+                    // Try again or just ignore.
+
+
+                }
+                else -> {
+                    Log.d("one tap", "Couldn't get credential from result." +
+                            " (${e.localizedMessage})")
+
+
+
+                }
+            }
+        }
+    }
+    private fun displaySignIn(){
+        oneTapClient?.beginSignIn(signInRequest!!)
+            ?.addOnSuccessListener(this) { result ->
+                try {
+                    val ib = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                    oneTapResult.launch(ib)
+                } catch (e: IntentSender.SendIntentException) {
+
+                    Log.e("btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                    Log.e("btn click", "problerm")
+                }
+            }
+            ?.addOnFailureListener(this) { e ->
+                // No Google Accounts found. Just continue presenting the signed-out UI.
+                displaySignUp()
+                Log.d("btn click", e.localizedMessage!!)
+                Log.e("btn click", "problerm 22222")
+
+            }
+    }
+
+    private fun displaySignUp() {
+        oneTapClient?.beginSignIn(signUpRequest!!)
+            ?.addOnSuccessListener(this) { result ->
+                try {
+                    val ib = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                    oneTapResult.launch(ib)
+                } catch (e: IntentSender.SendIntentException) {
+                    Log.e("btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                }
+            }
+            ?.addOnFailureListener(this) { e ->
+                // No Google Accounts found. Just continue presenting the signed-out UI.
+
+                Log.d("ezzeeeebi", e.localizedMessage!!)
+
+            }
+
+
+    }
+
+    companion object {
+        private const val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1
+    }
 }

@@ -24,6 +24,7 @@ class LkolPro : AppCompatActivity() {
     lateinit var  camera_img:ImageButton
     lateinit var frag:Fragment
     lateinit var lostfound:Fragment
+    lateinit var loggedAs:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -53,6 +54,7 @@ class LkolPro : AppCompatActivity() {
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
         profile_icon = findViewById(R.id.profile_icon)
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
+         loggedAs = mSharedPref.getString("lastlogged", "user").toString()
         val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(profile_icon)
         supportFragmentManager.beginTransaction().replace(R.id.frame, HomePro()).commit()
@@ -94,7 +96,14 @@ class LkolPro : AppCompatActivity() {
 
 
             R.id.profile_icon -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, ProfileUser()).commit()
+                if(loggedAs == "user") {
+                    getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame, ProfileUser()).commit()
+                }
+                if(loggedAs == "club") {
+                    getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame, ProfileClub()).commit()
+                }
                 getSupportFragmentManager().beginTransaction().remove(frag).commit()
                 getSupportFragmentManager().beginTransaction().remove(lostfound).commit()
 

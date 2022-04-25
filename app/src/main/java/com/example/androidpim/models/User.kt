@@ -3,15 +3,15 @@ package com.example.androidpim.models
 
 
 data class UserLoggedIn (
-    val _id: String? = null,
-    val identifant: String? = null,
-    val FirstName: String? = null,
+    val id: String? = null,
+    var identifant: String? = null,
+    var FirstName: String? = null,
     val LastName: String? = null,
-    val className: String? = null,
-    val description: String? = null,
+    var className: String? = null,
+    var description: String? = null,
     var email: String? = null,
     var password: String? = null,
-    val phoneNumber: Int? = null,
+    var phoneNumber: Int? = null,
     val profilePicture: String? = null,
     val role: String? = null,
     val social: Boolean? = null,
@@ -20,18 +20,18 @@ data class UserLoggedIn (
 )
 
 data class User (
-    val identifant: String? = null,
-    val FirstName: String? = null,
-    val LastName: String? = null,
-    val className: String? = null,
-    val description: String? = null,
+    var identifant: String? = null,
+    var FirstName: String? = null,
+    var LastName: String? = null,
+    var className: String? = null,
+    var description: String? = null,
     var email: String? = null,
     var password: String? = null,
     var phoneNumber: Int? = null,
-    val profilePicture: String? = null,
-    val role: String? = null,
-    val social: Boolean? = null,
-    val verified: Boolean? = null
+    var profilePicture: String? = null,
+    var role: String? = null,
+    var social: Boolean? = null,
+    var verified: Boolean? = null
 )
 
 data class UserReset (
