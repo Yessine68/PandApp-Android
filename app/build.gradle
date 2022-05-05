@@ -108,5 +108,10 @@ dependencies {
 
 
 
+    //-- QR Code
+    implementation 'com.github.kenglxn.qrgen:android:2.6.0'
+
+
+
 
 }

@@ -55,6 +55,11 @@ interface RetrofitApi {
         @Body eventInt: EventInt
     ):Call<EventInt>
 
+    @DELETE("EventInt/{id}")
+    fun leaveEvent(
+        @Path("id") id:String,
+    ):Call<EventInt>
+
     @POST("authClub")
     fun clubLogin(
         @Body club: ClubLoggedIn
