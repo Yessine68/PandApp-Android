@@ -50,7 +50,6 @@ class fragmentLost : Fragment() {
                     for(post in response.body()!!)
                     {
                         Log.i("ghassen", post.toString())
-
                         postList?.add(post)
 
                     }
@@ -66,7 +65,6 @@ class fragmentLost : Fragment() {
 
                 }
             }
-
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
                 t.printStackTrace()
                 println("OnFailure")
@@ -74,6 +72,13 @@ class fragmentLost : Fragment() {
 
         })
 
+
+        listView.setOnItemClickListener { parent, view, position, id ->
+println("el position ya gaston "+postList?.get(position).toString())
+
+
+
+        }
 
         return view
 

@@ -1,7 +1,9 @@
 package com.example.androidpim.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -31,6 +33,7 @@ class upload_post : AppCompatActivity() {
     lateinit var button_choose : Button
     lateinit var imageView: ImageView
     lateinit var imageViewBack: ImageView
+    lateinit var mSharedPref: SharedPreferences
 
     lateinit var buttonPost : Button
     lateinit var objet: EditText
@@ -44,20 +47,21 @@ class upload_post : AppCompatActivity() {
         setContentView(R.layout.activity_upload_post)
         objet= findViewById(R.id.objet)
         place= findViewById(R.id.place)
+        mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
         var route = intent.getStringExtra("data")
-
-
+        val user_id: String = mSharedPref.getString("LastName", "zwayten").toString() + "" + mSharedPref.getString("FirstName", "zwayten").toString()
+        val email =mSharedPref.getString("email", "zwayten").toString().trim()
+        println("ghassenklai "+user_id)
         buttonPost=findViewById(R.id.buttonPost)
         buttonPost.setOnClickListener {
             val objet_text = objet.text.toString().trim()
             val place_text = place.text.toString().trim()
-            val publisheId = "ghassen"
+            val publisheId = user_id
             val type= route!!
-            print("hellew"+type)
-            addPost(publisheId,type,objet_text,place_text)
-finish()
-
+            println("ghassen klai "+user_id)
+            addPost(email,publisheId,type,objet_text,place_text)
+            finish()
         }
         imageViewBack=findViewById(R.id.imageViewBack)
         imageViewBack.setOnClickListener {
@@ -89,7 +93,7 @@ finish()
 
         }
     }
-    private fun addPost(publisheId: String, type: String, objet: String, place: String){
+    private fun addPost(email:String,publisheId: String, type: String, objet: String, place: String){
 
 
         val stream = contentResolver.openInputStream(selectedImageUri!!)
@@ -111,6 +115,8 @@ finish()
             data["type"] = type.toRequestBody(MultipartBody.FORM)
             data["objet"] = objet.toRequestBody(MultipartBody.FORM)
             data["place"] = place.toRequestBody(MultipartBody.FORM)
+            data["email"] = email.toRequestBody(MultipartBody.FORM)
+
 
             if (imagePost != null) {
                 println("++++++++++++++++++++++++++++++++++++"+imagePost)

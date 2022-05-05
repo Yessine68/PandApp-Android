@@ -30,22 +30,37 @@ private const val ARG_PARAM2 = "param2"
  */
 class lostfoundfrag : Fragment() {
     var mContext: Context? = null
-
+   lateinit var viewPager:ViewPager
      val lostFrag: fragmentLost = fragmentLost()
      val foundFrag: fragmentfound = fragmentfound()
     val POST_ROUTE = "com.example.lostfound.postpage"
-    lateinit var  adapter:Adapter;
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        var tabLayout = view.findViewById<View>(R.id.tabLayout) as TabLayout
+
+        super.onViewCreated(view, savedInstanceState)
+         viewPager = view.findViewById<View>(R.id.viewPager) as ViewPager
+
+        var adapter = ViewPagerAdapter(childFragmentManager)
+        // Add fragments
+        adapter.addFragment(lostFrag, "LOST")
+        adapter.addFragment(foundFrag, "Found")
+        viewPager.adapter = adapter
+        tabLayout.setupWithViewPager(viewPager)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_lostfoundfrag, container, false)
         this.mContext = view.context;
-        var adapter = ViewPagerAdapter(parentFragmentManager)
+
+         viewPager = view.findViewById<View>(R.id.viewPager) as ViewPager
 
         // Inflate the layout for this fragment
-        var viewPager = view.findViewById<View>(R.id.viewPager) as ViewPager
-        var tabLayout = view.findViewById<View>(R.id.tabLayout) as TabLayout
         var searchView = view.findViewById<View>(R.id.searchView) as SearchView
         var buttonCreate = view.findViewById<View>(R.id.buttonCreate) as FloatingActionButton
       /*  val lostDilog = this.mContext?.let { it1 -> DialogSheet(it1, true) }
@@ -81,13 +96,11 @@ class lostfoundfrag : Fragment() {
         }
         
 
-        // Add fragments
-        adapter.addFragment(lostFrag, "LOST")
-        adapter.addFragment(foundFrag, "Found")
-        viewPager.adapter = adapter
-        tabLayout.setupWithViewPager(viewPager)
+
       return  view
     }
+
+
 
 
 }

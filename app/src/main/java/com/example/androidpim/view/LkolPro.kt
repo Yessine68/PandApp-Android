@@ -89,12 +89,11 @@ class LkolPro : AppCompatActivity() {
 
              */
             R.id.heart_icon -> {
+                lostfound = lostfoundfrag()
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, lostfound).commit()
                 getSupportFragmentManager().beginTransaction().remove(frag).commit()
 
             }
-
-
             R.id.profile_icon -> {
                 if(loggedAs == "user") {
                     getSupportFragmentManager().beginTransaction()

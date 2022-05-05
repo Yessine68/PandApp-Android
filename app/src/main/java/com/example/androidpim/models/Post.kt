@@ -2,6 +2,7 @@ package com.example.androidpim.models
 
 
 data class Post(
+    val email:String,
     val _id: String,
     val image: String,
     val objet: String,

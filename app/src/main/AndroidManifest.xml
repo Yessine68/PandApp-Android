@@ -3,16 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidpim">
 
-    package="com.example.androidpim" >
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-
 
     <application
         android:allowBackup="true"
@@ -24,10 +21,16 @@
         android:theme="@style/Theme.AndroidPim"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateHidden">
+        <activity android:name=".ChatRoomActivity"
+            android:exported="false"
+            />
+        <activity android:name=".EntranceActivity"
+            android:exported="false"
+
+            />
         <activity
             android:name=".pdfReader"
             android:exported="false" />
-
         <activity
             android:name=".courses"
             android:exported="false" />

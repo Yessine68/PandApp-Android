@@ -91,7 +91,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/add_icon"
                 android:layout_toEndOf="@+id/home_icon"
-                android:src="@drawable/ic_big_search"
+                android:src="@drawable/courseslogo"
                 />
 
             <ImageView
@@ -110,7 +110,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/profile_icon"
                 android:layout_toEndOf="@+id/add_icon"
-                android:src="@drawable/ic_big_heart"
+                android:src="@drawable/lostfwhite"
                 />
 
             <de.hdodenhof.circleimageview.CircleImageView

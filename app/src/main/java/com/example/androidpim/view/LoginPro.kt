@@ -292,17 +292,17 @@ class LoginPro : AppCompatActivity() {
                             call: Call<UserLoggedIn>,
                             response: Response<UserLoggedIn>
                         ) {
+                            println("loggedin"+response.body().toString())
                             if (response.isSuccessful) {
-
                                 mSharedPref.edit().apply {
-
+                                    putString("className", response.body()?.className.toString())
                                     putString("email", response.body()?.email.toString())
                                     putString("password", response.body()?.password.toString())
                                     putString("FirstName", response.body()?.FirstName.toString())
                                     putString("profilePicture", response.body()?.profilePicture.toString())
                                     putString("phonenumber", response.body()?.phoneNumber.toString())
                                     putString("identifiant", response.body()?.identifant.toString())
-                                    putString("id", response.body()?.id.toString())
+                                    putString("id", response.body()?._id.toString())
                                     putString("role", "user")
                                     putString("lastlogged", "user")
                                     if (remember.isChecked()) {
@@ -838,7 +838,7 @@ class LoginPro : AppCompatActivity() {
                                                 putString("profilePicture", userInstance.profilePicture.toString())
                                                 putString("phonenumber", userInstance.phoneNumber.toString())
                                                 putString("identifiant", userInstance.identifant.toString())
-                                                putString("id", userInstance.id.toString())
+                                                putString("id", userInstance._id.toString())
                                                 putString("role", "user")
                                                 putString("lastlogged", "user")
 
