@@ -42,6 +42,9 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
+            android:name=".view.AddPost"
+            android:exported="false" />
+        <activity
             android:name=".ChatRoomActivity"
             android:exported="false" />
         <activity

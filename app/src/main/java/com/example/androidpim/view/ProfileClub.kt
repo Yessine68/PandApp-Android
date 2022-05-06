@@ -1,6 +1,7 @@
 package com.example.androidpim.view
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
@@ -34,6 +35,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
     lateinit var emailprofileclub: TextView
     ////lateinit var editprofilebutton: Button
     ////lateinit var documentsrequest: Button
+    lateinit var addEvent:Button
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.club_profile, parent, false)
@@ -43,6 +45,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
         imageProfileclub = view.findViewById(R.id.imageProfileclub)
         usernameProfileclub = view.findViewById(R.id.usernameProfileclub)
         emailprofileclub = view.findViewById(R.id.emailprofileclub)
+        addEvent = view.findViewById(R.id.addEvent)
 
 
         val activity = activity as Context
@@ -101,6 +104,14 @@ class ProfileClub: Fragment(R.layout.club_profile) {
         println("###############################################"+picStr)
         val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(imageProfileclub)
+
+
+        addEvent.setOnClickListener {
+            val intent = Intent(view.context, AddPost::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+        }
 
 
 

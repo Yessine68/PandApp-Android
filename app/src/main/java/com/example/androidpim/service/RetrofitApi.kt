@@ -28,6 +28,14 @@ interface RetrofitApi {
         @Part clubLogo: MultipartBody.Part
     ) : Call<Club>
 
+    @Multipart
+    @POST("event/")
+    fun postEvent(
+        @PartMap data : LinkedHashMap<String, RequestBody>,
+        @Part banner: MultipartBody.Part
+    ) : Call<Event>
+
+
 
     @GET("user/userByEmail/{email}")
     fun getUserByEmail(
