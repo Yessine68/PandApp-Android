@@ -10,11 +10,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface LostPostApi {
-    @GET("lostFound/lost")
-     fun GetAllLost(): Call<List<Post>>
-    @GET("lostFound/found")
-     fun GetAllFound(): Call<List<Post>>
-     @Multipart
+    @GET("mylostFound/lost/{id}")
+     fun GetMyAllLost(@Path("id")id:String): Call<List<Post>>
+    @GET("mylostFound/found/{id}")
+     fun GetMyAllFound(@Path("id")id:String): Call<List<Post>>
+    @GET("lostFound/lost/{id}")
+    fun GetAllLost(@Path("id")id:String): Call<List<Post>>
+    @GET("lostFound/found/{id}")
+    fun GetAllFound(@Path("id")id:String): Call<List<Post>>
+
+    @Multipart
      @POST("addpost")
      fun  lostAndFound(
          @PartMap data : LinkedHashMap<String, RequestBody>,

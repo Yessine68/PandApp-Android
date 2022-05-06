@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.androidpim.EntranceActivity
 import com.example.androidpim.R
-import com.example.androidpim.adapters.PostAdapter
+import com.example.androidpim.adapters.myPostAdapter
 import com.example.androidpim.models.Post
 import com.example.androidpim.service.LostPostApi
 import retrofit2.Call
@@ -25,10 +25,10 @@ import java.util.*
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 /**
  * A simple [Fragment] subclass.
- * Use the [fragmentLost.newInstance] factory method to
+ * Use the [myfragmentLost.newInstance] factory method to
  * create an instance of this fragment.
  */
-class fragmentLost : Fragment() {
+class myfragmentLost : Fragment() {
     // TODO: Rename and change types of parameters
 
 
@@ -48,7 +48,7 @@ class fragmentLost : Fragment() {
         listView = view!!.findViewById<ListView>(R.id.listView) as ListView
         // postList =  ArrayList<Post>()
         val apiInterface = LostPostApi.create()
-        apiInterface.GetAllLost(id).enqueue(object: Callback<List<Post>> {
+        apiInterface.GetMyAllLost(id).enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 
                 if(response.isSuccessful){
@@ -61,7 +61,7 @@ class fragmentLost : Fragment() {
 
                     Collections.reverse(response.body()!!)
                     val parentActivity = view.context as FragmentActivity
-                    val postAdapter = PostAdapter(parentActivity,response.body()!!)
+                    val postAdapter = myPostAdapter(parentActivity,response.body()!!)
                     listView.adapter = postAdapter
 
                     Log.i("yessss", response.body().toString())
@@ -98,7 +98,7 @@ println("el position ya gaston "+postList?.get(position))
                 mFinalList.add(p)
             }
         }
-        val postAdapter = PostAdapter(parentActivity, mFinalList)
+        val postAdapter = myPostAdapter(parentActivity, mFinalList)
         //PostAdapter postAdapter = new PostAdapter(parentActivity,postList);
         //postAdapter.getFilter().filter(search);
         listView.adapter = postAdapter

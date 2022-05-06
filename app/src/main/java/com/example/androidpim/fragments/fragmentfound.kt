@@ -1,5 +1,7 @@
 package com.example.androidpim.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,6 +31,7 @@ import java.util.*
 class fragmentfound : Fragment() {
     lateinit var listView:  ListView;
     private var postList: ArrayList<Post>? = null
+    lateinit var mSharedPref: SharedPreferences
 
 
     fun refreshList(search: String) {
@@ -51,11 +54,12 @@ class fragmentfound : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        print("zwaytennn was here found")
+        mSharedPref =  requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        val id: String = mSharedPref.getString("email", "zwayten").toString()
 
         val view = inflater.inflate(R.layout.fragment_lost, container, false)
         val apiInterface = LostPostApi.create()
-        apiInterface.GetAllFound().enqueue(object: Callback<List<Post>> {
+        apiInterface.GetAllFound(id).enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 if(response.isSuccessful){
                     for(post in response.body()!!)

@@ -15,6 +15,7 @@ import com.example.androidpim.R
 import com.example.androidpim.fragments.EventFragment
 import com.example.androidpim.fragments.ListOfCourses
 import com.example.androidpim.fragments.lostfoundfrag
+import com.example.androidpim.fragments.mylostfoundfrag
 
 
 class LkolPro : AppCompatActivity() {
@@ -35,7 +36,7 @@ class LkolPro : AppCompatActivity() {
         setContentView(R.layout.activity_lkol_pro)
         supportActionBar?.hide();
         frag = EventFragment()
-        lostfound =lostfoundfrag()
+        lostfound =mylostfoundfrag()
 
         val homeBtn = findViewById<ImageView>(R.id.home_icon)
         val searchBtn = findViewById<ImageView>(R.id.search_icon)
@@ -89,7 +90,7 @@ class LkolPro : AppCompatActivity() {
 
              */
             R.id.heart_icon -> {
-                lostfound = lostfoundfrag()
+                lostfound = mylostfoundfrag()
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, lostfound).commit()
                 getSupportFragmentManager().beginTransaction().remove(frag).commit()
 

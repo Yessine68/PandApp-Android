@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 
@@ -86,6 +87,7 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+
 //-----------------------------------------
 
     //Socket.io
@@ -112,6 +114,11 @@ dependencies {
     implementation 'com.github.kenglxn.qrgen:android:2.6.0'
 
 
+    // Google maps
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+
+    // Google Maps Android API Utility Library
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 
 
 }
