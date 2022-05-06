@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.AddPost"
+    >
+    <ImageView
+        android:id="@+id/imageViewBackadd"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/back" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/eventImageadd"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginStart="0dp"
+            android:adjustViewBounds="true"
+
+
+            android:src="@drawable/logo"
+
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="25dp">
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/titleadd"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+               >
+
+            </EditText>
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/placeadd"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                >
+
+
+            </EditText>
+
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/descriptionadd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+            </EditText>
+
+            <DatePicker
+                android:id="@+id/datePicker1"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:backgroundTint="#932626"
+                android:backgroundTintMode="add"
+                android:calendarTextColor="#F31919"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:foregroundTint="@color/md_red_900"
+                android:foregroundTintMode="add"
+                android:yearListSelectorColor="#FF4242" />
+
+
+
+
+
+            <Button
+                android:id="@+id/postAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:text="Post event">
+            </Button>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

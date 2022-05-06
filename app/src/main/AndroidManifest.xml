@@ -21,14 +21,15 @@
         android:theme="@style/Theme.AndroidPim"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateHidden">
-        <activity android:name=".ChatRoomActivity"
-            android:exported="false"
-            />
-        <activity android:name=".EntranceActivity"
-            android:exported="false"
-
-            />
-
+        <activity
+            android:name=".view.AddPost"
+            android:exported="false" />
+        <activity
+            android:name=".ChatRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EntranceActivity"
+            android:exported="false" />
         <activity
             android:name=".pdfReader"
             android:exported="false" />
