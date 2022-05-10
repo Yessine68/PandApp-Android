@@ -36,7 +36,7 @@ class LkolPro : AppCompatActivity() {
         setContentView(R.layout.activity_lkol_pro)
         supportActionBar?.hide();
         frag = EventFragment()
-        lostfound =mylostfoundfrag()
+        lostfound =lostfoundfrag()
 
         val homeBtn = findViewById<ImageView>(R.id.home_icon)
         val searchBtn = findViewById<ImageView>(R.id.search_icon)
@@ -90,7 +90,7 @@ class LkolPro : AppCompatActivity() {
 
              */
             R.id.heart_icon -> {
-                lostfound = mylostfoundfrag()
+                lostfound = lostfoundfrag()
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, lostfound).commit()
                 getSupportFragmentManager().beginTransaction().remove(frag).commit()
 

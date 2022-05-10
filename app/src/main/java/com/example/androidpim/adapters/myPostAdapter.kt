@@ -14,7 +14,7 @@ import com.example.androidpim.models.Post
 class myPostAdapter(// Declare variables
     private val context: FragmentActivity, postList: List<Post>
 ) :
-    ArrayAdapter<Post?>(context, R.layout.card_post, postList) {
+    ArrayAdapter<Post?>(context, R.layout.mycard_post, postList) {
     private val postList: List<Post>
     private var textViewTitle: TextView? = null
     private var textViewDescription: TextView? = null
@@ -22,7 +22,7 @@ class myPostAdapter(// Declare variables
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
-        val view: View = inflater.inflate(R.layout.card_post, null, true)
+        val view: View = inflater.inflate(R.layout.mycard_post, null, true)
 
         // Initialize
         textViewTitle = view.findViewById<View>(R.id.textViewTitle) as TextView

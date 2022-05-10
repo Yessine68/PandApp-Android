@@ -4,4 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SplashScreen"/>
+    tools:context=".view.SplashScreen">
+    <ImageView
+        android:src="@drawable/logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+
+    </ImageView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
