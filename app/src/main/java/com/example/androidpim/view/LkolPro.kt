@@ -17,7 +17,6 @@ import com.example.androidpim.fragments.ListOfChat
 import com.example.androidpim.fragments.ListOfCourses
 import com.example.androidpim.fragments.lostfoundfrag
 
-
 class LkolPro : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
     lateinit var profile_icon: ImageView

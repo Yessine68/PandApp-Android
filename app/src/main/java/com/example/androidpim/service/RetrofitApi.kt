@@ -110,7 +110,7 @@ interface RetrofitApi {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(baseUrl.baseApiUri)
+                .baseUrl(BASE_URL)
                 .build()
             return retrofit.create(RetrofitApi::class.java)
 

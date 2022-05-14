@@ -32,7 +32,7 @@ interface LostPostApi {
 
          fun create() : LostPostApi {
             return Retrofit.Builder()
-                .baseUrl(baseUrl.baseApiUri+"lostpost/")
+                .baseUrl(BASE_URL+"lostpost/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(LostPostApi::class.java)

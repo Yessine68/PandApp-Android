@@ -25,10 +25,9 @@ interface ElearningApi {
     ):Call<chatList>
 
     companion object {
-        var baseUrl:BaseUrl = BaseUrl()
         fun create() : ElearningApi {
             return Retrofit.Builder()
-                .baseUrl(baseUrl.baseApiUri)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(ElearningApi::class.java)
