@@ -108,7 +108,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
 
         addEvent.setOnClickListener {
             val intent = Intent(view.context, AddPost::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
 
         }

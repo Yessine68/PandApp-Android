@@ -84,12 +84,14 @@ class LkolPro : AppCompatActivity() {
 
 
             }
-            /*
+
             R.id.add_icon -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, GalleryFragment()).commit()
+                val intent = Intent(applicationContext, Scc::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
             }
 
-             */
+
             R.id.heart_icon -> {
                 lostfound = lostfoundfrag()
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, lostfound).commit()
