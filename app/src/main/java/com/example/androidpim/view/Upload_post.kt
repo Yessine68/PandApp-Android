@@ -14,9 +14,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpim.R
 import com.example.androidpim.models.Post
-import com.example.androidpim.models.User
 import com.example.androidpim.service.LostPostApi
-import com.example.androidpim.service.RetrofitApi
 import com.github.dhaval2404.imagepicker.ImagePicker
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody

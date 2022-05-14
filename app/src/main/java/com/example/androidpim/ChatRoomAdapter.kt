@@ -21,7 +21,6 @@ class ChatRoomAdapter(val context : Context, val chatList : ArrayList<Message>) 
         Log.d("chatlist size",chatList.size.toString())
         var view : View? = null
         when(viewType){
-
             0 ->{
                 view = LayoutInflater.from(context).inflate(R.layout.row_chat_user,parent,false)
                 Log.d("user inflating","viewType : ${viewType}")

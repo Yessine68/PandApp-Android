@@ -23,22 +23,16 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var mSocket: Socket;
     lateinit var userName: String;
     lateinit var roomName: String;
-
-
+    lateinit var layoutManager: LinearLayoutManager;
     val gson: Gson = Gson()
-
     //For setting the recyclerView.
     val chatList: ArrayList<Message> = arrayListOf();
     lateinit var chatRoomAdapter: ChatRoomAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chatroom)
-
-
         send.setOnClickListener(this)
         leave.setOnClickListener(this)
-
         //Get the nickname and roomname from entrance activity.
         try {
             userName = intent.getStringExtra("userName")!!
@@ -49,13 +43,10 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
 
 
         //Set Chatroom adapter
-
         chatRoomAdapter = ChatRoomAdapter(this, chatList);
         recyclerView.adapter = chatRoomAdapter;
-
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-
         //Let's connect to our Chat room! :D
         try {
             mSocket = IO.socket("http://10.0.2.2:3000")
@@ -65,7 +56,6 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
             Log.d("fail", "Failed to connect")
         }
-
         mSocket.connect()
         mSocket.on(Socket.EVENT_CONNECT, onConnect)
         mSocket.on("newUserToChatRoom", onNewUser)
@@ -121,8 +111,6 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
             recyclerView.scrollToPosition(chatList.size - 1) //move focus on last message
         }
     }
-
-
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.send -> sendMessage()
@@ -130,12 +118,12 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
     override fun onDestroy() {
-        finish()
         super.onDestroy()
         val data = initialData(userName, roomName)
         val jsonData = gson.toJson(data)
         mSocket.emit("unsubscribe", jsonData)
         mSocket.disconnect()
+        finishActivity(CONTEXT_INCLUDE_CODE)
     }
 
 }

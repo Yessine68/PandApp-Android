@@ -13,19 +13,18 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.fragments.EventFragment
+import com.example.androidpim.fragments.ListOfChat
 import com.example.androidpim.fragments.ListOfCourses
 import com.example.androidpim.fragments.lostfoundfrag
-import com.example.androidpim.fragments.mylostfoundfrag
 
 
 class LkolPro : AppCompatActivity() {
-
     lateinit var mSharedPref: SharedPreferences
     lateinit var profile_icon: ImageView
-    lateinit var  camera_img:ImageButton
     lateinit var frag:Fragment
     lateinit var lostfound:Fragment
     lateinit var loggedAs:String
+    lateinit var send_img:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -37,6 +36,7 @@ class LkolPro : AppCompatActivity() {
         supportActionBar?.hide();
         frag = EventFragment()
         lostfound =lostfoundfrag()
+         send_img = findViewById<ImageButton>(R.id.send_img)
 
         val homeBtn = findViewById<ImageView>(R.id.home_icon)
         val searchBtn = findViewById<ImageView>(R.id.search_icon)
@@ -44,14 +44,15 @@ class LkolPro : AppCompatActivity() {
         val favouriteBtn = findViewById<ImageView>(R.id.heart_icon)
         val profileBtn = findViewById<ImageView>(R.id.profile_icon)
         val camera_img = findViewById<ImageView>(R.id.camera_img)
-
-
         homeBtn.setOnClickListener(clickListener)
         searchBtn.setOnClickListener(clickListener)
         galleryBtn.setOnClickListener(clickListener)
         favouriteBtn.setOnClickListener(clickListener)
         profileBtn.setOnClickListener(clickListener)
-
+        send_img.setOnClickListener {
+            supportFragmentManager.beginTransaction().replace(R.id.frame, ListOfChat()).commit()
+            supportFragmentManager.beginTransaction().remove(frag).commit()
+        }
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
         profile_icon = findViewById(R.id.profile_icon)
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
