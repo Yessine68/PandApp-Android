@@ -86,7 +86,7 @@ class LkolPro : AppCompatActivity() {
 
             R.id.add_icon -> {
                 val intent = Intent(applicationContext, Scc::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK 
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
             }
 

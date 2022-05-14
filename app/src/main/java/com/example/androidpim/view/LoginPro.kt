@@ -353,13 +353,13 @@ class LoginPro : AppCompatActivity() {
         usersignup?.setOnClickListener {
             dialogSheet2.dismiss()
             val intent = Intent(applicationContext, OnboardingExample4Activity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
         clubignup?.setOnClickListener {
             dialogSheet2.dismiss()
             val intent = Intent(applicationContext, OnboardingExample5::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
 
