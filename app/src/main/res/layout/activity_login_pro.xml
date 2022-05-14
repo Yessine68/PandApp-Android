@@ -130,6 +130,7 @@
             android:layout_gravity="left"
             android:elevation="0dp"
             android:layout_margin="5dp"
+            android:buttonTint="@color/md_red_800"
             android:text="Remember me"/>
 
         <Button

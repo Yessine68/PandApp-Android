@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="358dp"
-        android:layout_height="474dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -49,7 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#00000000"
-                tools:ignore="SpeakableTextPresentCheck"></Button>
+                tools:ignore="SpeakableTextPresentCheck">
+
+            </Button>
         </RelativeLayout>
 
 

@@ -343,8 +343,8 @@ class LoginPro : AppCompatActivity() {
         val dialogSheet2 = DialogSheet(this@LoginPro, true)
         dialogSheet2.setView(custom_dialog_view_singup)
         val factory2 = layoutInflater
-        dialogSheet2.setTitle("Reset Password")
-            .setMessage("Verification code will be sent to the mail")
+        dialogSheet2.setTitle("Signup")
+            .setMessage("Choose which role you would like to sign-up with")
             .setSingleLineTitle(true)
             .setColoredNavigationBar(true)
         val inflatedView2 = dialogSheet2.inflatedView
