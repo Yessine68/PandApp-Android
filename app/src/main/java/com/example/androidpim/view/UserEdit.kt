@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.models.User
 import com.example.androidpim.models.UserLoggedIn
+import com.example.androidpim.service.BASE_URL
 import com.example.androidpim.service.RetrofitApi
 import kotlinx.android.synthetic.main.activity_sign_up_pro.*
 import retrofit2.Call
@@ -59,7 +60,7 @@ class UserEdit : Fragment(R.layout.user_edit) {
 
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
         println("###############################################"+picStr)
-        val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
+        val ppp = BASE_URL +"upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(imageProfile)
         saveedit.setOnClickListener {
             var user = User()

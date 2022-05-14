@@ -21,6 +21,7 @@ import com.example.androidpim.adapters.EventAdapter
 import com.example.androidpim.models.ClubLoggedIn
 import com.example.androidpim.models.Document
 import com.example.androidpim.models.Event
+import com.example.androidpim.service.BASE_URL
 import com.example.androidpim.service.RetrofitApi
 import com.example.androidpim.view.LkolPro
 import com.example.androidpim.view.ProfileUser
@@ -78,7 +79,7 @@ class DocumentsFragment : Fragment(R.layout.document_fragment) {
         usernameProfileDoc.text = firstName +" "+lastName;
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
         println("###############################################"+picStr)
-        val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
+        val ppp = BASE_URL +"upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(imageProfileDoc)
 
         //-----------------------------------------------------

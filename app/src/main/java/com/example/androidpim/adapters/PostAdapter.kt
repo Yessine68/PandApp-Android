@@ -14,6 +14,7 @@ import com.example.androidpim.ChatRoomActivity
 import com.example.androidpim.R
 import com.example.androidpim.models.Post
 import com.example.androidpim.models.chatList
+import com.example.androidpim.service.BASE_URL
 import com.example.androidpim.service.ElearningApi
 import com.example.androidpim.service.RetrofitApi
 import kotlinx.android.synthetic.main.activity_entrance.*
@@ -48,18 +49,20 @@ class PostAdapter(// Declare variables
         // Set the title and description to textView
 
         if(post.email==email ){
+            println("email")
             val view: View = inflater.inflate(R.layout.mycardpost, null, true)
             // Initialize
             textViewTitle = view.findViewById<View>(R.id.textViewTitle) as TextView
             profile_icon = view.findViewById(R.id.profile_icon)
             textViewDescription = view.findViewById<View>(R.id.textViewDescription) as TextView
             textViewDescription!!.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-            val ppp = "http://10.0.2.2:3000/upload/download/"+post.image
+            val ppp = BASE_URL+"upload/download/"+post.image
             textViewTitle!!.setText(post.objet)
             textViewDescription!!.setText(post.place)
             Glide.with(view).load(Uri.parse(ppp)).into(profile_icon)
             return view
         }else{
+            print("not email")
             val view:View= inflater.inflate(R.layout.card_post, null, true)
             // Initialize
             textViewTitle = view.findViewById<View>(R.id.textViewTitle) as TextView
@@ -103,7 +106,7 @@ class PostAdapter(// Declare variables
                     Toast.makeText(context,"Nickname and Roomname should be filled!", Toast.LENGTH_SHORT)
                 }
             }
-            val ppp = "http://10.0.2.2:3000/upload/download/"+post.image
+            val ppp = BASE_URL+"upload/download/"+post.image
             textViewTitle!!.setText(post.objet)
             textViewDescription!!.setText(post.place)
             Glide.with(view).load(Uri.parse(ppp)).into(profile_icon)

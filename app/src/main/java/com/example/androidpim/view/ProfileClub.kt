@@ -20,6 +20,7 @@ import com.example.androidpim.R
 import com.example.androidpim.adapters.EventAdapter
 import com.example.androidpim.fragments.DocumentsFragment
 import com.example.androidpim.models.Event
+import com.example.androidpim.service.BASE_URL
 import com.example.androidpim.service.RetrofitApi
 import retrofit2.Call
 import retrofit2.Callback
@@ -102,7 +103,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
 
         val picStr: String = mSharedPref.getString("clubLogo", "email").toString()
         println("###############################################"+picStr)
-        val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
+        val ppp = BASE_URL +"upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(imageProfileclub)
 
 

@@ -21,6 +21,7 @@ import com.example.androidpim.R
 import com.example.androidpim.fragments.DocumentsFragment
 import com.example.androidpim.models.User
 import com.example.androidpim.models.UserLoggedIn
+import com.example.androidpim.service.BASE_URL
 import com.example.androidpim.service.RetrofitApi
 import com.marcoscg.dialogsheet.DialogSheet
 import kotlinx.android.synthetic.main.activity_sign_up_pro.*
@@ -80,7 +81,7 @@ class ProfileUser : Fragment(R.layout.activity_profile_user) {
                     if(testgolgol == false){
 
                         println("###############################################"+userInstance.profilePicture)
-                        val ppp = "http://10.0.2.2:3000/upload/download/"+userInstance.profilePicture
+                        val ppp = BASE_URL +"upload/download/"+userInstance.profilePicture
                         if (parent != null) {
                             Glide.with(parent.context).load(Uri.parse(ppp)).into(imageProfile)
                         }

@@ -18,6 +18,7 @@ import com.example.androidpim.R
 import com.example.androidpim.models.Event
 import com.example.androidpim.models.EventInt
 import com.example.androidpim.models.Qrj
+import com.example.androidpim.service.BASE_URL
 import com.example.androidpim.service.RetrofitApi
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
@@ -49,7 +50,7 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
         mSharedPref = mContext?.getSharedPreferences("UserPref", Context.MODE_PRIVATE)!!
         val email: String = mSharedPref.getString("email", "zwayten").toString()
 
-        val ppp = "http://10.0.2.2:3000/upload/download/"+eventList[position].banner
+        val ppp = BASE_URL +"upload/download/"+eventList[position].banner
 
         this.mContext?.let { Glide.with(it).load(Uri.parse(ppp)).into(holder.eventImage) }
 

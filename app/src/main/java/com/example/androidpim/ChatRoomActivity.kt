@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidpim.R
+import com.example.androidpim.service.BASE_URL
 import com.google.gson.Gson
 import com.junga.socketio_android.model.MessageType
 import io.socket.client.IO
@@ -49,7 +50,7 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         recyclerView.layoutManager = layoutManager
         //Let's connect to our Chat room! :D
         try {
-            mSocket = IO.socket("http://10.0.2.2:3000")
+            mSocket = IO.socket(BASE_URL)
             Log.d("success", mSocket.id())
 
         } catch (e: Exception) {

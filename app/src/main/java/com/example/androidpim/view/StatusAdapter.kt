@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.models.User
+import com.example.androidpim.service.BASE_URL
 
 
 class StatusAdapter(val activity: Context, val statusList: ArrayList<User>) : RecyclerView.Adapter<StatusAdapter.ViewHolder>() {
@@ -31,7 +32,7 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<User>) : Re
 
         p0.name?.text = statusList[p1].FirstName+ " " + statusList[p1].LastName
         p0.name.visibility = View.VISIBLE
-        val ppp = "http://10.0.2.2:3000/upload/download/"+statusList[p1].profilePicture
+        val ppp = BASE_URL +"upload/download/"+statusList[p1].profilePicture
         Glide.with(activity)
             .load(ppp)
             .into(p0.photo)

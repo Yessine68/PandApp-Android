@@ -28,7 +28,6 @@ interface LostPostApi {
 
 
      companion object {
-         var baseUrl:BaseUrl = BaseUrl()
 
          fun create() : LostPostApi {
             return Retrofit.Builder()

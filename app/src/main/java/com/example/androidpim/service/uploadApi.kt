@@ -21,7 +21,6 @@ open fun uploadFile(
 
 
     companion object {
-        var baseUrl:BaseUrl = BaseUrl()
         fun create() : uploadApi {
            return Retrofit.Builder()
                .baseUrl(BASE_URL)

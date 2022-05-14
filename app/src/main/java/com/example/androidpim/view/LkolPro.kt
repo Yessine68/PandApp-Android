@@ -16,6 +16,7 @@ import com.example.androidpim.fragments.EventFragment
 import com.example.androidpim.fragments.ListOfChat
 import com.example.androidpim.fragments.ListOfCourses
 import com.example.androidpim.fragments.lostfoundfrag
+import com.example.androidpim.service.BASE_URL
 
 class LkolPro : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
@@ -56,7 +57,7 @@ class LkolPro : AppCompatActivity() {
         profile_icon = findViewById(R.id.profile_icon)
         val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
          loggedAs = mSharedPref.getString("lastlogged", "user").toString()
-        val ppp = "http://10.0.2.2:3000/upload/download/"+picStr
+        val ppp = BASE_URL +"upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(profile_icon)
         supportFragmentManager.beginTransaction().replace(R.id.frame, HomePro()).commit()
         supportFragmentManager.beginTransaction().replace(R.id.frameEvent, frag).commit()

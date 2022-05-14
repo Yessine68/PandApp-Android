@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.downloader.OnDownloadListener
 import com.downloader.PRDownloader
+import com.example.androidpim.service.BASE_URL
 import com.github.barteksc.pdfviewer.PDFView
 import java.io.File
 
@@ -35,7 +36,7 @@ class pdfReader : AppCompatActivity() {
         PRDownloader.initialize(applicationContext)
         pdfView=findViewById(R.id.PDFView)
         downloadPdfFromInternet(
-            "http://10.0.2.2:3000/upload/download/"+pdfName,
+            BASE_URL +"upload/download/"+pdfName,
             getRootDirPath(this),
             "courses"
         )

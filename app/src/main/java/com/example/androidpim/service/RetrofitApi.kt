@@ -104,7 +104,6 @@ interface RetrofitApi {
         fun GetAllArticles():Call<ArticlesReponse>
     */
     companion object {
-         var baseUrl:BaseUrl = BaseUrl()
 
         fun create() : RetrofitApi {
 
