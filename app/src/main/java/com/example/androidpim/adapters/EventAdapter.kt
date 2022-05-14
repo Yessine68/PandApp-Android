@@ -3,6 +3,7 @@ package com.example.androidpim.adapters
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.models.Event
 import com.example.androidpim.models.EventInt
+import com.example.androidpim.models.Qrj
 import com.example.androidpim.service.RetrofitApi
+import com.google.gson.Gson
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.google.zxing.qrcode.QRCodeWriter
 import com.marcoscg.dialogsheet.DialogSheet
 import net.glxn.qrgen.core.scheme.VCard
 
@@ -180,13 +187,13 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
 
                 return ts
             }
-
+/*
             fun generateQRCode()
             {
 
                 val vCard = VCard(eventTitleDetail?.text.toString())
-                    .setAddress(eventPlaceDetail?.text.toString())
-                    .setPhoneNumber(eventTimeDetail?.text.toString())
+                    .setAddress(eventList[position]._id)
+                    .setPhoneNumber(email)
                     .setWebsite(descriptiondetail?.text.toString())
                 qrImage =
                     net.glxn.qrgen.android.QRCode.from(vCard).bitmap()
@@ -208,12 +215,43 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
 
 //----------------qr code
 
+*/
+
+
+            fun generateQj() {
+                val data = Qrj(email, eventList[position]._id)
+                println("qr email"+ data.userEmail)
+                println("qr email"+ data.postId)
+                var gson = Gson()
+                var jsonString = gson.toJson(data)
+                println(jsonString)
+
+                val writer = QRCodeWriter()
+                try {
+                    val bitMatrix = writer.encode(jsonString,BarcodeFormat.QR_CODE, 512,512)
+                    val width = bitMatrix.width
+                    val height = bitMatrix.height
+                    val bmp = Bitmap.createBitmap(width,height,Bitmap.Config.RGB_565)
+                    for (x in 0 until width){
+                        for (y in 0 until height) {
+                            bmp.setPixel(x,y, if(bitMatrix[x,y]) Color.BLACK else Color.WHITE)
+                        }
+                    }
+                    qrevent?.setImageBitmap(bmp)
+                } catch (e:WriterException){
+                    println("oooo")
+                }
+
+            }
+
+
 
             eventTitleDetail?.setText(eventList[position].title.toString())
             eventPlaceDetail?.setText(eventList[position].place.toString())
             eventTimeDetail?.setText(eventList[position].Time.toString())
             descriptiondetail?.setText(eventList[position].description.toString())
-            generateQRCode()
+            generateQj()
+
 
 
 
@@ -244,4 +282,11 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
 
 
     }
+            /*
+                            class Qrj(
+                                var userEmail: String? = null,
+                                val postId: String? = null
+                            )
+
+             */
 }

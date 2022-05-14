@@ -1,6 +1,7 @@
 package com.example.androidpim.view
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -24,6 +25,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.jetbrains.anko.activityManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,19 +34,16 @@ import retrofit2.Response
 class AddPost : AppCompatActivity() {
 
     lateinit var imageViewBackadd: ImageView
-     var fab: ImageView?=null
+    var fab: ImageView?=null
     lateinit var titleadd: EditText
     lateinit var placeadd: EditText
     lateinit var descriptionadd: EditText
     lateinit var datePicker1: DatePicker
     lateinit var postAdd:Button
-
-
     lateinit var mSharedPref: SharedPreferences
     private var selectedImageUri: Uri? = null
 
     private fun login(titleadd_text: String, placeadd_text: String,datePicker1_text: String, descriptionadd_text: String){
-
 
         val stream = contentResolver.openInputStream(selectedImageUri!!)
         if(stream!=null){
@@ -62,21 +61,15 @@ class AddPost : AppCompatActivity() {
 
             val publisher = mSharedPref.getString("login", "zwayten").toString()
             val typeadd = "Event"
-
-
             Log.d("MyActivity", "on finish upload file")
-
             val apiInterface = RetrofitApi.create()
             val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
-
             data["publisheId"] = publisher.toRequestBody(MultipartBody.FORM)
             data["place"] = placeadd_text.toRequestBody(MultipartBody.FORM)
             data["Time"] = datePicker1_text.toRequestBody(MultipartBody.FORM)
             data["description"] = descriptionadd_text.toRequestBody(MultipartBody.FORM)
             data["title"] = titleadd_text.toRequestBody(MultipartBody.FORM)
             data["type"] = typeadd.toRequestBody(MultipartBody.FORM)
-
-
 
             if (banner != null) {
                 println("++++++++++++++++++++++++++++++++++++"+banner)
@@ -131,27 +124,20 @@ class AddPost : AppCompatActivity() {
             val month: Int = datePicker1.getMonth() + 1
             val year: Int = datePicker1.getYear()
             val fullDate = day.toString()+"-"+month.toString()+"-"+year.toString()
-
             val titleadd_text =  titleadd.text.toString().trim()
             val placeadd_text = placeadd.text.toString().trim()
             val descriptionadd_text = descriptionadd.text.toString().trim()
             login(titleadd_text, placeadd_text,fullDate, descriptionadd_text)
-
         }
-
         imageViewBackadd.setOnClickListener{
-            val intent = Intent(view.context, LkolPro::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            finish()
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == ImagePicker.REQUEST_CODE){
             selectedImageUri = data?.data
             fab?.setImageURI(selectedImageUri)
-
         }
     }
 }
