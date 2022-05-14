@@ -104,10 +104,13 @@ interface RetrofitApi {
         fun GetAllArticles():Call<ArticlesReponse>
     */
     companion object {
+         var baseUrl:BaseUrl = BaseUrl()
+
         fun create() : RetrofitApi {
+
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.14:3000/")
+                .baseUrl(baseUrl.baseApiUri)
                 .build()
             return retrofit.create(RetrofitApi::class.java)
 

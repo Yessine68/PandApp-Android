@@ -28,9 +28,11 @@ interface LostPostApi {
 
 
      companion object {
-        fun create() : LostPostApi {
+         var baseUrl:BaseUrl = BaseUrl()
+
+         fun create() : LostPostApi {
             return Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000/lostpost/")
+                .baseUrl(baseUrl.baseApiUri+"lostpost/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(LostPostApi::class.java)

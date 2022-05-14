@@ -21,9 +21,10 @@ open fun uploadFile(
 
 
     companion object {
+        var baseUrl:BaseUrl = BaseUrl()
         fun create() : uploadApi {
            return Retrofit.Builder()
-               .baseUrl("http://10.0.2.2:3000/")
+               .baseUrl(baseUrl.baseApiUri)
                .addConverterFactory(GsonConverterFactory.create())
                 .build()
             .create(uploadApi::class.java)
