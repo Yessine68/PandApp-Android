@@ -27,8 +27,8 @@
                 android:layout_height="125dp"
                 android:background="@color/white"
                 android:inputType="text"
-                android:maxLength="20"
-                android:maxLines="1" />
+                android:maxLength="200"
+                android:maxLines="5" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout

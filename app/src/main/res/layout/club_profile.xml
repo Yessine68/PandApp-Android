@@ -64,64 +64,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="10dp"
-                app:cardUseCompatPadding="true"
-                tools:cardCornerRAdius="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="3dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="5dp"
-                            android:padding="2dp"
-                            android:src="@drawable/ic_email_filled" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:text="Email"
-                            android:textColor="#605E5E"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
 
 
-                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/emailprofileclub"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginBottom="15dp"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <include
-                layout="@layout/item_add_club"
-                android:layout_height="99dp"
-                android:layout_width="match_parent" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/framedll"
                 android:layout_width="match_parent"

@@ -8,6 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.AddPost"
     >
+
     <ImageView
         android:id="@+id/imageViewBackadd"
         android:layout_width="25dp"
@@ -59,7 +60,9 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/titleadd"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+
+                android:hint="Event Title"
+                android:layout_height="wrap_content"
                >
 
             </EditText>
@@ -68,19 +71,27 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/placeadd"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
+                android:hint="Place"
                 >
 
 
             </EditText>
 
 
-            <EditText
+             <com.google.android.material.textfield.TextInputEditText
                 android:layout_marginTop="10dp"
                 android:id="@+id/descriptionadd"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
-            </EditText>
+                 android:layout_height="100dp"
+                 android:background="@color/white"
+                 android:inputType="text"
+                 android:maxLength="200"
+                 android:maxLines="5"
+                android:hint="Description"
+
+                >
+            </com.google.android.material.textfield.TextInputEditText>
 
             <DatePicker
                 android:id="@+id/datePicker1"

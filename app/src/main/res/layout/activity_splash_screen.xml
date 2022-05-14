@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.SplashScreen">
     <ImageView
-        android:src="@drawable/logo"
+        android:src="@drawable/ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
