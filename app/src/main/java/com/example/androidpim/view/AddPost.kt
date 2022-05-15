@@ -9,10 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpim.R
 import com.example.androidpim.models.Event
@@ -46,53 +43,59 @@ class AddPost : AppCompatActivity() {
 
     private fun login(titleadd_text: String, placeadd_text: String,datePicker1_text: String, descriptionadd_text: String){
 
-        val stream = contentResolver.openInputStream(selectedImageUri!!)
-        if(stream!=null){
+        if(selectedImageUri == null){
+            Toast.makeText(applicationContext, "image is required", Toast.LENGTH_LONG).show()
+        } else{
+            val stream = contentResolver.openInputStream(selectedImageUri!!)
+            if(stream!=null){
 
-            val request =
-                stream?.let { RequestBody.create("image/png".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
-            val banner = request?.let {
-                MultipartBody.Part.createFormData(
-                    "file",
-                    "file.png",
-                    it
-                )
-            }
+                val request =
+                    stream?.let { RequestBody.create("image/png".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
+                val banner = request?.let {
+                    MultipartBody.Part.createFormData(
+                        "file",
+                        "file.png",
+                        it
+                    )
+                }
 
 
-            val publisher = mSharedPref.getString("login", "zwayten").toString()
-            val typeadd = "Event"
-            Log.d("MyActivity", "on finish upload file")
-            val apiInterface = RetrofitApi.create()
-            val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
-            data["publisheId"] = publisher.toRequestBody(MultipartBody.FORM)
-            data["place"] = placeadd_text.toRequestBody(MultipartBody.FORM)
-            data["Time"] = datePicker1_text.toRequestBody(MultipartBody.FORM)
-            data["description"] = descriptionadd_text.toRequestBody(MultipartBody.FORM)
-            data["title"] = titleadd_text.toRequestBody(MultipartBody.FORM)
-            data["type"] = typeadd.toRequestBody(MultipartBody.FORM)
+                val publisher = mSharedPref.getString("login", "zwayten").toString()
+                val typeadd = "Event"
+                Log.d("MyActivity", "on finish upload file")
+                val apiInterface = RetrofitApi.create()
+                val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
+                data["publisheId"] = publisher.toRequestBody(MultipartBody.FORM)
+                data["place"] = placeadd_text.toRequestBody(MultipartBody.FORM)
+                data["Time"] = datePicker1_text.toRequestBody(MultipartBody.FORM)
+                data["description"] = descriptionadd_text.toRequestBody(MultipartBody.FORM)
+                data["title"] = titleadd_text.toRequestBody(MultipartBody.FORM)
+                data["type"] = typeadd.toRequestBody(MultipartBody.FORM)
 
-            if (banner != null) {
-                println("++++++++++++++++++++++++++++++++++++"+banner)
-                apiInterface.postEvent(data,banner).enqueue(object:
-                    Callback<Event> {
-                    override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                        if(response.isSuccessful){
-                            Log.i("ahawa", response.body().toString())
+                if (banner != null) {
+                    println("++++++++++++++++++++++++++++++++++++"+banner)
+                    apiInterface.postEvent(data,banner).enqueue(object:
+                        Callback<Event> {
+                        override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                            if(response.isSuccessful){
+                                Log.i("ahawa", response.body().toString())
+                                finish()
 
-                        } else {
-                            Log.i("niet", response.body().toString())
+                            } else {
+                                Log.i("niet", response.body().toString())
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<Event>, t: Throwable) {
+                        override fun onFailure(call: Call<Event>, t: Throwable) {
 
-                        println("lel")
-                    }
+                            println("lel")
+                        }
 
-                })
+                    })
+                }
             }
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

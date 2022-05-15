@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.TextKeyListener.clear
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -14,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.androidpim.R
 import com.example.androidpim.adapters.OnboardingViewPagerAdapter4
 import com.example.androidpim.fragments.OnboardingFragment
+import com.example.androidpim.models.EventInt
 import com.example.androidpim.models.User
 import com.example.androidpim.service.RetrofitApi
 import com.google.android.material.tabs.TabLayoutMediator
@@ -36,16 +38,66 @@ class OnboardingExample4Activity : AppCompatActivity() {
     private lateinit var btnNext: Button
 
 
-    private fun login(){
+    private fun login() {
 
         registerShared = getSharedPreferences("Register", Context.MODE_PRIVATE)
-        val selectedImageUri: Uri?= Uri.parse(registerShared.getString("imageUrl", "zwayten").toString())
+        val pika = registerShared.getString("imageUrl", "zwayten").toString()
+        println("el taswira el mokerza "+ pika)
+        val identifant_text: String =
+            registerShared.getString("identifant", "zwayten").toString()
+        val email_text: String = registerShared.getString("email", "zwayten").toString()
+        val password_text: String = registerShared.getString("password", "zwayten").toString()
+        val phone_text: String = registerShared.getString("phone", "zwayten").toString()
+        val first_text: String = registerShared.getString("firstname", "zwayten").toString()
+        val last_text: String = registerShared.getString("lastName", "zwayten").toString()
+        val description_text: String =
+            registerShared.getString("description", "zwayten").toString()
+        val classe_text: String = registerShared.getString("className", "zwayten").toString()
 
+        if (pika == "null") {
+            println("menghyr soura")
+            var userNoCapNoGun = User()
+
+            userNoCapNoGun.identifant = identifant_text
+            userNoCapNoGun.FirstName = first_text
+            userNoCapNoGun.LastName = last_text
+            userNoCapNoGun.className = classe_text
+            userNoCapNoGun.description = description_text
+            userNoCapNoGun.email = email_text
+            userNoCapNoGun.password = password_text
+            userNoCapNoGun.phoneNumber = phone_text.toInt()
+            userNoCapNoGun.profilePicture = "default.png"
+            userNoCapNoGun.social = true
+            userNoCapNoGun.verified = true
+            var exx = false
+            val apiNoCapNoGun = RetrofitApi.create().usergooglesignup(userNoCapNoGun)
+            apiNoCapNoGun.enqueue(object : Callback<User>{
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    if (response.isSuccessful){
+                        finish()
+                        registerShared.edit().clear().apply()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    println("failed")
+                }
+
+            })
+        } else {
+            val selectedImageUri: Uri? =
+                Uri.parse(registerShared.getString("imageUrl", "zwayten").toString())
         val stream = contentResolver.openInputStream(selectedImageUri!!)
-        if(stream!=null){
+        if (stream != null) {
 
             val request =
-                stream?.let { RequestBody.create("image/png".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
+                stream?.let {
+                    RequestBody.create(
+                        "image/png".toMediaTypeOrNull(),
+                        it.readBytes()
+                    )
+                } // read all bytes using kotlin extension
             val profilePicture = request?.let {
                 MultipartBody.Part.createFormData(
                     "file",
@@ -56,20 +108,6 @@ class OnboardingExample4Activity : AppCompatActivity() {
 
 
 
-
-
-
-
-
-
-            val identifant_text: String = registerShared.getString("identifant", "zwayten").toString()
-            val email_text: String = registerShared.getString("email", "zwayten").toString()
-            val password_text: String = registerShared.getString("password", "zwayten").toString()
-            val phone_text: String = registerShared.getString("phone", "zwayten").toString()
-            val first_text: String = registerShared.getString("firstname", "zwayten").toString()
-            val last_text: String = registerShared.getString("lastName", "zwayten").toString()
-            val description_text: String = registerShared.getString("description", "zwayten").toString()
-            val classe_text: String = registerShared.getString("className", "zwayten").toString()
 
 
 
@@ -84,18 +122,18 @@ class OnboardingExample4Activity : AppCompatActivity() {
             data["phoneNumber"] = phone_text.toRequestBody(MultipartBody.FORM)
             data["FirstName"] = first_text.toRequestBody(MultipartBody.FORM)
             data["LastName"] = last_text.toRequestBody(MultipartBody.FORM)
-            data["className"] =  classe_text.toRequestBody(MultipartBody.FORM)
+            data["className"] = classe_text.toRequestBody(MultipartBody.FORM)
             data["description"] = description_text.toRequestBody(MultipartBody.FORM)
 
             if (profilePicture != null) {
-                println("++++++++++++++++++++++++++++++++++++"+profilePicture)
-                apiInterface.userSignUp(data,profilePicture).enqueue(object:
+                println("++++++++++++++++++++++++++++++++++++" + profilePicture)
+                apiInterface.userSignUp(data, profilePicture).enqueue(object :
                     Callback<User> {
                     override fun onResponse(
                         call: Call<User>,
                         response: Response<User>
                     ) {
-                        if(response.isSuccessful){
+                        if (response.isSuccessful) {
                             Log.i("onResponse goooood", response.body().toString())
 
                         } else {
@@ -111,6 +149,7 @@ class OnboardingExample4Activity : AppCompatActivity() {
                 })
             }
         }
+    }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

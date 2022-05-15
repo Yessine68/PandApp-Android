@@ -21,6 +21,10 @@ interface RetrofitApi {
     fun usergooglesignup(
         @Body user: User):Call<User>
 
+    @POST("club")
+    fun clubNoCapNoGun(
+        @Body club: Club):Call<Club>
+
     @Multipart
     @POST("club/signup")
     fun clubSignUp(

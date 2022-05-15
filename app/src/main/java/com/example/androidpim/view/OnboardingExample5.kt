@@ -43,75 +43,97 @@ class OnboardingExample5 : AppCompatActivity() {
     private fun login(){
 
         registerClubShared = getSharedPreferences("RegisterClub", Context.MODE_PRIVATE)
-        val selectedImageUri: Uri?= Uri.parse(registerClubShared.getString("imageUrl", "zwayten").toString())
 
-        val stream = contentResolver.openInputStream(selectedImageUri!!)
-        if(stream!=null){
+        val clubName: String = registerClubShared.getString("clubName", "zwayten").toString()
+        val login: String = registerClubShared.getString("login", "zwayten").toString()
+        val password: String = registerClubShared.getString("password", "zwayten").toString()
+        val clubOwner: String = registerClubShared.getString("clubOwner", "zwayten").toString()
+        val description: String = registerClubShared.getString("description", "zwayten").toString()
 
-            val request =
-                stream?.let { RequestBody.create("image/png".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
-            val clubLogo = request?.let {
-                MultipartBody.Part.createFormData(
-                    "file",
-                    "file.png",
-                    it
-                )
-            }
+        val pika = registerClubShared.getString("imageUrl", "zwayten").toString()
+        if (pika == "null") {
+            println("menghyr soura")
+            var clubNoCapNoGun = Club()
+            clubNoCapNoGun.clubLogo = "defaultClub.png"
+            clubNoCapNoGun.clubName = clubName
+            clubNoCapNoGun.clubOwner = clubOwner
+            clubNoCapNoGun.description = description
+            clubNoCapNoGun.login = login
+            clubNoCapNoGun.password = password
+            clubNoCapNoGun.social = true
+            clubNoCapNoGun.verified = true
+
+            val apiNoCapNoGun = RetrofitApi.create().clubNoCapNoGun(clubNoCapNoGun)
+            apiNoCapNoGun.enqueue(object : Callback<Club>{
+                override fun onResponse(call: Call<Club>, response: Response<Club>) {
+                    if (response.isSuccessful){
+                        finish()
+                        registerClubShared.edit().clear().apply()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<Club>, t: Throwable) {
+                    println("failed")
+                }
+
+            })
+        }
+        else {
+            val selectedImageUri: Uri?= Uri.parse(registerClubShared.getString("imageUrl", "zwayten").toString())
+
+            val stream = contentResolver.openInputStream(selectedImageUri!!)
+            if(stream!=null){
+
+                val request =
+                    stream?.let { RequestBody.create("image/png".toMediaTypeOrNull(), it.readBytes()) } // read all bytes using kotlin extension
+                val clubLogo = request?.let {
+                    MultipartBody.Part.createFormData(
+                        "file",
+                        "file.png",
+                        it
+                    )
+                }
 
 
 
+                val apiInterface = RetrofitApi.create()
+                val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
 
 
 
+                data["clubName"] = clubName.toRequestBody(MultipartBody.FORM)
+                data["login"] = login.toRequestBody(MultipartBody.FORM)
+                data["password"] = password.toRequestBody(MultipartBody.FORM)
+                data["clubOwner"] = clubOwner.toRequestBody(MultipartBody.FORM)
+                data["description"] = description.toRequestBody(MultipartBody.FORM)
 
+                if (clubLogo != null) {
+                    println("++++++++++++++++++++++++++++++++++++"+clubLogo)
+                    apiInterface.clubSignUp(data,clubLogo).enqueue(object:
+                        Callback<Club> {
+                        override fun onResponse(
+                            call: Call<Club>,
+                            response: Response<Club>
+                        ) {
+                            if(response.isSuccessful){
+                                Log.i("onResponse goooood", response.body().toString())
 
-
-            val clubName: String = registerClubShared.getString("clubName", "zwayten").toString()
-            val login: String = registerClubShared.getString("login", "zwayten").toString()
-            val password: String = registerClubShared.getString("password", "zwayten").toString()
-            val clubOwner: String = registerClubShared.getString("clubOwner", "zwayten").toString()
-            val description: String = registerClubShared.getString("description", "zwayten").toString()
-
-
-
-
-            Log.d("MyActivity", "on finish upload file")
-
-            val apiInterface = RetrofitApi.create()
-            val data: LinkedHashMap<String, RequestBody> = LinkedHashMap()
-
-
-
-            data["clubName"] = clubName.toRequestBody(MultipartBody.FORM)
-            data["login"] = login.toRequestBody(MultipartBody.FORM)
-            data["password"] = password.toRequestBody(MultipartBody.FORM)
-            data["clubOwner"] = clubOwner.toRequestBody(MultipartBody.FORM)
-            data["description"] = description.toRequestBody(MultipartBody.FORM)
-
-            if (clubLogo != null) {
-                println("++++++++++++++++++++++++++++++++++++"+clubLogo)
-                apiInterface.clubSignUp(data,clubLogo).enqueue(object:
-                    Callback<Club> {
-                    override fun onResponse(
-                        call: Call<Club>,
-                        response: Response<Club>
-                    ) {
-                        if(response.isSuccessful){
-                            Log.i("onResponse goooood", response.body().toString())
-
-                        } else {
-                            Log.i("OnResponse not good", response.body().toString())
+                            } else {
+                                Log.i("OnResponse not good", response.body().toString())
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<Club>, t: Throwable) {
+                        override fun onFailure(call: Call<Club>, t: Throwable) {
 
-                        println("noooooooooooooooooo")
-                    }
+                            println("noooooooooooooooooo")
+                        }
 
-                })
+                    })
+                }
             }
         }
+
     }
 
 

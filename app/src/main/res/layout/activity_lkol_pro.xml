@@ -95,9 +95,12 @@
 
             <ImageView
                 android:id="@+id/search_icon"
-                android:layout_width="@dimen/bottom_menu_size"
-                android:layout_height="@dimen/bottom_menu_size"
-                android:layout_centerVertical="true"
+                android:layout_width="66dp"
+                android:layout_height="28dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="27dp"
+                android:layout_marginEnd="53dp"
+                android:layout_marginBottom="10dp"
                 android:layout_toStartOf="@+id/add_icon"
                 android:layout_toEndOf="@+id/home_icon"
                 android:src="@drawable/courseslogo" />
@@ -106,28 +109,29 @@
                 android:id="@+id/add_icon"
                 android:layout_width="@dimen/bottom_menu_size"
                 android:layout_height="@dimen/bottom_menu_size"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_big_add"
-                />
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_big_add" />
 
             <ImageView
                 android:id="@+id/heart_icon"
-                android:layout_width="@dimen/bottom_menu_size"
-                android:layout_height="@dimen/bottom_menu_size"
-                android:layout_centerVertical="true"
+                android:layout_width="48dp"
+                android:layout_height="29dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="34dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="10dp"
                 android:layout_toStartOf="@+id/profile_icon"
                 android:layout_toEndOf="@+id/add_icon"
-                android:src="@drawable/lostfwhite"
-                />
+                android:src="@drawable/lostfwhite" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_icon"
-                android:layout_width="@dimen/bottom_menu_size"
-                android:layout_height="@dimen/bottom_menu_size"
+                android:layout_width="55dp"
+                android:layout_height="28dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/menu_margin"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
                 android:src="@drawable/profile" />
 
         </RelativeLayout>
