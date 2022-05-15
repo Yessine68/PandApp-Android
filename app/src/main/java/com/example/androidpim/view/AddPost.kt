@@ -43,6 +43,7 @@ class AddPost : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
     private var selectedImageUri: Uri? = null
 
+
     private fun login(titleadd_text: String, placeadd_text: String,datePicker1_text: String, descriptionadd_text: String){
 
         val stream = contentResolver.openInputStream(selectedImageUri!!)
