@@ -1,30 +1,52 @@
 package com.example.androidpim
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.androidpim.R
+import com.bumptech.glide.Glide
+import com.example.androidpim.adapters.PostAdapter
+import com.example.androidpim.models.Post
 import com.example.androidpim.service.BASE_URL
+import com.example.androidpim.service.ElearningApi
 import com.google.gson.Gson
 import com.junga.socketio_android.model.MessageType
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_chatroom.*
+import kotlinx.android.synthetic.main.fragment_home_pro.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
 
 
     val TAG = ChatRoomActivity::class.java.simpleName
+    lateinit var mSharedPref: SharedPreferences
 
 
     lateinit var mSocket: Socket;
     lateinit var userName: String;
     lateinit var roomName: String;
+    lateinit var userPost: String;
     lateinit var layoutManager: LinearLayoutManager;
+    lateinit var username:TextView;
+    lateinit var picPartner:ImageView;
+
+
+
     val gson: Gson = Gson()
     //For setting the recyclerView.
     val chatList: ArrayList<Message> = arrayListOf();
@@ -35,14 +57,62 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         send.setOnClickListener(this)
         leave.setOnClickListener(this)
         //Get the nickname and roomname from entrance activity.
-        try {
+
             userName = intent.getStringExtra("userName")!!
             roomName = intent.getStringExtra("roomName")!!
+            userPost = intent.getStringExtra("userPost")!!
+            picPartner=findViewById<ImageView>(R.id.partnerpic)
+            username = findViewById<TextView>(R.id.partnerName)
+            username.setText(userPost)
+
+            val ppp = BASE_URL+"upload/download/user/"+userPost
+            Glide.with(this).load(Uri.parse(ppp)).into(picPartner)
+            mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+            val name=mSharedPref.getString("FirstName", "zwayten").toString()
+
+            println("hollla mother  ")
+
+        try {
+            val apiInterface = ElearningApi.create()
+            apiInterface.GetAllMessages(roomName).enqueue(object: Callback<List<Message>> {
+                override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {
+                    if(response.isSuccessful){
+                        println("hollla mother  "+ response.body().toString())
+for(msage in response.body()!!){
+    if (msage.userName==name){
+        msage.viewType = MessageType.CHAT_MINE.index
+        addItemToRecyclerView(msage)
+    }else {
+        msage.viewType = MessageType.CHAT_PARTNER.index
+        addItemToRecyclerView(msage)
+
+    }
+
+
+}
+
+
+                        Log.i("yessss", response.body().toString())
+                    } else {
+                        Log.i("nooooo", response.body().toString())
+
+                    }
+                }
+                override fun onFailure(call: Call<List<Message>>, t: Throwable) {
+                    t.printStackTrace()
+                    println("OnFailure")
+                }
+
+            })
+            println(userName)
+            println("chat rooo;;"+roomName)
+
+
+
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
         //Set Chatroom adapter
         chatRoomAdapter = ChatRoomAdapter(this, chatList);
         recyclerView.adapter = chatRoomAdapter;
@@ -57,6 +127,8 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
             Log.d("fail", "Failed to connect")
         }
+
+
         mSocket.connect()
         mSocket.on(Socket.EVENT_CONNECT, onConnect)
         mSocket.on("newUserToChatRoom", onNewUser)
@@ -98,6 +170,30 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
         mSocket.emit("newMessage", jsonData)
 
         val message = Message(userName, content, roomName, MessageType.CHAT_MINE.index)
+        val apiInterface = ElearningApi.create()
+        apiInterface.addMessage(message).enqueue(object: Callback<Message> {
+            override fun onResponse(
+                call: Call<Message>,
+                response: Response<Message>
+            ) {
+                if(response.isSuccessful){
+                    Log.i("onResponse goooood", response.body().toString())
+
+                } else {
+                    Log.i("OnResponse not good", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Message>, t: Throwable) {
+
+                println("noooooooooooooooooo")
+            }
+
+        })
+
+
+
+
         addItemToRecyclerView(message)
     }
 
@@ -115,16 +211,15 @@ class ChatRoomActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.send -> sendMessage()
-            R.id.leave -> onDestroy()
+            R.id.leave -> deestroy()
         }
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        val data = initialData(userName, roomName)
+      fun deestroy() {
+         val data = initialData(userName, roomName)
         val jsonData = gson.toJson(data)
         mSocket.emit("unsubscribe", jsonData)
         mSocket.disconnect()
-        finishActivity(CONTEXT_INCLUDE_CODE)
+finish()
     }
 
 }

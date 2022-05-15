@@ -59,7 +59,7 @@ class fragmentfound : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_lost, container, false)
         val apiInterface = LostPostApi.create()
-        apiInterface.GetAllFound(id).enqueue(object: Callback<List<Post>> {
+        apiInterface.GetAllFound().enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 if(response.isSuccessful){
                     for(post in response.body()!!)

@@ -9,6 +9,6 @@ data class Post(
     val place: String,
     val publisheId: String,
     val publishedAt: String,
-    val state: Boolean,
+    var state: Boolean,
     val type: String
 )

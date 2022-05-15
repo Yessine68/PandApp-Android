@@ -1,11 +1,14 @@
 package com.example.androidpim.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpim.R
@@ -27,6 +30,7 @@ class ListOfChat : Fragment() {
 
     lateinit var recylcerChampionAdapter: chatAdapter
     lateinit var carRecyclerView: RecyclerView
+    lateinit var mSharedPref: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,15 +39,16 @@ class ListOfChat : Fragment() {
         // Inflate the layout for this fragment
         val rootView= inflater.inflate(R.layout.fragment_list_of_courses, container, false)
         var eleringList : MutableList<chatList> = ArrayList()
+        mSharedPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        val email: String = mSharedPref.getString("email", "zwayten").toString()
 
         carRecyclerView = rootView.findViewById(R.id.recycle_learning)
         val apiInterface = ElearningApi.create()
-
-apiInterface.GetAllChat().enqueue(object: Callback<List<chatList>> {
+apiInterface.GetAllChat(email).enqueue(object: Callback<List<chatList>> {
     override fun onResponse(call: Call<List<chatList>>, response: Response<List<chatList>>) {
         if(response.isSuccessful){
             eleringList= response.body() as MutableList<chatList>;
-            recylcerChampionAdapter = chatAdapter(eleringList)
+            recylcerChampionAdapter = chatAdapter(context as FragmentActivity,eleringList)
             carRecyclerView.adapter = recylcerChampionAdapter
             carRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL ,
                 false)

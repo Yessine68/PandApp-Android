@@ -49,6 +49,7 @@ class LkolPro : AppCompatActivity() {
         galleryBtn.setOnClickListener(clickListener)
         favouriteBtn.setOnClickListener(clickListener)
         profileBtn.setOnClickListener(clickListener)
+
         send_img.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frame, ListOfChat()).commit()
             supportFragmentManager.beginTransaction().remove(frag).commit()

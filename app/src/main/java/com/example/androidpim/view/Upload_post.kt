@@ -48,7 +48,7 @@ class upload_post : AppCompatActivity() {
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
         var route = intent.getStringExtra("data")
-        val user_id: String = mSharedPref.getString("LastName", "zwayten").toString() + "" + mSharedPref.getString("FirstName", "zwayten").toString()
+        val user_id: String = mSharedPref.getString("FirstName", "zwayten").toString()
         val email =mSharedPref.getString("email", "zwayten").toString().trim()
         println("ghassenklai "+user_id)
         buttonPost=findViewById(R.id.buttonPost)

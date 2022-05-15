@@ -57,7 +57,7 @@ class ChatRoomAdapter(val context : Context, val chatList : ArrayList<Message>) 
         val userName = messageData.userName;
         val content = messageData.messageContent;
         val viewType = messageData.viewType;
-
+println("hellooooooooooooooooooooooooooooooooooooooooooooooooo$viewType")
         when(viewType) {
 
             CHAT_MINE -> {

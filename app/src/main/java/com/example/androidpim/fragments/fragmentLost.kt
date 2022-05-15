@@ -48,7 +48,7 @@ class fragmentLost : Fragment() {
         listView = view!!.findViewById<ListView>(R.id.listView) as ListView
         // postList =  ArrayList<Post>()
         val apiInterface = LostPostApi.create()
-        apiInterface.GetAllLost(id).enqueue(object: Callback<List<Post>> {
+        apiInterface.GetAllLost().enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 
                 if(response.isSuccessful){
