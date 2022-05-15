@@ -45,7 +45,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
 
         imageProfileclub = view.findViewById(R.id.imageProfileclub)
         usernameProfileclub = view.findViewById(R.id.usernameProfileclub)
-        emailprofileclub = view.findViewById(R.id.emailprofileclub)
+
         addEvent = view.findViewById(R.id.addEvent)
 
 
@@ -97,7 +97,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
 
 
         usernameProfileclub.text = clubName;
-        emailprofileclub.text = email;
+        //emailprofileclub.text = email;
 
 
 

@@ -56,8 +56,15 @@ class LkolPro : AppCompatActivity() {
         }
         mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
         profile_icon = findViewById(R.id.profile_icon)
-        val picStr: String = mSharedPref.getString("profilePicture", "email").toString()
+        var picStr: String = ""
+        if(mSharedPref.getString("lastlogged", "club").toString() == "club")
+        {
+             picStr = mSharedPref.getString("clubLogo", "email").toString()
+        }
          loggedAs = mSharedPref.getString("lastlogged", "user").toString()
+        if(loggedAs == "user"){
+            picStr =  mSharedPref.getString("profilePicture", "email").toString()
+        }
         val ppp = BASE_URL +"upload/download/"+picStr
         Glide.with(this).load(Uri.parse(ppp)).into(profile_icon)
         supportFragmentManager.beginTransaction().replace(R.id.frame, HomePro()).commit()
