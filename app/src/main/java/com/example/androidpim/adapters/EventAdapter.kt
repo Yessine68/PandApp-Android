@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
@@ -25,6 +26,8 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.marcoscg.dialogsheet.DialogSheet
+import io.karn.notify.Notify
+import io.karn.notify.NotifyCreator
 import net.glxn.qrgen.core.scheme.VCard
 
 import retrofit2.Call
@@ -126,11 +129,13 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
                 eventInt.postId = eventList[position]._id
                 eventInt.userEmail = email
                 println("ooooo"+eventList[position]._id)
+
                 var existedeja = false
                 val apijoin = RetrofitApi.create().getEventIntByEmail(eventInt.postId!!)
                 apijoin.enqueue(object : Callback<List<EventInt>>{
                     override fun onResponse(call: Call<List<EventInt>>, response: Response<List<EventInt>>) {
                         if (response.isSuccessful){
+
                     //println(response.body()!![position].userEmail.toString())
                         var eventIntId =""
                         var k = 0
@@ -144,6 +149,9 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
                                 apiuser.enqueue(object : Callback<EventInt>{
                                     override fun onResponse(call: Call<EventInt>, response: Response<EventInt>) {
                                         println(response.body()!!)
+
+
+
                                     }
 
                                     override fun onFailure(call: Call<EventInt>, t: Throwable) {
@@ -290,4 +298,7 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
                             )
 
              */
+
 }
+
+

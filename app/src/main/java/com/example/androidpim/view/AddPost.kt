@@ -17,6 +17,7 @@ import com.example.androidpim.service.RetrofitApi
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import com.google.android.material.internal.ContextUtils.getActivity
+import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.fragment_home_pro.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -80,6 +81,12 @@ class AddPost : AppCompatActivity() {
                             if(response.isSuccessful){
                                 Log.i("ahawa", response.body().toString())
                                 finish()
+                                Notify.with(applicationContext)
+                                    .content { // this: Payload.Content.Default
+                                        title = "new event "
+                                        text = "checkout this new event"
+                                    }
+                                    .show()
 
                             } else {
                                 Log.i("niet", response.body().toString())
