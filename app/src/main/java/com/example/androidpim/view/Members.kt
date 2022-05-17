@@ -40,8 +40,8 @@ class Members : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_members)
 
-        var membersRequest = ArrayList<ClubMembers>()
-        var membersIn = ArrayList<ClubMembers>()
+        val membersRequest = ArrayList<ClubMembers>()
+        val membersIn = ArrayList<ClubMembers>()
 
         frameMembers = findViewById(R.id.frameMembers)
         frameMembers.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -198,8 +198,72 @@ class Members : AppCompatActivity() {
             }
 
 
+        val clubMemebrsAdapterIn = MembersAdapter(membersIn)
+        val rightCallbackIn =
+            SwipeCallbackRight { position ->
+
+                clubMemebrsAdapter.notifyDataSetChanged();
+                val apiDeleteMember = RetrofitApi.create().deleteMember(membersIn.get(position)._id.toString())
+                apiDeleteMember.enqueue( object : Callback<ClubMembers> {
+                    override fun onResponse(
+                        call: Call<ClubMembers>,
+                        response: Response<ClubMembers>
+                    ) {
+                        val apiuser = RetrofitApi.create().getClubMembers(currentLogin)
+                        apiuser.enqueue( object : Callback<List<ClubMembers>> {
+                            override fun onResponse(
+                                call: Call<List<ClubMembers>>,
+                                response: Response<List<ClubMembers>>
+                            ) {
+                                membersRequest.clear()
+                                membersIn.clear()
+                                if (response != null) {
+                                    for (i in 0 until response.body()!!.size){
+                                        if(response.body()!![i].state == false){
+                                            membersRequest.add(response.body()!![i])
+                                        }
+                                        if(response.body()!![i].state == true){
+                                            membersIn.add(response.body()!![i])
+                                        }
+
+                                    }
+
+
+                                }
+                                //StatusAdapter.setMovieListItems(response.body()!!)
+                                val clubMemebrsAdapter = MembersAdapter(membersRequest)
+                                frameMembers.adapter = clubMemebrsAdapter
+                                val clubMemebrsAdapterIn = MembersAdapter(membersIn)
+                                frameMembersIn.adapter = clubMemebrsAdapterIn
+                            }
+
+                            override fun onFailure(call: Call<List<ClubMembers>>, t: Throwable) {
+                                println("mochkol")
+                            }
+
+                        })
+                    }
+
+                    override fun onFailure(call: Call<ClubMembers>, t: Throwable) {
+                        println("mochkol")
+                    }
+
+                })
+
+            }
+
+
         val recyclerAdapterSwipeGestures = GestureManager(rightCallback, leftCallback)
+        val recyclerAdapterSwipeGesturesIn = GestureManager(rightCallbackIn)
         //Set Text
+        recyclerAdapterSwipeGesturesIn.setTextRight("Kick")
+        recyclerAdapterSwipeGesturesIn.setTextSize(30)
+        recyclerAdapterSwipeGesturesIn.setTextColor(Color.WHITE)
+        recyclerAdapterSwipeGesturesIn.setBackgroundColorLeft(ColorDrawable(Color.RED))
+        val itemTouchHelperIn = ItemTouchHelper(recyclerAdapterSwipeGesturesIn)
+        itemTouchHelperIn.attachToRecyclerView(frameMembersIn)
+
+
 
         //Set Text
         recyclerAdapterSwipeGestures.setTextLeft("Accept")

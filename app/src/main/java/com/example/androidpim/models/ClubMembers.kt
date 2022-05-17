@@ -2,9 +2,10 @@ package com.example.androidpim.models
 
 data class ClubMembers(
     val _id: String? = null,
-    val clubName: String? = null,
-    val memberPicture: String? = null,
-    val state: Boolean,
-    val userEmail: String? = null,
-    val userName: String? = null
+    var clubName: String? = null,
+    var memberPicture: String? = null,
+    var state: Boolean = false,
+    var userEmail: String? = null,
+    var userName: String? = null,
+    var name: String? = null
 )

@@ -25,6 +25,10 @@ interface RetrofitApi {
     fun clubNoCapNoGun(
         @Body club: Club):Call<Club>
 
+    @POST("clubMembers")
+    fun joinClubRojla(
+        @Body clubMembers: ClubMembers):Call<ClubMembers>
+
     @Multipart
     @POST("club/signup")
     fun clubSignUp(
@@ -112,6 +116,8 @@ interface RetrofitApi {
 
     @GET("user")
     fun GetAllUsers():Call<List<User>>
+    @GET("club")
+    fun GetAllClubs():Call<List<Club>>
 
     @GET("event")
     fun GetEvents():Call<List<Event>>
@@ -119,10 +125,11 @@ interface RetrofitApi {
     @GET("document")
     fun GetDocuments():Call<List<Document>>
 
-    /*
-        @GET("article")
-        fun GetAllArticles():Call<ArticlesReponse>
-    */
+    @GET("clubMembers/findclubbyuser/{userEmail}/{clubName}")
+    fun getClubMemberByClubNameAndUserEmail(
+        @Path("userEmail") userEmail:String,
+        @Path("clubName") clubName:String,
+    ) : Call<List<ClubMembers>>
     companion object {
 
         fun create() : RetrofitApi {

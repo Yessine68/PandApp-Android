@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidpim.R
+import com.example.androidpim.models.Club
 import com.example.androidpim.models.User
 import com.example.androidpim.service.RetrofitApi
 import retrofit2.Call
@@ -33,11 +34,11 @@ class HomePro : Fragment(R.layout.fragment_home_pro) {
         val instaStausList = view.findViewById<RecyclerView>(R.id.insta_status_list)
         instaStausList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-        val apiuser = RetrofitApi.create().GetAllUsers()
+        val apiuser = RetrofitApi.create().GetAllClubs()
 
-        val statusList = ArrayList<User>()
-        apiuser.enqueue( object : Callback<List<User>>{
-            override fun onResponse(call: Call<List<User>>?, response: Response<List<User>>?) {
+        val statusList = ArrayList<Club>()
+        apiuser.enqueue( object : Callback<List<Club>>{
+            override fun onResponse(call: Call<List<Club>>?, response: Response<List<Club>>?) {
 
                 if(response?.body() != null)
                     println(response.body()!!.size)
@@ -51,7 +52,7 @@ class HomePro : Fragment(R.layout.fragment_home_pro) {
 
             }
 
-            override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<Club>>?, t: Throwable?) {
 
             }
 
