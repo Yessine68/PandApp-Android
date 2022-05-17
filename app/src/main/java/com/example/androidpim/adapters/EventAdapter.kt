@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
@@ -54,6 +55,7 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
         val email: String = mSharedPref.getString("email", "zwayten").toString()
 
         val ppp = BASE_URL +"upload/download/"+eventList[position].banner
+        val pika =  mSharedPref.getString("lastlogged", "user").toString()
 
         this.mContext?.let { Glide.with(it).load(Uri.parse(ppp)).into(holder.eventImage) }
 
@@ -75,6 +77,10 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
             val descriptiondetail= inflatedView2?.findViewById<TextView>(R.id.descriptiondetail)
             val qrevent= inflatedView2?.findViewById<ImageView>(R.id.qrevent)
             val joinButton = inflatedView2?.findViewById<Button>(R.id.joinButton)
+
+            if (pika == "club"){
+                joinButton?.isVisible = false
+            }
 
 
 

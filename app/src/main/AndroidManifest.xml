@@ -16,11 +16,14 @@
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidPim"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".view.Members"
+            android:exported="false" />
         <activity
             android:name=".view.Scc"
             android:exported="false" />
@@ -43,7 +46,6 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
-
         <activity
             android:name=".MapsActivity"
             android:exported="false"

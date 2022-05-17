@@ -35,7 +35,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
     lateinit var usernameProfileclub: TextView
     lateinit var emailprofileclub: TextView
     ////lateinit var editprofilebutton: Button
-    ////lateinit var documentsrequest: Button
+    lateinit var membersbutton: Button
     lateinit var addEvent:Button
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,6 +45,7 @@ class ProfileClub: Fragment(R.layout.club_profile) {
 
         imageProfileclub = view.findViewById(R.id.imageProfileclub)
         usernameProfileclub = view.findViewById(R.id.usernameProfileclub)
+        membersbutton = view.findViewById(R.id.membersbutton)
 
         addEvent = view.findViewById(R.id.addEvent)
 
@@ -81,7 +82,11 @@ class ProfileClub: Fragment(R.layout.club_profile) {
 
         })
 
-
+        membersbutton.setOnClickListener {
+            val intent = Intent(view.context, Members::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
 
 
         //editprofilebutton = view.findViewById(R.id.editprofilebutton)

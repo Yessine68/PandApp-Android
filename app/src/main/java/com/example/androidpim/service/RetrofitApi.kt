@@ -46,6 +46,11 @@ interface RetrofitApi {
         @Path("email") email:String,
     ) : Call<List<UserLoggedIn>>
 
+    @GET("clubMembers/{clubName}")
+    fun getClubMembers(
+        @Path("clubName") clubName:String,
+    ) : Call<List<ClubMembers>>
+
     @GET("eventInt/eventIntById/{postId}")
     fun getEventIntByEmail(
         @Path("postId") postId:String,
@@ -72,6 +77,11 @@ interface RetrofitApi {
         @Path("id") id:String,
     ):Call<EventInt>
 
+    @DELETE("clubMembers/{id}")
+    fun deleteMember(
+        @Path("id") id:String
+    ):Call<ClubMembers>
+
     @POST("authClub")
     fun clubLogin(
         @Body club: ClubLoggedIn
@@ -93,6 +103,12 @@ interface RetrofitApi {
     fun updateProfileUser(
         @Path("email") email:String,
         @Body user: User):Call<User>
+
+    @PATCH("/clubMembers/{id}")
+    fun joinclub(
+        @Path("id") id: String?
+    ):Call<ClubMembers>
+
 
     @GET("user")
     fun GetAllUsers():Call<List<User>>
