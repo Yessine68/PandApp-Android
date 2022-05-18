@@ -55,7 +55,7 @@ class OnboardingExample5 : AppCompatActivity() {
         if (pika == "null") {
             println("menghyr soura")
             var clubNoCapNoGun = Club()
-            clubNoCapNoGun.clubLogo = "defaultClub.png"
+            clubNoCapNoGun.clubLogo = "default.png"
             clubNoCapNoGun.clubName = clubName
             clubNoCapNoGun.clubOwner = clubOwner
             clubNoCapNoGun.description = description
@@ -73,6 +73,7 @@ class OnboardingExample5 : AppCompatActivity() {
                         var clubChat = ClubChat()
                         clubChat.clubName = clubNoCapNoGun.login
                         clubChat.esmElclub = clubNoCapNoGun.clubName
+                        clubChat.clubImage = "default.png"
                         val apiClubChat = RetrofitApi.create().createChatRoom(clubChat)
                         apiClubChat.enqueue(object: Callback<ClubChat>{
                             override fun onResponse(call: Call<ClubChat>, response: Response<ClubChat>) {
@@ -134,7 +135,24 @@ class OnboardingExample5 : AppCompatActivity() {
                             response: Response<Club>
                         ) {
                             if(response.isSuccessful){
-                                Log.i("onResponse goooood", response.body().toString())
+                                var clubChat = ClubChat()
+                                clubChat.clubName = login
+
+                                clubChat.esmElclub = clubName
+                                println(clubLogo.toString())
+                                println("taswira chat room"+response.body()!!.clubLogo)
+                                clubChat.clubImage = response.body()!!.clubLogo
+                                val apiClubChatt = RetrofitApi.create().createChatRoom(clubChat)
+                                apiClubChatt.enqueue(object: Callback<ClubChat>{
+                                    override fun onResponse(call: Call<ClubChat>, response: Response<ClubChat>) {
+                                        println("chat room created")
+                                    }
+
+                                    override fun onFailure(call: Call<ClubChat>, t: Throwable) {
+                                        println("chat room not created")
+                                    }
+
+                                })
 
                             } else {
                                 Log.i("OnResponse not good", response.body().toString())

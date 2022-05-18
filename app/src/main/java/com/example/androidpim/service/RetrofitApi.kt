@@ -29,6 +29,10 @@ interface RetrofitApi {
     fun joinClubRojla(
         @Body clubMembers: ClubMembers):Call<ClubMembers>
 
+    @POST("messageclub")
+    fun sendMessageClub(
+        @Body messageclub: Messageclub):Call<Messageclub>
+
     @Multipart
     @POST("club/signup")
     fun clubSignUp(

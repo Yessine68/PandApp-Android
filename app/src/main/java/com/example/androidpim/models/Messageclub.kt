@@ -5,5 +5,6 @@ data class Messageclub(
     var clubChat: String?=null,
     var textMessage: String?=null,
     var time: String?=null,
-    var userId: String?=null
+    var userId: String?=null,
+    var userImage: String?=null
 )

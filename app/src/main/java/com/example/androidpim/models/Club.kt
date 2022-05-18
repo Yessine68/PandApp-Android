@@ -1,6 +1,7 @@
 package com.example.androidpim.models
 
 data class Club(
+    var _id: String?=null,
     var clubLogo: String? = null,
     var clubName: String? = null,
     var clubOwner: String? = null,

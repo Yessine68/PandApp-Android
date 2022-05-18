@@ -1,5 +1,6 @@
 package com.example.androidpim.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -45,7 +46,7 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
         return statusList.size
     }
 
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: ViewHolder, @SuppressLint("RecyclerView") p1: Int) {
 
 
 
@@ -67,32 +68,11 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
         val joinInsta = inflatedView2?.findViewById<Button>(R.id.joinInsta)
         val chatButton = inflatedView2?.findViewById<Button>(R.id.chatButton)
 
-        chatButton?.setOnClickListener {
-            val apigetChatRoom = RetrofitApi.create().getChatRoomByClub(statusList[p1].login)
-            apigetChatRoom.enqueue(object : Callback<ClubChat>{
-                override fun onResponse(call: Call<ClubChat>, response: Response<ClubChat>) {
-                    if(response.isSuccessful){
-                        response.body()!!.messageclubs?.let { it1 -> println("el size"+it1.size) }
-                        val intent = Intent(mContext, ClubRoom::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        mContext?.startActivity(intent)
-                    }
-                }
 
-                override fun onFailure(call: Call<ClubChat>, t: Throwable) {
-                    println("mochkla chattttttttttttttttttt")
-                }
 
-            })
-        }
 
-        val loggedAs = mSharedPref.getString("lastlogged", "user").toString()
-        if(loggedAs == "club"){
-            joinInsta?.isVisible = false
-        }
-        if(loggedAs == "user"){
-            joinInsta?.isVisible = true
-        }
+
+
 
         val apiCheck = RetrofitApi.create().getClubMemberByClubNameAndUserEmail(mSharedPref.getString("email", "zwayten").toString(),
             statusList[p1].login.toString()
@@ -109,17 +89,20 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
                             etatJoin = "pending"
                             idHmed = response.body()!![0]._id.toString()
                             joinInsta?.setText("Cancel Request")
+                            chatButton?.isVisible = false
 
                         }
                         if(response.body()!![0].state ==  true){
                             etatJoin = "existe"
                             idHmed = response.body()!![0]._id.toString()
                             joinInsta?.setText("leave")
+                            chatButton?.isVisible = true
                         }
                     }
                     if(response.body()!!.size == 0){
                         etatJoin= "none"
                         joinInsta?.setText("Join")
+                        chatButton?.isVisible = false
                     }
                 }
             }
@@ -129,6 +112,52 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
             }
 
         })
+        val loggedAs = mSharedPref.getString("lastlogged", "user").toString()
+        if(loggedAs == "club"){
+            joinInsta?.isVisible = false
+            chatButton?.isVisible = false
+
+        }
+        if(loggedAs == "user"){
+            joinInsta?.isVisible = true
+            if(etatJoin == "existe"){
+                chatButton?.isVisible = true
+            }
+            if(etatJoin == "none" || etatJoin == "pending"){
+                chatButton?.isVisible = false
+            }
+
+        }
+
+        chatButton?.setOnClickListener {
+            val apigetChatRoom = RetrofitApi.create().getChatRoomByClub(statusList[p1].login)
+            apigetChatRoom.enqueue(object : Callback<ClubChat>{
+                override fun onResponse(call: Call<ClubChat>, response: Response<ClubChat>) {
+                    if(response.isSuccessful){
+                        response.body()!!.messageclubs?.let { it1 -> println("el size"+it1.size) }
+                        val intent = Intent(mContext, ClubRoom::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.apply {
+                            putExtra("clubchatId",response.body()!!._id)
+                            putExtra("clubchatName",statusList[p1].login)
+                            putExtra("esmelclub",statusList[p1].clubName)
+                            putExtra("clubLogo",statusList[p1].clubLogo)
+                        }
+
+                        mContext?.startActivity(intent)
+                    }
+                }
+
+                override fun onFailure(call: Call<ClubChat>, t: Throwable) {
+                    println("mochkla chattttttttttttttttttt")
+                }
+
+            })
+        }
+
+
+
+
 
 
 
