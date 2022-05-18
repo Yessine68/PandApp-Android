@@ -299,6 +299,7 @@ class LoginPro : AppCompatActivity() {
                                     putString("email", response.body()?.email.toString())
                                     putString("password", response.body()?.password.toString())
                                     putString("FirstName", response.body()?.FirstName.toString())
+                                    putString("LastName", response.body()?.LastName.toString())
                                     putString("profilePicture", response.body()?.profilePicture.toString())
                                     putString("phonenumber", response.body()?.phoneNumber.toString())
                                     putString("identifiant", response.body()?.identifant.toString())
