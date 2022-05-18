@@ -22,6 +22,9 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateHidden">
         <activity
+            android:name=".view.ClubRoom"
+            android:exported="false" />
+        <activity
             android:name=".view.Members"
             android:exported="false" />
         <activity

@@ -55,9 +55,6 @@
     <string name="show_scanner_from_fragment">Join Event</string>
 
 
-
-
-
     <string name="more">More</string>
     <string name="delete_channel">Delete Channel</string>
     <string name="leave_channel">Leave Channel</string>
@@ -73,6 +70,10 @@
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
     <string name="retry">Retry</string>
+
+    <string name="send_button">SEND</string>
+    <string name="enter_message">Enter message</string>
+    <string name="change_user">Change User</string>
 
     <string name="update_channel_name">Update Channel Name</string>
 

@@ -15,6 +15,7 @@ import com.example.androidpim.R
 import com.example.androidpim.adapters.OnboardingViewPagerAdapter5
 import com.example.androidpim.fragments.OnboardingFragment
 import com.example.androidpim.models.Club
+import com.example.androidpim.models.ClubChat
 import com.example.androidpim.models.User
 import com.example.androidpim.service.RetrofitApi
 import com.google.android.material.tabs.TabLayoutMediator
@@ -63,10 +64,26 @@ class OnboardingExample5 : AppCompatActivity() {
             clubNoCapNoGun.social = true
             clubNoCapNoGun.verified = true
 
+
+
             val apiNoCapNoGun = RetrofitApi.create().clubNoCapNoGun(clubNoCapNoGun)
             apiNoCapNoGun.enqueue(object : Callback<Club>{
                 override fun onResponse(call: Call<Club>, response: Response<Club>) {
                     if (response.isSuccessful){
+                        var clubChat = ClubChat()
+                        clubChat.clubName = clubNoCapNoGun.login
+                        clubChat.esmElclub = clubNoCapNoGun.clubName
+                        val apiClubChat = RetrofitApi.create().createChatRoom(clubChat)
+                        apiClubChat.enqueue(object: Callback<ClubChat>{
+                            override fun onResponse(call: Call<ClubChat>, response: Response<ClubChat>) {
+                                println("chat room created")
+                            }
+
+                            override fun onFailure(call: Call<ClubChat>, t: Throwable) {
+                                println("chat room not created")
+                            }
+
+                        })
                         finish()
                         registerClubShared.edit().clear().apply()
 

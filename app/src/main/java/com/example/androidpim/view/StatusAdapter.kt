@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.models.Club
+import com.example.androidpim.models.ClubChat
 import com.example.androidpim.models.ClubMembers
 import com.example.androidpim.models.User
 import com.example.androidpim.service.BASE_URL
@@ -62,6 +63,24 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
         val clubNameInsta = inflatedView2?.findViewById<TextView>(R.id.clubNameInsta)
         val descriptioninsta = inflatedView2?.findViewById<TextView>(R.id.descriptioninsta)
         val joinInsta = inflatedView2?.findViewById<Button>(R.id.joinInsta)
+        val chatButton = inflatedView2?.findViewById<Button>(R.id.chatButton)
+
+        chatButton?.setOnClickListener {
+            val apigetChatRoom = RetrofitApi.create().getChatRoomByClub(statusList[p1].login)
+            apigetChatRoom.enqueue(object : Callback<ClubChat>{
+                override fun onResponse(call: Call<ClubChat>, response: Response<ClubChat>) {
+                    if(response.isSuccessful){
+                        response.body()!!.messageclubs?.let { it1 -> println("el size"+it1.size) }
+                    }
+                }
+
+                override fun onFailure(call: Call<ClubChat>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+
         val loggedAs = mSharedPref.getString("lastlogged", "user").toString()
         if(loggedAs == "club"){
             joinInsta?.isVisible = false

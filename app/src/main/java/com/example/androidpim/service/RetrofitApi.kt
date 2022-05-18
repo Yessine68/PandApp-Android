@@ -130,6 +130,15 @@ interface RetrofitApi {
         @Path("userEmail") userEmail:String,
         @Path("clubName") clubName:String,
     ) : Call<List<ClubMembers>>
+
+    @POST("clubChat")
+    fun createChatRoom(
+        @Body clubChat: ClubChat):Call<ClubChat>
+
+    @GET("/clubChat/{clubName}")
+    fun getChatRoomByClub(
+        @Path("clubName") clubName: String?
+    ):Call<ClubChat>
     companion object {
 
         fun create() : RetrofitApi {
