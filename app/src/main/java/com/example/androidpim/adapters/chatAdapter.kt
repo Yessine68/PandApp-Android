@@ -50,11 +50,9 @@ lateinit var email:String;
         var userName:String
         val chatRoom = chatLists[position].chatRoom
         val reciver= chatLists[position].userNameReciver
-val userPost =            chatLists[position].userName
+val userPost =chatLists[position].userName
 
         userName = if(email == chatLists[position].emailUser){
-
-
             chatLists[position].userName
         }else{
             chatLists[position].userNameReciver

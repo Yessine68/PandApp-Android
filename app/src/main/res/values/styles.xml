@@ -11,6 +11,7 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
     </style>
 
+
     <style name="Widget.LostFound.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/TextAppearance.LostFound.TextInputLayout.HintText</item>
         <item name="android:paddingBottom">8dp</item>
