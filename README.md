@@ -89,7 +89,62 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 * [Android](https://www.android.com)
 * [Kotlin](https://kotlinlang.org)
+* Project dependencies
+   ```sh
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation('com.google.android.material:material:1.5.0')
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+    implementation 'com.github.chnouman:AwesomeDialog:1.0.4'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.florent37:inline-activity-result:1.0.4'
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation 'com.github.marcoscgdev:DialogSheet:2.1.2'
+    implementation 'com.github.Spikeysanju:MotionToast:1.4'
+    implementation 'com.airbnb.android:lottie:3.6.1'
+    implementation 'com.github.florent37:shapeofview:1.4.7'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation('io.socket:socket.io-client:1.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+    implementation "org.jetbrains.anko:anko:0.10.8"
+    implementation "io.karn:notify:1.4.0"
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
+    implementation 'com.github.kenglxn.qrgen:android:2.6.0'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0@aar'
+    implementation 'com.google.zxing:core:3.4.1'
+    implementation 'com.mapbox.maps:android:10.4.2'
+    implementation ('com.mapbox.maps:android:10.4.2'){
+        exclude group: 'group_name', module: 'module_name'
+    }
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v9:0.4.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-places-v9:0.12.0'
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'com.github.WilliBoelke:simple-recycler-view-swipe-gestures:1.3'
 
+   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
