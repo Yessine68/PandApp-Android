@@ -40,6 +40,7 @@ lateinit var toolbar: Toolbar;
         menuInflater.inflate(R.menu.top_menu,menu)
         return super.onCreateOptionsMenu(menu)
     }
+    //top navigation
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
@@ -129,6 +130,7 @@ lateinit var toolbar: Toolbar;
             startActivity(intent)
         }
 
+        // bootom navigation
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.page_1 -> {
