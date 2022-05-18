@@ -68,6 +68,67 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
         val joinInsta = inflatedView2?.findViewById<Button>(R.id.joinInsta)
         val chatButton = inflatedView2?.findViewById<Button>(R.id.chatButton)
 
+
+
+
+
+
+
+        val apiCheck = RetrofitApi.create().getClubMemberByClubNameAndUserEmail(mSharedPref.getString("email", "zwayten").toString(),
+            statusList[p1].login.toString()
+        )
+
+        apiCheck.enqueue(object : Callback<List<ClubMembers>> {
+            override fun onResponse(
+                call: Call<List<ClubMembers>>,
+                response: Response<List<ClubMembers>>
+            ) {
+                if(response.isSuccessful){
+                    if(response.body()!!.size != 0){
+                        if(response.body()!![0].state ==  false){
+                            etatJoin = "pending"
+                            idHmed = response.body()!![0]._id.toString()
+                            joinInsta?.setText("Cancel Request")
+                            chatButton?.isVisible = false
+
+                        }
+                        if(response.body()!![0].state ==  true){
+                            etatJoin = "existe"
+                            idHmed = response.body()!![0]._id.toString()
+                            joinInsta?.setText("leave")
+                            chatButton?.isVisible = true
+                        }
+                    }
+                    if(response.body()!!.size == 0){
+                        etatJoin= "none"
+                        joinInsta?.setText("Join")
+                        chatButton?.isVisible = false
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<ClubMembers>>, t: Throwable) {
+                println("mochkla")
+            }
+
+        })
+        val loggedAs = mSharedPref.getString("lastlogged", "user").toString()
+        if(loggedAs == "club"){
+            joinInsta?.isVisible = false
+            chatButton?.isVisible = false
+
+        }
+        if(loggedAs == "user"){
+            joinInsta?.isVisible = true
+            if(etatJoin == "existe"){
+                chatButton?.isVisible = true
+            }
+            if(etatJoin == "none" || etatJoin == "pending"){
+                chatButton?.isVisible = false
+            }
+
+        }
+
         chatButton?.setOnClickListener {
             val apigetChatRoom = RetrofitApi.create().getChatRoomByClub(statusList[p1].login)
             apigetChatRoom.enqueue(object : Callback<ClubChat>{
@@ -94,49 +155,9 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
             })
         }
 
-        val loggedAs = mSharedPref.getString("lastlogged", "user").toString()
-        if(loggedAs == "club"){
-            joinInsta?.isVisible = false
-        }
-        if(loggedAs == "user"){
-            joinInsta?.isVisible = true
-        }
 
-        val apiCheck = RetrofitApi.create().getClubMemberByClubNameAndUserEmail(mSharedPref.getString("email", "zwayten").toString(),
-            statusList[p1].login.toString()
-        )
 
-        apiCheck.enqueue(object : Callback<List<ClubMembers>> {
-            override fun onResponse(
-                call: Call<List<ClubMembers>>,
-                response: Response<List<ClubMembers>>
-            ) {
-                if(response.isSuccessful){
-                    if(response.body()!!.size != 0){
-                        if(response.body()!![0].state ==  false){
-                            etatJoin = "pending"
-                            idHmed = response.body()!![0]._id.toString()
-                            joinInsta?.setText("Cancel Request")
 
-                        }
-                        if(response.body()!![0].state ==  true){
-                            etatJoin = "existe"
-                            idHmed = response.body()!![0]._id.toString()
-                            joinInsta?.setText("leave")
-                        }
-                    }
-                    if(response.body()!!.size == 0){
-                        etatJoin= "none"
-                        joinInsta?.setText("Join")
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<ClubMembers>>, t: Throwable) {
-                println("mochkla")
-            }
-
-        })
 
 
 
