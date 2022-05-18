@@ -2,6 +2,7 @@ package com.example.androidpim.view
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.TextureView
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -71,11 +73,14 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
                 override fun onResponse(call: Call<ClubChat>, response: Response<ClubChat>) {
                     if(response.isSuccessful){
                         response.body()!!.messageclubs?.let { it1 -> println("el size"+it1.size) }
+                        val intent = Intent(mContext, ClubRoom::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        mContext?.startActivity(intent)
                     }
                 }
 
                 override fun onFailure(call: Call<ClubChat>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    println("mochkla chattttttttttttttttttt")
                 }
 
             })
