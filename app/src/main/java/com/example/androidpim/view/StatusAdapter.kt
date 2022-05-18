@@ -1,5 +1,6 @@
 package com.example.androidpim.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -45,7 +46,7 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
         return statusList.size
     }
 
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: ViewHolder, @SuppressLint("RecyclerView") p1: Int) {
 
 
 
@@ -75,6 +76,13 @@ class StatusAdapter(val activity: Context, val statusList: ArrayList<Club>) : Re
                         response.body()!!.messageclubs?.let { it1 -> println("el size"+it1.size) }
                         val intent = Intent(mContext, ClubRoom::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.apply {
+                            putExtra("clubchatId",response.body()!!._id)
+                            putExtra("clubchatName",statusList[p1].login)
+                            putExtra("esmelclub",statusList[p1].clubName)
+                            putExtra("clubLogo",statusList[p1].clubLogo)
+                        }
+
                         mContext?.startActivity(intent)
                     }
                 }

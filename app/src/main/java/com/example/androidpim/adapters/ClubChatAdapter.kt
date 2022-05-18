@@ -54,8 +54,8 @@ println("teammm zwayten")
     }
 
     override fun onBindViewHolder(holder: ClubChatViewHolder, position: Int) {
-        println("teammm gassssss")
-        val ppp = BASE_URL +"upload/download/"+"image-1652755143263.png"//membersList[position].memberPicture
+
+        val ppp = BASE_URL +"upload/download/"+messageList[position].userImage//membersList[position].memberPicture
         Glide.with(mContext!!)
             .load(ppp)
             .into(holder.chatOtherProfilePic)
