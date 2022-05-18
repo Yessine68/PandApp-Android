@@ -12,10 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.androidpim.R
-import com.example.androidpim.fragments.EventFragment
-import com.example.androidpim.fragments.ListOfChat
-import com.example.androidpim.fragments.ListOfCourses
-import com.example.androidpim.fragments.lostfoundfrag
+import com.example.androidpim.fragments.*
 import com.example.androidpim.service.BASE_URL
 
 class LkolPro : AppCompatActivity() {
@@ -25,6 +22,8 @@ class LkolPro : AppCompatActivity() {
     lateinit var lostfound:Fragment
     lateinit var loggedAs:String
     lateinit var send_img:ImageView
+    lateinit var map:ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -37,6 +36,7 @@ class LkolPro : AppCompatActivity() {
         frag = EventFragment()
         lostfound =lostfoundfrag()
          send_img = findViewById<ImageButton>(R.id.send_img)
+        map = findViewById<ImageButton>(R.id.map)
 
         val homeBtn = findViewById<ImageView>(R.id.home_icon)
         val searchBtn = findViewById<ImageView>(R.id.search_icon)
@@ -49,7 +49,11 @@ class LkolPro : AppCompatActivity() {
         galleryBtn.setOnClickListener(clickListener)
         favouriteBtn.setOnClickListener(clickListener)
         profileBtn.setOnClickListener(clickListener)
+map.setOnClickListener{
+    supportFragmentManager.beginTransaction().replace(R.id.frame, MapFrag()).commit()
+    supportFragmentManager.beginTransaction().remove(frag).commit()
 
+}
         send_img.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.frame, ListOfChat()).commit()
             supportFragmentManager.beginTransaction().remove(frag).commit()

@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +23,9 @@
         android:theme="@style/Theme.AndroidPim"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".mapActivity"
+            android:exported="false" />
         <activity
             android:name=".view.Scc"
             android:exported="false" />
@@ -44,10 +49,6 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
         <activity
             android:name=".view.AddPost"
             android:exported="false" />

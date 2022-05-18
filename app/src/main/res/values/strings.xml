@@ -53,5 +53,5 @@
     <string name="scan_a_code">Scan a QR Code</string>
     <string name="result_not_found">Result Not Found</string>
     <string name="show_scanner_from_fragment">Join Event</string>
-
+    <string name="mapbox_access_token">pk.eyJ1IjoieWVzbWluYSIsImEiOiJjbDJ2em01a3MwMmN5M2xuenpqZnEyZ2NxIn0.9a_hRfIs7kjqLkkkEon7Yg</string>
 </resources>

@@ -1,4 +1,11 @@
-package com.example.androidpim.models
+/**
+ * @author Joyce Hong
+ * @email soja0524@gmail.com
+ * @created 2019-09-03
+ * @desc
+ */
+
+package com.example.androidpim
 
 data class Message (val userName : String, val messageContent : String, val roomName: String,var viewType : Int)
 data class initialData (val userName : String, val roomName : String)

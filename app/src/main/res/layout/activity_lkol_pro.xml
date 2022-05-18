@@ -43,6 +43,16 @@
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/ic_send" />
 
+            <ImageView
+                android:id="@+id/map"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignRight="@+id/insta_img"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="-80dp"
+                android:src="@drawable/ic_baseline_map_24" />
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,8 +128,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/profile_icon"
                 android:layout_toEndOf="@+id/add_icon"
-                android:src="@drawable/lostfwhite"
-                />
+                android:src="@drawable/lostfwhite" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_icon"
