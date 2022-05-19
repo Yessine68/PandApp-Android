@@ -22,12 +22,6 @@ class EventFragment: Fragment(R.layout.fragment_event) {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val rootView = inflater.inflate(R.layout.fragment_event, container, false)
-
-
-
-
-
-
         val activity = activity as Context
 
         val eventRecycler = rootView.findViewById<RecyclerView>(R.id.eventlist)
