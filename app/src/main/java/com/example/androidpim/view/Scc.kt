@@ -1,16 +1,24 @@
 package com.example.androidpim.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.example.androidpim.R
 import com.example.androidpim.models.EventInt
+import com.example.androidpim.service.BASE_URL
 import com.example.androidpim.service.RetrofitApi
 import com.google.zxing.integration.android.IntentIntegrator
+import org.jetbrains.anko.find
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -25,6 +33,8 @@ class Scc : AppCompatActivity() {
     lateinit var site_name_key: TextView
     lateinit var site_name: TextView
     lateinit var showQRScanner: Button
+    lateinit var taswiraQRr:ImageView
+    lateinit var mSharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +44,13 @@ class Scc : AppCompatActivity() {
         name = findViewById(R.id.name)
         site_name_key = findViewById(R.id.site_name_key)
         site_name = findViewById(R.id.site_name)
+        taswiraQRr = findViewById(R.id.taswiraQRr)
         showQRScanner = findViewById(R.id.showQRScanner)
-
+        taswiraQRr.isVisible = false
         btnScan.setOnClickListener { performAction() }
         setupScanner()
+        mSharedPref = getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        val currentEmail = mSharedPref.getString("email", "user").toString()
     }
 
     private fun performAction() {
@@ -67,11 +80,17 @@ class Scc : AppCompatActivity() {
 
                     // Show values in UI.
                     name.text = obj.getString("postId")
-                    site_name.text = obj.getString("userEmail")
+                    site_name.text = mSharedPref.getString("email", "user").toString()
+                    val picStr: String = obj.getString("imagee")
+                    println("###############################################"+picStr)
+                    val ppp = BASE_URL +"upload/download/"+picStr
+                    Glide.with(this).load(Uri.parse(ppp)).into(taswiraQRr)
+                    taswiraQRr.isVisible =true
+
                     //Toast.makeText(this, "ooooooooooooooooooooooooooooooo", Toast.LENGTH_LONG).show()
                     var eventInt = EventInt()
                     eventInt.postId = obj.getString("postId")
-                    eventInt.userEmail = obj.getString("userEmail")
+                    eventInt.userEmail = mSharedPref.getString("email", "user").toString()
 
                     var existedeja = false
                     val apijoin = RetrofitApi.create().getEventIntByEmail(eventInt.postId!!)

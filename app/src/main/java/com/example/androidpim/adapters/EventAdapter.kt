@@ -74,23 +74,17 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
             val eventTitleDetail = inflatedView2?.findViewById<TextView>(R.id.eventTitleDetail)
             val eventTimeDetail= inflatedView2?.findViewById<TextView>(R.id.eventTimeDetail)
             val eventPlaceDetail= inflatedView2?.findViewById<TextView>(R.id.eventPlaceDetail)
-            val descriptiondetail= inflatedView2?.findViewById<TextView>(R.id.descriptiondetail)
+            val descriptiondetail= inflatedView2?.findViewById<TextView>(R.id.descriptionDetail)
             val qrevent= inflatedView2?.findViewById<ImageView>(R.id.qrevent)
             val joinButton = inflatedView2?.findViewById<Button>(R.id.joinButton)
 
+            eventTitleDetail?.setText(eventList[position].title)
+            eventPlaceDetail?.setText(eventList[position].place)
+            eventTimeDetail?.setText(eventList[position].Time)
+            descriptiondetail?.setText(eventList[position].description)
             if (pika == "club"){
                 joinButton?.isVisible = false
             }
-
-
-
-
-
-
-
-
-
-
 
 
             var eventIntt = EventInt()
@@ -234,9 +228,10 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
 
 
             fun generateQj() {
-                val data = Qrj(email, eventList[position]._id)
+                val data = Qrj(eventList[position].publisheId, eventList[position]._id, eventList[position].banner)
                 println("qr email"+ data.userEmail)
                 println("qr email"+ data.postId)
+                println("qr email"+ data.imagee)
                 var gson = Gson()
                 var jsonString = gson.toJson(data)
                 println(jsonString)
@@ -261,10 +256,7 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
 
 
 
-            eventTitleDetail?.setText(eventList[position].title.toString())
-            eventPlaceDetail?.setText(eventList[position].place.toString())
-            eventTimeDetail?.setText(eventList[position].Time.toString())
-            descriptiondetail?.setText(eventList[position].description.toString())
+
             generateQj()
 
 

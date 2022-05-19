@@ -31,7 +31,7 @@ interface RetrofitApi {
 
     @POST("messageclub")
     fun sendMessageClub(
-        @Body messageclub: Messageclub):Call<Messageclub>
+        @Body data: Messageclub):Call<Messageclub>
 
     @Multipart
     @POST("club/signup")
