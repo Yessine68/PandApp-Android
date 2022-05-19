@@ -75,8 +75,12 @@ class EventAdapter (val eventList: List<Event>) : RecyclerView.Adapter<EventAdap
             val eventTimeDetail= inflatedView2?.findViewById<TextView>(R.id.eventTimeDetail)
             val eventPlaceDetail= inflatedView2?.findViewById<TextView>(R.id.eventPlaceDetail)
             val descriptiondetail= inflatedView2?.findViewById<TextView>(R.id.descriptionDetail)
+            
             val qrevent= inflatedView2?.findViewById<ImageView>(R.id.qrevent)
             val joinButton = inflatedView2?.findViewById<Button>(R.id.joinButton)
+
+            //dfsdfsdfsfsfs
+
 
             eventTitleDetail?.setText(eventList[position].title)
             eventPlaceDetail?.setText(eventList[position].place)
