@@ -6,14 +6,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.LkolPro">
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
         android:elevation="15dp">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/send_img"
+            android:layout_width="55dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/profile" />
+
+        <ImageView
+            android:id="@+id/insta_img"
+            android:layout_width="122dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:src="@drawable/pandapp_insta" />
+
+    </androidx.appcompat.widget.Toolbar>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="800dp"
+        android:background="@color/white"
+        android:elevation="15dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -27,45 +59,23 @@
                 android:src="@drawable/ic_logout"
                 app:tint="@color/md_black_1000" />
 
-            <ImageView
-                android:id="@+id/insta_img"
-                android:layout_width="122dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/pandapp_insta" />
 
-            <ImageView
-                android:id="@+id/send_img"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:src="@drawable/ic_send" />
+
+
+
 
             <ImageView
                 android:id="@+id/map"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_alignRight="@+id/insta_img"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="-80dp"
                 android:src="@drawable/ic_baseline_map_24" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-24dp"
-                android:layout_toRightOf="@+id/send_img"
-                android:text="0"
-                android:textColor="@color/red"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
 
     <FrameLayout
         android:id="@+id/frameEvent"
@@ -90,62 +100,24 @@
 
         android:elevation="15dp"
         android:layout_alignParentBottom="true">
-
-        <RelativeLayout
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_alignBottom="@+id/bottom_layout"
+            android:id="@+id/bootomnav"
+            android:layout_height="wrap_content">
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/bottom_navigation_menu" />
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/home_icon"
-                android:layout_width="@dimen/bottom_menu_size"
-                android:layout_height="@dimen/bottom_menu_size"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/menu_margin"
-                android:src="@drawable/ic_black_home" />
 
-            <ImageView
-                android:id="@+id/search_icon"
-                android:layout_width="66dp"
-                android:layout_height="28dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="27dp"
-                android:layout_marginEnd="53dp"
-                android:layout_marginBottom="10dp"
-                android:layout_toStartOf="@+id/add_icon"
-                android:layout_toEndOf="@+id/home_icon"
-                android:src="@drawable/courseslogo" />
-
-            <ImageView
-                android:id="@+id/add_icon"
-                android:layout_width="@dimen/bottom_menu_size"
-                android:layout_height="@dimen/bottom_menu_size"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_big_add" />
-
-            <ImageView
-                android:id="@+id/heart_icon"
-                android:layout_width="48dp"
-                android:layout_height="29dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="34dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="10dp"
-                android:layout_toStartOf="@+id/profile_icon"
-                android:layout_toEndOf="@+id/add_icon"
-                android:src="@drawable/lostfwhite" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_icon"
-                android:layout_width="55dp"
-                android:layout_height="28dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/profile" />
-
-        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

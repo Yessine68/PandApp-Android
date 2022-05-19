@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <item
             android:id="@+id/navigation_item_1"
-            android:title="Profile" />
+            android:title="Profile"
+            />
         <item
             android:id="@+id/navigation_item_2"
             android:title="Messages" />

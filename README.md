@@ -1,4 +1,4 @@
-# PandApp Android
+# androidPim
 PandApp on Android
 <div id="top"></div>
 <a href="https://img.shields.io/badge/Swift5-100%25-yellow"><img alt="Android use" src="https://img.shields.io/badge/Android-100%25-green"></a> <a href="https://img.shields.io/badge/Kotlin.js-red"><img alt="StoryBoard use" src="https://img.shields.io/badge/Used-kotlin-blue"></a> 
