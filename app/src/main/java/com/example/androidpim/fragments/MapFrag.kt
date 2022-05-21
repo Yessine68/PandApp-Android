@@ -151,6 +151,7 @@ for(parking in response.body()!!){
                 data["longatitude"] = point.longitude()
                 data["latatitude"]= point.latitude()
                 data["userId"]= id
+                addViewAnnotation(point)
 
                 apiuser.postParking(data).enqueue(object: Callback<Any> {
                     override fun onResponse(
@@ -159,7 +160,6 @@ for(parking in response.body()!!){
                     ) {
                         if(response.isSuccessful){
                             Log.i("onResponse goooood", response.body().toString())
-                            addViewAnnotation(point)
 
 
                         } else {

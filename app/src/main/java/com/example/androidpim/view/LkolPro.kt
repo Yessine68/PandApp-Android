@@ -45,11 +45,16 @@ lateinit var toolbar: Toolbar;
         // Handle item selection
         return when (item.itemId) {
             R.id.profile -> {
+
                 if(loggedAs == "user") {
+                    supportFragmentManager.beginTransaction().remove(frag).commit()
+                    supportFragmentManager.beginTransaction().remove(lostfound).commit()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame, ProfileUser()).commit()
                 }
                 if(loggedAs == "club") {
+                    supportFragmentManager.beginTransaction().remove(frag).commit()
+                    supportFragmentManager.beginTransaction().remove(lostfound).commit()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame, ProfileClub()).commit()
                 }
@@ -94,6 +99,8 @@ lateinit var toolbar: Toolbar;
 
 }
         send_img.setOnClickListener {
+            supportFragmentManager.beginTransaction().remove(frag).commit()
+            supportFragmentManager.beginTransaction().remove(lostfound).commit()
             if(loggedAs == "user") {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frame, ProfileUser()).commit()

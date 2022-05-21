@@ -15,6 +15,8 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        //1012405297503-651ktghf4on48ppjh06abtv9jchj03dn.apps.googleusercontent.com
+        //buildConfigField("String", "WEB_CLIENT_ID", '"1012405297503-651ktghf4on48ppjh06abtv9jchj03dn.apps.googleusercontent.com"')
         buildConfigField("String", "WEB_CLIENT_ID", '"1012405297503-srts4p401265f9bh6dal59mpl2ab3mp1.apps.googleusercontent.com"')
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -86,7 +88,7 @@ dependencies {
 
     implementation 'com.github.florent37:shapeofview:1.4.7'
 
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
