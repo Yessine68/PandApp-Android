@@ -25,11 +25,11 @@ PandApp on Android
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/KlaiGhassen/PandApp-Android">
     <img src="images/logo.png" alt="Logo" width="200" height="200">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">PandApp Readme !</h3>
 
   <p align="center">
    PandApp android application
